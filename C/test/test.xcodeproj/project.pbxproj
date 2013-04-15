@@ -1,0 +1,206 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F5A1C999171047DA009E7460 /* detWs_mex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A1C994171047DA009E7460 /* detWs_mex.cpp */; };
+		F5A1C99A171047DA009E7460 /* functions_lib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A1C995171047DA009E7460 /* functions_lib.cpp */; };
+		F5A1C99B171047DA009E7460 /* Hs_mex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A1C997171047DA009E7460 /* Hs_mex.cpp */; };
+		F5A1C99C171047DA009E7460 /* Ws_mex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A1C998171047DA009E7460 /* Ws_mex.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F55C12B8170EFFC10056EB17 /* test.mexmaci64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = test.mexmaci64; sourceTree = BUILT_PRODUCTS_DIR; };
+		F55C12BB170EFFC10056EB17 /* mex.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = mex.xcconfig; sourceTree = "<group>"; };
+		F5A1C994171047DA009E7460 /* detWs_mex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = detWs_mex.cpp; path = ../../detWs_mex.cpp; sourceTree = "<group>"; };
+		F5A1C995171047DA009E7460 /* functions_lib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = functions_lib.cpp; path = ../../functions_lib.cpp; sourceTree = "<group>"; };
+		F5A1C996171047DA009E7460 /* functions_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = functions_lib.h; path = ../../functions_lib.h; sourceTree = "<group>"; };
+		F5A1C997171047DA009E7460 /* Hs_mex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Hs_mex.cpp; path = ../../Hs_mex.cpp; sourceTree = "<group>"; };
+		F5A1C998171047DA009E7460 /* Ws_mex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ws_mex.cpp; path = ../../Ws_mex.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		F55C12B1170EFFC10056EB17 = {
+			isa = PBXGroup;
+			children = (
+				F55C12BA170EFFC10056EB17 /* test */,
+				F55C12B9170EFFC10056EB17 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F55C12B9170EFFC10056EB17 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F55C12B8170EFFC10056EB17 /* test.mexmaci64 */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F55C12BA170EFFC10056EB17 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				F55C12BB170EFFC10056EB17 /* mex.xcconfig */,
+				F5A1C994171047DA009E7460 /* detWs_mex.cpp */,
+				F5A1C995171047DA009E7460 /* functions_lib.cpp */,
+				F5A1C996171047DA009E7460 /* functions_lib.h */,
+				F5A1C997171047DA009E7460 /* Hs_mex.cpp */,
+				F5A1C998171047DA009E7460 /* Ws_mex.cpp */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F55C12B7170EFFC10056EB17 /* test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F55C12BE170EFFC10056EB17 /* Build configuration list for PBXNativeTarget "test" */;
+			buildPhases = (
+				F55C12B6170EFFC10056EB17 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test;
+			productName = test;
+			productReference = F55C12B8170EFFC10056EB17 /* test.mexmaci64 */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F55C12B2170EFFC10056EB17 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
+			buildConfigurationList = F55C12B5170EFFC10056EB17 /* Build configuration list for PBXProject "test" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F55C12B1170EFFC10056EB17;
+			productRefGroup = F55C12B9170EFFC10056EB17 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F55C12B7170EFFC10056EB17 /* test */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F55C12B6170EFFC10056EB17 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5A1C999171047DA009E7460 /* detWs_mex.cpp in Sources */,
+				F5A1C99A171047DA009E7460 /* functions_lib.cpp in Sources */,
+				F5A1C99B171047DA009E7460 /* Hs_mex.cpp in Sources */,
+				F5A1C99C171047DA009E7460 /* Ws_mex.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F55C12BC170EFFC10056EB17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F55C12BB170EFFC10056EB17 /* mex.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F55C12BD170EFFC10056EB17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F55C12BB170EFFC10056EB17 /* mex.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F55C12BF170EFFC10056EB17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = mexmaci64;
+				HEADER_SEARCH_PATHS = "$(MATLABROOT)/extern/include";
+				LIBRARY_SEARCH_PATHS = "$(MATLABROOT)/bin/maci64";
+				MACH_O_TYPE = mh_bundle;
+				OTHER_LDFLAGS = (
+					"-lmx",
+					"-lmex",
+					"-lmat",
+					"-lgsl",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "$(SRCROOT)/build/$(CONFIGURATION)";
+			};
+			name = Debug;
+		};
+		F55C12C0170EFFC10056EB17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = mexmaci64;
+				HEADER_SEARCH_PATHS = "$(MATLABROOT)/extern/include";
+				LIBRARY_SEARCH_PATHS = "$(MATLABROOT)/bin/maci64";
+				MACH_O_TYPE = mh_bundle;
+				OTHER_LDFLAGS = (
+					"-lmx",
+					"-lmex",
+					"-lmat",
+					"-lgsl",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "$(SRCROOT)/build/$(CONFIGURATION)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F55C12B5170EFFC10056EB17 /* Build configuration list for PBXProject "test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F55C12BC170EFFC10056EB17 /* Debug */,
+				F55C12BD170EFFC10056EB17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F55C12BE170EFFC10056EB17 /* Build configuration list for PBXNativeTarget "test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F55C12BF170EFFC10056EB17 /* Debug */,
+				F55C12C0170EFFC10056EB17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F55C12B2170EFFC10056EB17 /* Project object */;
+}

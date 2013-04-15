@@ -1,0 +1,201 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F55C12AF170EFF580056EB17 /* Hs_c.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F55C12AD170EFF580056EB17 /* Hs_c.cpp */; };
+		F55C12B0170EFF580056EB17 /* Ws_c.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F55C12AE170EFF580056EB17 /* Ws_c.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F55C129F170EFDDB0056EB17 /* Ws.mexmaci64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = Ws.mexmaci64; sourceTree = BUILT_PRODUCTS_DIR; };
+		F55C12A2170EFDDB0056EB17 /* mex.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = mex.xcconfig; sourceTree = "<group>"; };
+		F55C12A9170EFE040056EB17 /* Hs_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hs_c.h; path = ../../Hs_c.h; sourceTree = "<group>"; };
+		F55C12AD170EFF580056EB17 /* Hs_c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Hs_c.cpp; path = ../../Hs_c.cpp; sourceTree = "<group>"; };
+		F55C12AE170EFF580056EB17 /* Ws_c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ws_c.cpp; path = ../../Ws_c.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		F55C1298170EFDDB0056EB17 = {
+			isa = PBXGroup;
+			children = (
+				F55C12A1170EFDDB0056EB17 /* Ws */,
+				F55C12A0170EFDDB0056EB17 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F55C12A0170EFDDB0056EB17 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F55C129F170EFDDB0056EB17 /* Ws.mexmaci64 */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F55C12A1170EFDDB0056EB17 /* Ws */ = {
+			isa = PBXGroup;
+			children = (
+				F55C12A2170EFDDB0056EB17 /* mex.xcconfig */,
+				F55C12AD170EFF580056EB17 /* Hs_c.cpp */,
+				F55C12AE170EFF580056EB17 /* Ws_c.cpp */,
+				F55C12A9170EFE040056EB17 /* Hs_c.h */,
+			);
+			path = Ws;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F55C129E170EFDDB0056EB17 /* Ws */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F55C12A5170EFDDB0056EB17 /* Build configuration list for PBXNativeTarget "Ws" */;
+			buildPhases = (
+				F55C129D170EFDDB0056EB17 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Ws;
+			productName = Ws;
+			productReference = F55C129F170EFDDB0056EB17 /* Ws.mexmaci64 */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F55C1299170EFDDB0056EB17 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
+			buildConfigurationList = F55C129C170EFDDB0056EB17 /* Build configuration list for PBXProject "Ws" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F55C1298170EFDDB0056EB17;
+			productRefGroup = F55C12A0170EFDDB0056EB17 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F55C129E170EFDDB0056EB17 /* Ws */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F55C129D170EFDDB0056EB17 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F55C12AF170EFF580056EB17 /* Hs_c.cpp in Sources */,
+				F55C12B0170EFF580056EB17 /* Ws_c.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F55C12A3170EFDDB0056EB17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F55C12A2170EFDDB0056EB17 /* mex.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_LDFLAGS[arch=*]" = "-lgsl";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F55C12A4170EFDDB0056EB17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F55C12A2170EFDDB0056EB17 /* mex.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				"OTHER_LDFLAGS[arch=*]" = "-lgsl";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F55C12A6170EFDDB0056EB17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = mexmaci64;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = "$(MATLABROOT)/extern/include";
+				LIBRARY_SEARCH_PATHS = "$(MATLABROOT)/bin/maci64";
+				MACH_O_TYPE = mh_bundle;
+				OTHER_LDFLAGS = (
+					"-lmx",
+					"-lmex",
+					"-lmat",
+					"-lgsl",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "$(SRCROOT)/build/$(CONFIGURATION)";
+			};
+			name = Debug;
+		};
+		F55C12A7170EFDDB0056EB17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = mexmaci64;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = "$(MATLABROOT)/extern/include";
+				LIBRARY_SEARCH_PATHS = "$(MATLABROOT)/bin/maci64";
+				MACH_O_TYPE = mh_bundle;
+				OTHER_LDFLAGS = (
+					"-lmx",
+					"-lmex",
+					"-lmat",
+					"-lgsl",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "$(SRCROOT)/build/$(CONFIGURATION)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F55C129C170EFDDB0056EB17 /* Build configuration list for PBXProject "Ws" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F55C12A3170EFDDB0056EB17 /* Debug */,
+				F55C12A4170EFDDB0056EB17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F55C12A5170EFDDB0056EB17 /* Build configuration list for PBXNativeTarget "Ws" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F55C12A6170EFDDB0056EB17 /* Debug */,
+				F55C12A7170EFDDB0056EB17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F55C1299170EFDDB0056EB17 /* Project object */;
+}

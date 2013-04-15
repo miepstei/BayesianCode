@@ -1,0 +1,117 @@
+TWs
+v5
+r1
+cCheck dependencies
+cCompileC build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Hs_c.o /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c normal x86_64 c com.apple.compilers.llvmgcc42
+cCompileC build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Ws_c.o /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c normal x86_64 c com.apple.compilers.llvmgcc42
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
+c000000005149D71100000000000000AA
+t1363793681
+s170
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/stdio.h
+c000000005149D7230000000000004523
+t1363793699
+s17699
+
+N/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c
+c00000000515EC3E90000000000000DF5
+t1365165033
+s3573
+i"Hs_c.h"
+i"mex.h"
+i<gsl/gsl_blas.h>
+
+N/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c
+c00000000515EAA4900000000000008F1
+t1365158473
+s2289
+i"mex.h"
+i"matrix.h"
+i"Hs_c.h"
+i<gsl/gsl_matrix.h>
+i<gsl/gsl_linalg.h>
+i<stdio.h>
+
+N/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Hs_c.o
+t2
+s0
+
+N/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Ws.LinkFileList
+c00000000515EC689000000000000011C
+t1365165705
+s284
+
+N/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Ws_c.o
+t2
+s0
+
+N/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.mexmaci64
+t2
+s0
+
+N/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h
+c00000000515EA50A00000000000000F9
+t1365157130
+s249
+i<gsl/gsl_matrix.h>
+i<gsl/gsl_linalg.h>
+
+CBuild AST from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c
+r0
+
+CBuild AST from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c
+r0
+
+CCheck dependencies
+r0
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies2bf8e109fe0eb741^f50fe609fe0eb741^---0#1#0#--18"Check dependencies36"15192A5A-9EEF-4EFD-916C-9827F71FBD10-
+
+CCompileC build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Hs_c.o /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c normal x86_64 c com.apple.compilers.llvmgcc42
+s386858505.900475
+e386858505.956622
+r0
+xCompileC
+xbuild/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Hs_c.o
+x/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c
+xnormal
+xx86_64
+xc
+xcom.apple.compilers.llvmgcc42
+oIn file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:1:
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:1:28: error: gsl/gsl_matrix.h: No such file or directory
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:2:28: error: gsl/gsl_linalg.h: No such file or directory
+oIn file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:1:
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:7: error: expected '=', ',', ';', 'asm' or '__attribute__' before '*' token
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:2:17: error: mex.h: No such file or directory
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:3:26: error: gsl/gsl_blas.h: No such file or directory
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:5: error: expected '=', ',', ';', 'asm' or '__attribute__' before '*' token
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection100"Compile /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c99b7e609fe0eb741^a8e0f409fe0eb741^-1161"In file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:1:/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:1:28: error: gsl/gsl_matrix.h: No such file or directory/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:2:28: error: gsl/gsl_linalg.h: No such file or directoryIn file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:1:/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:7: error: expected '=', ',', ';', 'asm' or '__attribute__' before '*' token/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:2:17: error: mex.h: No such file or directory/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:3:26: error: gsl/gsl_blas.h: No such file or directory/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c:5: error: expected '=', ',', ';', 'asm' or '__attribute__' before '*' token6(21%IDEActivityLogMessage2@43"Gsl/gsl_matrix.h: No such file or directory-386858505#118#150#2(36%IDEActivityLogHeaderInclusionMessage3@114"In file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c-386858505#18446744073709551615#0#-0#-23%DVTTextDocumentLocation4@108"file://localhost/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2@127"Gsl/gsl_matrix.h: No such file or directory in /Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h-386858505#18446744073709551615#0#-0#-4@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2#-4@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@43"Gsl/gsl_linalg.h: No such file or directory-386858505#268#150#2(3@114"In file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c-386858505#18446744073709551615#0#-0#-4@108"file://localhost/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2@127"Gsl/gsl_linalg.h: No such file or directory in /Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h-386858505#18446744073709551615#0#-0#-4@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#---2#-4@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@65"Expected '=', ',', ';', 'asm' or '__attribute__' before '*' token-386858505#536#169#2(3@114"In file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c-386858505#18446744073709551615#0#-0#-4@108"file://localhost/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2@149"Expected '=', ',', ';', 'asm' or '__attribute__' before '*' token in /Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h-386858505#18446744073709551615#0#-0#-4@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^6#18446744073709551615#6#18446744073709551615#18446744073709551615#0#---2#-4@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^6#18446744073709551615#6#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@32"Mex.h: No such file or directory-386858505#705#139#-2#-4@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.c0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@41"Gsl/gsl_blas.h: No such file or directory-386858505#844#148#-2#-4@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.c0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@65"Expected '=', ',', ';', 'asm' or '__attribute__' before '*' token-386858505#992#169#-2#-4@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.c0000000000000000^4#18446744073709551615#4#18446744073709551615#18446744073709551615#0#19"Expected * before *--0#0#0#-19%DVTDocumentLocation5@108"file://localhost/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c0000000000000000^1445"CompileC build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Hs_c.o Ws/../../Hs_c.c normal x86_64 c com.apple.compilers.llvmgcc42    cd /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/usr/bin/llvm-gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -Os -Wshorten-64-to-32 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -mmacosx-version-min=10.8 -gdwarf-2 -I/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/Ws.hmap -I/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/include -I/Applications/MATLAB_R2012b.app/extern/include -I/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/DerivedSources/x86_64 -I/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/DerivedSources -F/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug -c /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.c -o /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Hs_c.o36"E48AC5AC-CCEF-483A-8397-AF589E6B1AFF-
+
+CCompileC build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Ws_c.o /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c normal x86_64 c com.apple.compilers.llvmgcc42
+s386858505.901090
+e386858506.057790
+r0
+xCompileC
+xbuild/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Ws_c.o
+x/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c
+xnormal
+xx86_64
+xc
+xcom.apple.compilers.llvmgcc42
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:1:17: error: mex.h: No such file or directory
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:2:20: error: matrix.h: No such file or directory
+oIn file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:3:
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:1:28: error: gsl/gsl_matrix.h: No such file or directory
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:2:28: error: gsl/gsl_linalg.h: No such file or directory
+oIn file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:3:
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:7: error: expected '=', ',', ';', 'asm' or '__attribute__' before '*' token
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:8: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'namespace'
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:10: error: expected declaration specifiers or '...' before 'mxArray'
+o/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:10: error: expected ';', ',' or ')' before '*' token
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection100"Compile /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c3ac9e609fe0eb741^c0cd0e0afe0eb741^-1465"/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:1:17: error: mex.h: No such file or directory/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:2:20: error: matrix.h: No such file or directoryIn file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:3:/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:1:28: error: gsl/gsl_matrix.h: No such file or directory/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:2:28: error: gsl/gsl_linalg.h: No such file or directoryIn file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:3:/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Hs_c.h:7: error: expected '=', ',', ';', 'asm' or '__attribute__' before '*' token/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:8: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'namespace'/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:10: error: expected declaration specifiers or '...' before 'mxArray'/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c:10: error: expected ';', ',' or ')' before '*' token8(21%IDEActivityLogMessage2@32"Mex.h: No such file or directory-386858505#0#139#-2#-23%DVTTextDocumentLocation3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Ws_c.c0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@35"Matrix.h: No such file or directory-386858505#139#142#-2#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Ws_c.c0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@43"Gsl/gsl_matrix.h: No such file or directory-386858505#399#150#2(36%IDEActivityLogHeaderInclusionMessage4@114"In file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c-386858505#18446744073709551615#0#-0#-3@108"file://localhost/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#---2@127"Gsl/gsl_matrix.h: No such file or directory in /Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h-386858505#18446744073709551615#0#-0#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@43"Gsl/gsl_linalg.h: No such file or directory-386858505#549#150#2(4@114"In file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c-386858505#18446744073709551615#0#-0#-3@108"file://localhost/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#---2@127"Gsl/gsl_linalg.h: No such file or directory in /Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h-386858505#18446744073709551615#0#-0#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#---2#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@65"Expected '=', ',', ';', 'asm' or '__attribute__' before '*' token-386858505#817#169#2(4@114"In file included from /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c-386858505#18446744073709551615#0#-0#-3@108"file://localhost/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#---2@149"Expected '=', ',', ';', 'asm' or '__attribute__' before '*' token in /Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h-386858505#18446744073709551615#0#-0#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^6#18446744073709551615#6#18446744073709551615#18446744073709551615#0#---2#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Hs_c.h0000000000000000^6#18446744073709551615#6#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@67"Expected '=', ',', ';', 'asm' or '__attribute__' before 'namespace'-386858505#986#171#-2#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Ws_c.c0000000000000000^7#18446744073709551615#7#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@57"Expected declaration specifiers or '...' before 'mxArray'-386858505#1157#162#-2#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Ws_c.c0000000000000000^9#18446744073709551615#9#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@41"Expected ';', ',' or ')' before '*' token-386858505#1319#146#-2#-3@96"file://localhost/Volumes/Users/Dropbox/Academic/phd/Code/bayesiancode/trunk/MarkovModel/C/Ws_c.c0000000000000000^9#18446744073709551615#9#18446744073709551615#18446744073709551615#0#19"Expected * before *--0#0#0#-19%DVTDocumentLocation5@108"file://localhost/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c0000000000000000^1445"CompileC build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Ws_c.o Ws/../../Ws_c.c normal x86_64 c com.apple.compilers.llvmgcc42    cd /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/usr/bin/llvm-gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -Os -Wshorten-64-to-32 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -mmacosx-version-min=10.8 -gdwarf-2 -I/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/Ws.hmap -I/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/include -I/Applications/MATLAB_R2012b.app/extern/include -I/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/DerivedSources/x86_64 -I/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/DerivedSources -F/Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug -c /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/Ws/../../Ws_c.c -o /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.build/Debug/Ws.build/Objects-normal/x86_64/Ws_c.o36"6890DB41-D354-4426-8CAD-E5D4E4523651-
+
+CLd /Volumes/Users/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/Ws/build/Debug/Ws.mexmaci64 normal x86_64
+r0
+

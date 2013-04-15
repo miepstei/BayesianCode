@@ -1,0 +1,195 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F5A6515F1710CC1000D0CF41 /* bisect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A6515C1710CC1000D0CF41 /* bisect.cpp */; };
+		F5A651601710CC1000D0CF41 /* functions_lib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A6515D1710CC1000D0CF41 /* functions_lib.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F5A651531710CBE900D0CF41 /* bisect.mexmaci64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = bisect.mexmaci64; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5A651561710CBE900D0CF41 /* mex.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = mex.xcconfig; sourceTree = "<group>"; };
+		F5A6515C1710CC1000D0CF41 /* bisect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bisect.cpp; path = ../../bisect.cpp; sourceTree = "<group>"; };
+		F5A6515D1710CC1000D0CF41 /* functions_lib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = functions_lib.cpp; path = ../../functions_lib.cpp; sourceTree = "<group>"; };
+		F5A6515E1710CC1000D0CF41 /* functions_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = functions_lib.h; path = ../../functions_lib.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		F5A6514C1710CBE900D0CF41 = {
+			isa = PBXGroup;
+			children = (
+				F5A651551710CBE900D0CF41 /* bisect */,
+				F5A651541710CBE900D0CF41 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F5A651541710CBE900D0CF41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5A651531710CBE900D0CF41 /* bisect.mexmaci64 */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5A651551710CBE900D0CF41 /* bisect */ = {
+			isa = PBXGroup;
+			children = (
+				F5A651561710CBE900D0CF41 /* mex.xcconfig */,
+				F5A6515C1710CC1000D0CF41 /* bisect.cpp */,
+				F5A6515D1710CC1000D0CF41 /* functions_lib.cpp */,
+				F5A6515E1710CC1000D0CF41 /* functions_lib.h */,
+			);
+			path = bisect;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F5A651521710CBE900D0CF41 /* bisect */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5A651591710CBE900D0CF41 /* Build configuration list for PBXNativeTarget "bisect" */;
+			buildPhases = (
+				F5A651511710CBE900D0CF41 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = bisect;
+			productName = bisect;
+			productReference = F5A651531710CBE900D0CF41 /* bisect.mexmaci64 */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F5A6514D1710CBE900D0CF41 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
+			buildConfigurationList = F5A651501710CBE900D0CF41 /* Build configuration list for PBXProject "bisect" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F5A6514C1710CBE900D0CF41;
+			productRefGroup = F5A651541710CBE900D0CF41 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F5A651521710CBE900D0CF41 /* bisect */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F5A651511710CBE900D0CF41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5A6515F1710CC1000D0CF41 /* bisect.cpp in Sources */,
+				F5A651601710CC1000D0CF41 /* functions_lib.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F5A651571710CBE900D0CF41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5A651561710CBE900D0CF41 /* mex.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F5A651581710CBE900D0CF41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5A651561710CBE900D0CF41 /* mex.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F5A6515A1710CBE900D0CF41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = mexmaci64;
+				HEADER_SEARCH_PATHS = "$(MATLABROOT)/extern/include";
+				LIBRARY_SEARCH_PATHS = "$(MATLABROOT)/bin/maci64";
+				MACH_O_TYPE = mh_bundle;
+				OTHER_LDFLAGS = (
+					"-lmx",
+					"-lmex",
+					"-lmat",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "$(SRCROOT)/build/$(CONFIGURATION)";
+			};
+			name = Debug;
+		};
+		F5A6515B1710CBE900D0CF41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = mexmaci64;
+				HEADER_SEARCH_PATHS = "$(MATLABROOT)/extern/include";
+				LIBRARY_SEARCH_PATHS = "$(MATLABROOT)/bin/maci64";
+				MACH_O_TYPE = mh_bundle;
+				OTHER_LDFLAGS = (
+					"-lmx",
+					"-lmex",
+					"-lmat",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = "$(SRCROOT)/build/$(CONFIGURATION)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F5A651501710CBE900D0CF41 /* Build configuration list for PBXProject "bisect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5A651571710CBE900D0CF41 /* Debug */,
+				F5A651581710CBE900D0CF41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5A651591710CBE900D0CF41 /* Build configuration list for PBXNativeTarget "bisect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5A6515A1710CBE900D0CF41 /* Debug */,
+				F5A6515B1710CBE900D0CF41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F5A6514D1710CBE900D0CF41 /* Project object */;
+}

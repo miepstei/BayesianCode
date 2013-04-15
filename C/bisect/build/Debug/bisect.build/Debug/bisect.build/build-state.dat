@@ -1,0 +1,194 @@
+Tbisect
+v5
+r1
+cCheck dependencies
+cCompileC build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/bisect.o /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp normal x86_64 c++ com.apple.compilers.llvmgcc42
+cCompileC build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/functions_lib.o /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp normal x86_64 c++ com.apple.compilers.llvmgcc42
+
+N/Applications/MATLAB_R2012b.app/extern/include/matrix.h
+c00000000500986900000000000007CA2
+t1342801552
+s31906
+i<stddef.h>
+i<tmwtypes.h>
+i<stddef.h>
+i<stdlib.h>
+i<assert.h>
+i<stdlib.h>
+
+N/Applications/MATLAB_R2012b.app/extern/include/mex.h
+c00000000500987A80000000000002481
+t1342801832
+s9345
+i"matrix.h"
+i"version.h"
+i"matrix.h"
+i<stdio.h>
+
+N/Applications/MATLAB_R2012b.app/extern/include/tmwtypes.h
+c00000000500988DA00000000000052B0
+t1342802138
+s21168
+i<limits.h>
+i<stdbool.h>
+i<float.h>
+i<stddef.h>
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
+c00000000514AEA6D00000000000000AA
+t1363864173
+s170
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/assert.h
+c00000000513C4E470000000000000F6E
+t1362906695
+s3950
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/math.h
+c00000000513C4E4800000000000066C2
+t1362906696
+s26306
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/stdio.h
+c00000000513C4E480000000000004523
+t1362906696
+s17699
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/stdlib.h
+c00000000513C4E480000000000003089
+t1362906696
+s12425
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/sys/_types.h
+c00000000513C4E480000000000001845
+t1362906696
+s6213
+
+N/Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include/float.h
+c00000000513C4E4A0000000000001538
+t1362906698
+s5432
+
+N/Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include/limits.h
+c00000000513C4E4A0000000000000D03
+t1362906698
+s3331
+i"syslimits.h"
+
+N/Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include/stdbool.h
+c00000000513C4E4A0000000000000644
+t1362906698
+s1604
+
+N/Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h
+c00000000513C4E4A0000000000003197
+t1362906698
+s12695
+i<machine/ansi.h>
+i<sys/_types.h>
+
+N/Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include/syslimits.h
+c00000000513C4E4A0000000000000155
+t1362906698
+s341
+
+N/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp
+c000000005160927F00000000000008F2
+t1365283455
+s2290
+i"mex.h"
+i"math.h"
+i"functions_lib.h"
+
+N/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp
+c00000000516017E60000000000001462
+t1365252070
+s5218
+i"functions_lib.h"
+i"mex.h"
+i<gsl/gsl_blas.h>
+
+N/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/bisect.LinkFileList
+c00000000516094960000000000000143
+t1365283990
+s323
+
+N/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/bisect.o
+t2
+s0
+
+N/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/functions_lib.o
+t2
+s0
+
+N/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.mexmaci64
+t2
+s0
+
+N/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h
+c00000000516004E70000000000000218
+t1365247207
+s536
+i<gsl/gsl_matrix.h>
+i<gsl/gsl_linalg.h>
+i"mex.h"
+
+CBuild AST from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp
+r0
+
+CBuild AST from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp
+r0
+
+CCheck dependencies
+r0
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependenciese1410b16cc10b741^1ef90f16cc10b741^---0#1#0#--18"Check dependencies36"FC00C2F4-18E4-4AA2-AEEB-73A8912B6F3C-
+
+CCompileC build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/bisect.o /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp normal x86_64 c++ com.apple.compilers.llvmgcc42
+s386976790.068465
+e386976790.285034
+r0
+xCompileC
+xbuild/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/bisect.o
+x/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.llvmgcc42
+oIn file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp:3:
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:1:28: error: gsl/gsl_matrix.h: No such file or directory
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:2:28: error: gsl/gsl_linalg.h: No such file or directory
+oIn file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp:3:
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:8: error: expected constructor, destructor, or type conversion before '*' token
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:9: error: expected constructor, destructor, or type conversion before '*' token
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:11: error: expected constructor, destructor, or type conversion before '*' token
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp: In function 'double bisect(int, int, double, double, double, double, double*, double*, double*, double*, int, int)':
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp:16: warning: implicit conversion shortens 64-bit value into a 32-bit value
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp: In function 'void mexFunction(int, mxArray**, int, const mxArray**)':
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp:46: warning: implicit conversion shortens 64-bit value into a 32-bit value
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection114"Compile /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp45bc1116cc10b741^8e794916cc10b741^-1946"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp:3:/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:1:28: error: gsl/gsl_matrix.h: No such file or directory/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:2:28: error: gsl/gsl_linalg.h: No such file or directoryIn file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp:3:/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:8: error: expected constructor, destructor, or type conversion before '*' token/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:9: error: expected constructor, destructor, or type conversion before '*' token/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:11: error: expected constructor, destructor, or type conversion before '*' token/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp: In function 'double bisect(int, int, double, double, double, double, double*, double*, double*, double*, int, int)':/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp:16: warning: implicit conversion shortens 64-bit value into a 32-bit value/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp: In function 'void mexFunction(int, mxArray**, int, const mxArray**)':/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp:46: warning: implicit conversion shortens 64-bit value into a 32-bit value7(21%IDEActivityLogMessage2@43"Gsl/gsl_matrix.h: No such file or directory-386976790#132#169#2(36%IDEActivityLogHeaderInclusionMessage3@128"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp-386976790#18446744073709551615#0#-0#-23%DVTTextDocumentLocation4@122"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#---2@138"Gsl/gsl_matrix.h: No such file or directory in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@43"Gsl/gsl_linalg.h: No such file or directory-386976790#301#169#2(3@128"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp-386976790#18446744073709551615#0#-0#-4@122"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#---2@138"Gsl/gsl_linalg.h: No such file or directory in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@69"Expected constructor, destructor, or type conversion before '*' token-386976790#602#192#2(3@128"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp-386976790#18446744073709551615#0#-0#-4@122"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#---2@164"Expected constructor, destructor, or type conversion before '*' token in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^7#18446744073709551615#7#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^7#18446744073709551615#7#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@69"Expected constructor, destructor, or type conversion before '*' token-386976790#794#192#2(3@128"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp-386976790#18446744073709551615#0#-0#-4@122"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#---2@164"Expected constructor, destructor, or type conversion before '*' token in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^8#18446744073709551615#8#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^8#18446744073709551615#8#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@69"Expected constructor, destructor, or type conversion before '*' token-386976790#986#193#2(3@128"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp-386976790#18446744073709551615#0#-0#-4@122"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#---2@164"Expected constructor, destructor, or type conversion before '*' token in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^10#18446744073709551615#10#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^10#18446744073709551615#10#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@61"Implicit conversion shortens 64-bit value into a 32-bit value-386976790#1404#182#-1#-4@102"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect.cpp0000000000000000^15#18446744073709551615#15#18446744073709551615#18446744073709551615#0#61"Implicit conversion shortens 64-bit value into a 32-bit value--2@61"Implicit conversion shortens 64-bit value into a 32-bit value-386976790#1764#182#-1#-4@102"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect.cpp0000000000000000^45#18446744073709551615#45#18446744073709551615#18446744073709551615#0#61"Implicit conversion shortens 64-bit value into a 32-bit value--0#0#0#-19%DVTDocumentLocation5@122"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp0000000000000000^1589"CompileC build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/bisect.o bisect/../../bisect.cpp normal x86_64 c++ com.apple.compilers.llvmgcc42    cd /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/usr/bin/llvm-gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -Os -Wshorten-64-to-32 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -mmacosx-version-min=10.8 -gdwarf-2 -fvisibility-inlines-hidden -I/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/bisect.hmap -I/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/include -I/Applications/MATLAB_R2012b.app/extern/include -I/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/DerivedSources/x86_64 -I/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/DerivedSources -F/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug -c /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../bisect.cpp -o /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/bisect.o36"418981AF-7093-4538-8576-41F45D2886E3-
+
+CCompileC build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/functions_lib.o /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp normal x86_64 c++ com.apple.compilers.llvmgcc42
+s386976790.068678
+e386976790.183687
+r0
+xCompileC
+xbuild/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/functions_lib.o
+x/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.llvmgcc42
+oIn file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp:1:
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:1:28: error: gsl/gsl_matrix.h: No such file or directory
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:2:28: error: gsl/gsl_linalg.h: No such file or directory
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp:3:26: error: gsl/gsl_blas.h: No such file or directory
+oIn file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp:1:
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:8: error: expected constructor, destructor, or type conversion before '*' token
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:9: error: expected constructor, destructor, or type conversion before '*' token
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:11: error: expected constructor, destructor, or type conversion before '*' token
+o/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp:6: error: expected constructor, destructor, or type conversion before '*' token
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection121"Compile /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp1fbd1116cc10b741^dba53516cc10b741^-1556"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp:1:/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:1:28: error: gsl/gsl_matrix.h: No such file or directory/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:2:28: error: gsl/gsl_linalg.h: No such file or directory/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp:3:26: error: gsl/gsl_blas.h: No such file or directoryIn file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp:1:/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:8: error: expected constructor, destructor, or type conversion before '*' token/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:9: error: expected constructor, destructor, or type conversion before '*' token/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.h:11: error: expected constructor, destructor, or type conversion before '*' token/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp:6: error: expected constructor, destructor, or type conversion before '*' token7(21%IDEActivityLogMessage2@43"Gsl/gsl_matrix.h: No such file or directory-386976790#139#169#2(36%IDEActivityLogHeaderInclusionMessage3@135"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp-386976790#18446744073709551615#0#-0#-23%DVTTextDocumentLocation4@129"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2@138"Gsl/gsl_matrix.h: No such file or directory in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@43"Gsl/gsl_linalg.h: No such file or directory-386976790#308#169#2(3@135"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp-386976790#18446744073709551615#0#-0#-4@129"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2@138"Gsl/gsl_linalg.h: No such file or directory in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^1#18446744073709551615#1#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@41"Gsl/gsl_blas.h: No such file or directory-386976790#477#169#-2#-4@109"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.cpp0000000000000000^2#18446744073709551615#2#18446744073709551615#18446744073709551615#0#28"*: No such file or directory--2@69"Expected constructor, destructor, or type conversion before '*' token-386976790#785#192#2(3@135"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp-386976790#18446744073709551615#0#-0#-4@129"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2@164"Expected constructor, destructor, or type conversion before '*' token in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^7#18446744073709551615#7#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^7#18446744073709551615#7#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@69"Expected constructor, destructor, or type conversion before '*' token-386976790#977#192#2(3@135"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp-386976790#18446744073709551615#0#-0#-4@129"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2@164"Expected constructor, destructor, or type conversion before '*' token in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^8#18446744073709551615#8#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^8#18446744073709551615#8#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@69"Expected constructor, destructor, or type conversion before '*' token-386976790#1169#193#2(3@135"In file included from /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp-386976790#18446744073709551615#0#-0#-4@129"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp0000000000000000^0#18446744073709551615#0#18446744073709551615#18446744073709551615#0#---2@164"Expected constructor, destructor, or type conversion before '*' token in /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h-386976790#18446744073709551615#0#-0#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^10#18446744073709551615#10#18446744073709551615#18446744073709551615#0#---2#-4@107"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.h0000000000000000^10#18446744073709551615#10#18446744073709551615#18446744073709551615#0#19"Expected * before *--2@69"Expected constructor, destructor, or type conversion before '*' token-386976790#1362#194#-2#-4@109"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/functions_lib.cpp0000000000000000^5#18446744073709551615#5#18446744073709551615#18446744073709551615#0#19"Expected * before *--0#0#0#-19%DVTDocumentLocation5@129"file://localhost/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp0000000000000000^1617"CompileC build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/functions_lib.o bisect/../../functions_lib.cpp normal x86_64 c++ com.apple.compilers.llvmgcc42    cd /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/usr/bin/llvm-gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -Os -Wshorten-64-to-32 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -mmacosx-version-min=10.8 -gdwarf-2 -fvisibility-inlines-hidden -I/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/bisect.hmap -I/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/include -I/Applications/MATLAB_R2012b.app/extern/include -I/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/DerivedSources/x86_64 -I/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/DerivedSources -F/Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug -c /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/bisect/../../functions_lib.cpp -o /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.build/Debug/bisect.build/Objects-normal/x86_64/functions_lib.o36"6FE9D558-3A16-450C-88F4-104DA01A21DF-
+
+CLd /Volumes/Dropbox/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/C/bisect/build/Debug/bisect.mexmaci64 normal x86_64
+r0
+

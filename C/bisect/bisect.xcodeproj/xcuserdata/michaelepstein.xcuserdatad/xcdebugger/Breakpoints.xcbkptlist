@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "1.0">
+   <FileBreakpoints>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../bisect.cpp"
+         timestampString = "386976820.842468"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "9"
+         endingLineNumber = "9"
+         landmarkName = "bisect(const int MAX_TRIES,int tries,const double tol,double min,double max,double tres,double *Qxx_m,double *Qyy_m,double *Qxy_m,double *Qyx_m, int kx, int ky)"
+         landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../bisect.cpp"
+         timestampString = "386978096.418642"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "30"
+         endingLineNumber = "30"
+         landmarkName = "bisect(const int MAX_TRIES,int tries,const double tol,double min,double max,double tres,double *Qxx_m,double *Qyy_m,double *Qxy_m,double *Qyx_m, int kx, int ky)"
+         landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../bisect.cpp"
+         timestampString = "386978192.980277"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "15"
+         endingLineNumber = "15"
+         landmarkName = "bisect(const int MAX_TRIES,int tries,const double tol,double min,double max,double tres,double *Qxx_m,double *Qyy_m,double *Qxy_m,double *Qyx_m, int kx, int ky)"
+         landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../bisect.cpp"
+         timestampString = "386978378.266702"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "16"
+         endingLineNumber = "16"
+         landmarkName = "bisect(const int MAX_TRIES,int tries,const double tol,double min,double max,double tres,double *Qxx_m,double *Qyy_m,double *Qxy_m,double *Qyx_m, int kx, int ky)"
+         landmarkType = "7">
+      </FileBreakpoint>
+   </FileBreakpoints>
+</Bucket>
