@@ -19,7 +19,7 @@ classdef intervals < handle               % subclass handle
         function ints = convert(obj)
            %converts object to 2 by n object for comparison with dc-pyps
            ints=zeros(length(obj.t),2);
-           for i=1:size(ints,2)
+           for i=1:size(ints,1)
               ints(i,1)=obj.t(i).min; 
               ints(i,2)=obj.t(i).max;
            end 

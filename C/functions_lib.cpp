@@ -18,14 +18,19 @@ gsl_matrix* setup_matrix(double *matrix, int rows, int cols){
 
 double calc_detWs(double s, double tres, double* Qxx_m, double* Qyy_m, double* Qxy_m, double* Qyx_m, int kx, int ky){
 
-    int sc; 
+    int sc;
+    double result;
     
     gsl_matrix* Ws = calc_Ws(s,tres,Qxx_m,Qyy_m,Qxy_m,Qyx_m,kx,ky);
     gsl_permutation * p = gsl_permutation_alloc (kx);
     gsl_linalg_LU_decomp(Ws, p, &sc);
-    gsl_permutation_free(p);
+    result = gsl_linalg_LU_det(Ws, sc);
     
-    return gsl_linalg_LU_det(Ws, sc);
+    //cleanup
+    gsl_permutation_free(p);
+    gsl_matrix_free(Ws);
+    
+    return result;
 }
 
 gsl_matrix* calc_Ws(double s, double tres, double* Qxx_m, double* Qyy_m, double* Qxy_m, double* Qyx_m, int kx, int ky){
@@ -38,9 +43,10 @@ gsl_matrix* calc_Ws(double s, double tres, double* Qxx_m, double* Qyy_m, double*
        
    //Calculate H(s)
    gsl_matrix *hs = calc_Hs(s,tres,Qxx_m,Qyy_m,Qxy_m,Qyx_m, kx, ky);
-    
    gsl_matrix_sub(ws,hs);
- 
+   
+   //cleanup
+   gsl_matrix_free(hs); 
    return ws;
     
     
@@ -177,6 +183,10 @@ gsl_matrix* calc_Hs(double s, double tres, double* Qxx_m, double* Qyy_m, double*
     //printf("\t Calced H(s)\n");
     
     //cleanup
+    gsl_matrix_free(Qxx);
+    gsl_matrix_free(Qxy);
+    gsl_matrix_free(Qyx);
+    gsl_matrix_free(Qyy);
     gsl_matrix_free(ky_eye);
     gsl_matrix_free(e_eye);
     gsl_matrix_free(detected_tres);

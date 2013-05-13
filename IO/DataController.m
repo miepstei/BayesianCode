@@ -12,10 +12,10 @@ classdef DataController
            %now read the data
            data=DataController.read_scn_data(header,scn_handle);
                      
-           sprintf(header.toString(header))
-           sprintf(data.toString())
-           sprintf(data.toString())
-           disp(data.getAmpAt(data.getPoints))
+           %sprintf(header.toString(header))
+           %sprintf(data.toString())
+           %sprintf(data.toString())
+           %disp(data.getAmpAt(data.getPoints))
            
            fclose(scn_handle);
 
@@ -89,7 +89,7 @@ classdef DataController
            mechanisms=struct('version',version,'mec_struct',meclist,'max_mecnum',max([meclist.mec_num]));
         end
         
-        function mec = load_mechanism(mecfile,mec_header)
+        function [rate_list cycle_mechanism ratetitle] = read_mechanism(mecfile,mec_header)
            f=fopen(mecfile);
            
            start=mec_header.start;
@@ -308,23 +308,23 @@ classdef DataController
            states=0;
            for i=1:kA
                states=states+1;
-               state_list(i)=State('A',strtrim(statenames(states,:)),conductance(states),states);             
+               state_list(i)=State('A',deblank(statenames(states,:)),conductance(states),states);             
            end
            
            for i=states+1:states+kB
                states=states+1;
-               state_list(i)=State('B',strtrim(statenames(states,:)),0,states);
+               state_list(i)=State('B',deblank(statenames(states,:)),0,states);
                             
            end          
            
            for i=states+1:states+kC
                states=states+1;
-               state_list(i)=State('C',strtrim(statenames(states,:)),0,states);                             
+               state_list(i)=State('C',deblank(statenames(states,:)),0,states);                             
            end       
            
            for i=states+1:states+kD
                states=states+1;
-               state_list(i)=State('D',strtrim(statenames(states,:)),0,states);                     
+               state_list(i)=State('D',deblank(statenames(states,:)),0,states);                     
            end           
            
            
@@ -339,67 +339,33 @@ classdef DataController
                     end
                 end
                 rate = Q(i_rate(i) , j_rate(i) );
-                rate_list(i)=TransitionRate(rate, state_list(i_rate(i)),state_list(j_rate(i)), ratename{i}, bound);
+                rate_list(i)=TransitionRate(rate, state_list(i_rate(i)),state_list(j_rate(i)), ratename{i}, bound,i);
            end
            
            %cycle states
            cycle_mechanism={};
            for i=1:cycle_number
                for j=1:states_cycles_conn(states_cycles_conn>0)
-                   cycle_states(j) = state_list(im(i));
+                   cycle_states{j} = deblank(state_list(im(i,j)).name);
                end
-               cycle_mechanism{i} = cycle_states;
+               cycle_mechanism(i).states = cycle_states;
            end
            
-           mec=Mechanism(rate_list,cycle_number,cycle_mechanism);
         end
         
-        
-        function mechanism=read_CK_demo()
-            R = State('B', 'R', 0.0,3);
-            AR = State('B', 'AR', 0.0,2);
-            ARS = State('A', 'AR*', 60e-12,1);
-            
-            cycles=0;
-            conc=10^-7; %100nM
-            
-            a=TransitionRate(100.0, AR, R, 'k(-1)','');
-            a.limits=[1e-15,1e+7];
-            a.hasLimits=true;
-            a.funct=@(rate,y)rate;
-            
-            
-            b=TransitionRate(100.0, R, AR, 'k(+1)','');
-            b.limits=[1e-15,1e+10];
-            b.hasLimits=true;
-            b.eff='c';
-            b.funct=@(rate,effector_value)rate*effector_value;
-            b.con_func=@(rate,factor)rate*factor;
-            b.constrain_args=[8,2];
-            
-                      
-            c=TransitionRate(1000.0, AR, ARS, 'beta1','' );
-            c.hasLimits=true;
-            c.limits=[1e-15,1e+7];
-            c.funct=@(rate,y)rate;
-           
-            
-            d=TransitionRate(1000.0, ARS, AR, 'alpha1','');
-            d.hasLimits=true;
-            d.limits=[1e-15,1e+7];
-            d.funct=@(rate,y)rate;
-           
-            rate_list=[a,b,c,d];
-            cycle_mechanism={};
-            mechanism=Mechanism(rate_list,cycles,cycle_mechanism);
-            
-            
+        function mec=create_mechanism(mecfile,mec_header,constraints)
+            %mec files don't come in with constraints so we need to add
+            %these here
+                   
+            [rate_list, cycle_mechanism, ratetitle] = DataController.read_mechanism(mecfile,mec_header);
+            %constraints=containers.Map('KeyType', 'int32','ValueType','any'); 
+            mec=Mechanism(rate_list,cycle_mechanism,constraints,ratetitle);   
         end
-        
+           
         function mechanism=read_mechanism_demo()
             %this is effectively Colqhoun '82 
-            A2RS = State('A', 'A2R*', 60e-12,2);
             ARS  = State('A', 'AR*', 60e-12,1);
+            A2RS = State('A', 'A2R*', 60e-12,2);
             AR   = State('B', 'AR', 0.0,3);
             A2R  = State('B', 'A2R', 0.0,4);
             R    = State('C', 'R', 0.0,5);
@@ -483,102 +449,13 @@ classdef DataController
            constraints(8)=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',8,'args',1); %FIXED!
            constraints(10)=struct('type','mr','function',@(rate,factor)rate,'rate_id',10,'cycle_no',1);
            
-           mechanism=Mechanism(rate_list,cycles,constraints);
-           %mechanism.updateContraints
+           mechanism=Mechanism(rate_list,cycles,constraints,'FIVE STATE MODEL');
             
         end
         
-        function mechanism=read_mechanism_demo_unconstrained()
-            %this is effectively degenerate Colqhoun '82 but with no constraints
-            A2RS = State('A', 'A2R*', 60e-12,2);
-            ARS  = State('A', 'AR*', 60e-12,1);
-            AR   = State('B', 'AR', 0.0,3);
-            A2R  = State('B', 'A2R', 0.0,4);
-            R    = State('C', 'R', 0.0,5);
-           
-           cycles=1; %number of cycles in our mechanism
-           %conc=100*10^-9; %100nM
-           conc=1; %concentration no longer part of mechanism 
-           %only Q generation
-           %define our ratelist
-            
-           
-           a=TransitionRate(150000, AR, ARS, 'beta1','',1);
-           a.hasLimits=true;
-           a.limits=[1e-15,1e+7];
-           a.funct=@(rate,y)rate;
-           
-           b=TransitionRate(148000, A2R, A2RS, 'beta2','',2);
-           b.hasLimits=true;
-           b.limits=[1e-15,1e+7];
-           b.funct=@(rate,y)rate;
-           
-           c=TransitionRate(364000, ARS, AR, 'alpha1','',3);
-           c.hasLimits=true;
-           c.limits=[1e-15,1e+7];
-           c.funct=@(rate,y)rate;
-           
-           d=TransitionRate(362.0, A2RS, A2R, 'alpha2','',4);
-           d.hasLimits=true;
-           d.limits=[1e-15,1e+7];
-           d.funct=@(rate,y)rate;
-           
-           e=TransitionRate(1220.0, AR, R, 'k(-1)','',5);
-           e.hasLimits=true;
-           e.limits=[1e-15,1e+7];
-           e.funct=@(rate,y)rate;
-           %e.is_constrained=true;
-           
-           f=TransitionRate(2440, A2R, AR, '2k(-2)','',6);
-           f.hasLimits=true;
-           f.limits=[1e-15,1e+7];
-           f.funct=@(rate,y)rate;
-           %f.is_constrained=true;
-           %f.con_func=@(rate,factor)rate*factor;
-           %f.constrain_args=[4,2];
-           
-           
-           %g=TransitionRate(2 * 5.0e07*conc, R, AR, '2k(+1)','');
-           g=TransitionRate(1.0e08*conc, R, AR, '2k(+1)','',7);
-           g.hasLimits=true;
-           g.limits=[1e-15,1e+10];
-           g.eff='c';
-           %g.funct=@(rate,effector_value)rate*effector_value;
-           %g.con_func=@(rate,factor)rate*factor;
-           %g.constrain_args=[8,2];
-           
-           %h=TransitionRate(5.0e08*conc, ARS, A2RS, 'k*(+2)','');
-           h=TransitionRate(5.0e08*conc, ARS, A2RS, 'k*(+2)','',8);
-           h.hasLimits=true;
-           h.limits=[1e-15,1e+10];
-           h.eff = 'c';
-           %h.funct=@(rate,effector_value)rate*effector_value;
-           
-           %i=TransitionRate(5.0e08*conc, AR, A2R, 'k(+2)','');
-           i=TransitionRate(2.5e08*conc, AR, A2R, 'k(+2)','',9);
-           i.hasLimits=true;
-           i.limits=[1e-15,1e+10];
-           i.eff='c';
-           %i.funct=@(rate,effector_value)rate*effector_value;
-           %i.fixed=true;
-           
-           j=TransitionRate(55, A2RS, ARS, '2k*(-2)','',10);
-           j.hasLimits=true;
-           j.limits=[1e-15,1e+7];
-           j.funct=@(rate,y)rate;
-           rate_list=[a,b,c,d,e,f,g,h,i,j];
-           
-           cycles=struct();
-           cycles(1).states={'A2R*', 'AR*', 'AR', 'A2R'};
-           constraints=containers.Map();
-           mechanism=Mechanism(rate_list,cycles,constraints);
-           
-           %mechanism.updateContraints
-            
-        end
 
         function write_mec_file(mechanism,outfile)
-
+            %To be implemented
 
 
         end

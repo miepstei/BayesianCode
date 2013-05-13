@@ -84,7 +84,7 @@ classdef ExactLikelihood < Likelihood
             
             a=tic;
             % we need the asymptotic G_AF,G_FA matricies
-            obj.eig_valsQ=sort(eigs(obj.Q_rep.Q),'descend')';
+            obj.eig_valsQ=sort(eig(obj.Q_rep.Q),'descend')';
             [specF,obj.eig_valsF,obj.eig_vectsF]=obj.spectral_expansion(obj.Q_rep.Q_FF);
             [obj.specA,obj.eig_valsA,obj.eig_vectsA]=obj.spectral_expansion(obj.Q_rep.Q_AA);
             timings.time(1)=toc(a);
@@ -372,6 +372,7 @@ classdef ExactLikelihood < Likelihood
                 burstlik=burstlik*obj.endCHS;
                 %disp(burstlik)
                 log_likelihood=log_likelihood-log(burstlik);
+                %fprintf('%i: %f - %f\n',i,burstlik,log_likelihood)
             end         
         end       
         

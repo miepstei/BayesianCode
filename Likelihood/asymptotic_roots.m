@@ -39,7 +39,7 @@ if lmin > 0
     min=min*4;
 end
 
-if lmax < kx % [QUERY]-I think this should be kx as we want to find all the kx roots...
+if lmax < ky % [QUERY]-I think this should be kx as we want to find all the kx roots...
     %all the roots are not captured at the max bound so reduce it further
     max=max/4;
 end
@@ -75,7 +75,7 @@ end
 
 function no = count_eigs(s,tres,Qxx,Qyy,Qxy,Qyx,kx,ky)
     %Find number of eigenvalues of H(s) that are equal to or less than s.
-    Hxx = Hs_mex(s,tres,Qxx,Qyy,Qxy,Qyx,kx,ky);
+    Hxx = Hs(s,tres,Qxx,Qyy,Qxy,Qyx,ky);
     eVals=eig(Hxx);
     no=sum(eVals<=s);
 end

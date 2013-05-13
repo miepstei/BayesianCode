@@ -38,12 +38,29 @@ for i=1:kx
    %pW=0, pu=1, like the solution of equilibrium distribution (1992)
    % not sure why we can't use the eigenvectors of say eigs(Ws) here
    
-   S=[W u];
-   left(i,:) = u'*(S*S')^-1;
-  
+   %S=[W u];
+   %left(i,:) = u'*(S*S')^-1;
+   
+   %solving using the reduced Q-method to prevent ill-conditioned arrors
+   %when (S*S') is singular
+   x=bsxfun(@minus,W(1:end-1,:),W(end,:));
+   x=x(:,1:end-1);
+   r=W(end,1:end-1);
+   solution = -r*x^-1;
+   solution(length(solution)+1) = 1-sum(solution);
+   left(i,:) = solution;
+   
    %right eigenvectors
-   S=[W' u]; 
-   right(i,:)=u'*(S*S')^-1;
+   %S=[W' u]; 
+   %right(i,:)=u'*(S*S')^-1;
+   
+   W=W';
+   x=bsxfun(@minus,W(1:end-1,:),W(end,:));
+   x=x(:,1:end-1);
+   r=W(end,1:end-1);
+   solution = -r*x^-1;
+   solution(length(solution)+1) = 1-sum(solution);
+   right(i,:)=solution;
    
 end
 right=right';

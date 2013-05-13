@@ -33,13 +33,14 @@ classdef Mechanism
     
     
     methods
-        function obj=Mechanism(rates,cycles,constraints)
+        function obj=Mechanism(rates,cycles,constraints,name)
             obj.rates=containers.Map('KeyType', 'int32','ValueType','any');
             obj.parameterMap=containers.Map('KeyType', 'int32','ValueType','any');
             obj.q_coordinates=containers.Map('KeyType', 'int32','ValueType','any');
             obj.cycles=cycles;
             obj.effectors=containers.Map();
             obj.constraints=constraints;
+            obj.name = name;
             names={};
             %build up a map of the states from the rate array
             rates_found=1;
@@ -120,6 +121,40 @@ classdef Mechanism
             
         end
         
+        function mechStr = toString(obj)
+            %prints a human readable representation of the mechanism
+            mechStr=sprintf('Mechanism name %s',obj.name);
+            
+            
+            mechStr=strcat(mechStr,sprintf('\n\n%i Rates\n\n',obj.rates.length()));
+            keys = obj.rates.keys();
+            for i=1:length(keys)
+                rate = obj.rates(keys{i});       
+                mechStr=strcat(mechStr,sprintf('\n\tRate name %s - value %f\n',rate.name,rate.rate_constant));              
+            end
+            
+            mechStr=strcat(mechStr,sprintf('\n\n%i Parameters\n\n',obj.parameterMap.length()));
+            keys = obj.parameterMap.keys();
+            for i=1:length(keys)
+                rate = obj.parameterMap(keys{i});       
+                mechStr=strcat(mechStr,sprintf('\n\tRate name %s - value %f\n',rate.name,rate.rate_constant));              
+            end            
+            
+            
+            mechStr=strcat(mechStr,sprintf('\n\n%i Constraints\n\n',obj.constraints.length()));
+            keys = obj.constraints.keys();
+            for i=1:length(keys)
+                constraint = obj.constraints(keys{i});
+                rate = obj.rates(keys{i});
+                if strcmp(constraint.type,'dependent')
+                    rateTo = obj.rates(constraint.rate_id);
+                    mechStr=strcat(mechStr,sprintf('\n\tConstraint name %s - type %s  on rate %s factor %i\n',rate.name,constraint.type,rateTo.name,constraint.args));             
+                elseif strcmp(constraint.type,'mr')
+                    mechStr=strcat(mechStr,sprintf('\n\tConstraint name %s - type %s  cycle number %i\n',rate.name,constraint.type,constraint.cycle_no));                                 
+                end         
+            end             
+        end
+        
         function [fwd bwd] = calcMR(obj,cycle_no)
             
             fwd=1;
@@ -140,9 +175,41 @@ classdef Mechanism
             
         end
         
-        function obj=setRates(obj,rates)
-            %set rates regardless of whether they are fixed or not -
-            %warning, bipasses parameter map
+        function obj=setConstraint(obj,rate_id,constraint)
+            %public function to allow the importation of mec files whilst
+            %post-hoc setting constraints akin to parsing ini files.
+            %constraints are of the form - containers.Map('KeyType', 'int32','ValueType','any');
+            %value = struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',5,'args',2);
+            obj.constraints(rate_id) = constraint;
+            
+        end
+        
+        function obj=setRate(obj,rate_id,rate_value,update_constraints)
+             %set rates regardless of whether they are fixed or not
+            if obj.rates.isKey(rate_id)
+                rate = obj.rates(rate_id);
+                rate.rate_constant=rate_value;
+                obj.rates(rate_id)=rate;
+                if obj.parameterMap.isKey(rate_id)
+                    param_rate=obj.parameterMap(rate_id);
+                    param_rate.rate_constant=rate_value;
+                    obj.parameterMap(rate_id)=param_rate;
+                end
+                if update_constraints
+                     obj=updateConstrainedRates(obj);
+                    for cyc=1:length(obj.cycles)
+                        obj=updateMicroscopicReversibility(obj,cyc); 
+                    end                     
+                end
+                
+            else    
+                fprintf('[WARN]: Rate %s not part of rate map\n',rate_id) 
+            end
+        end
+        
+        function obj=setRates(obj,rates,update_constraints)
+            %set rates regardless of whether they are fixed or not
+            
             
             if length(obj.rates) == length(rates)
                 for i=1:length(obj.rates)
@@ -155,10 +222,12 @@ classdef Mechanism
                         rate.rate_constant=rates(i);
                         obj.parameterMap(i)=rate;
                     end
-                end  
-                obj=updateConstrainedRates(obj);
-                for cyc=1:length(obj.cycles)
-                    obj=updateMicroscopicReversibility(obj,cyc); 
+                end 
+                if update_constraints
+                    obj=updateConstrainedRates(obj);
+                    %for cyc=1:length(obj.cycles)
+                    %    obj=updateMicroscopicReversibility(obj,cyc); 
+                    %end
                 end
             else
                fprintf('Rates objects of different lengths!\n')             
@@ -180,9 +249,9 @@ classdef Mechanism
                  
             %update constraints
             obj=updateConstrainedRates(obj);
-            for cyc=1:length(obj.cycles)
-                obj=updateMicroscopicReversibility(obj,cyc); 
-            end
+            %for cyc=1:length(obj.cycles)
+            %    obj=updateMicroscopicReversibility(obj,cyc); 
+            %end
             
         end
         
@@ -192,9 +261,9 @@ classdef Mechanism
             obj=updateRate(obj,rate_id);
             obj=updateConstrainedRates(obj);
             
-            for cyc=1:length(obj.cycles)
-                obj=updateMicroscopicReversibility(obj,cyc); 
-            end
+            %for cyc=1:length(obj.cycles)
+            %    obj=updateMicroscopicReversibility(obj,cyc); 
+            %end
         end
         
         function rate=getRate(obj,rate_id)
@@ -223,7 +292,7 @@ classdef Mechanism
         
         function rates=getRates(obj)
             
-            keySet = keys(obj.rates);
+            keySet = keys(obj.rates); %keys come out in alphabetical order
             rates=zeros(length(keySet),2);
             
             for key=1:length(keySet)
@@ -264,36 +333,6 @@ classdef Mechanism
            end
         end
 
-    end
-    
-    methods(Access=private)
-        function obj=validateParam(obj,key,value)
-            if ~obj.parameterMap.isKey(key)
-                fprintf('[WARN] trying to update unknown param %s\n',key)
-                
-            else
-                %the parameter is known - validate against limits
-                rate = obj.parameterMap(key);
-                if (value > rate.limits(1) && value < rate.limits(2))
-                    rate.rate_constant=value;
-                    obj.parameterMap(key)=rate;
-                else
-                    fprintf('[WARN] param %s out of range\n',key)
-                end
-            end
-            
-        end
-        
-        function obj=updateRate(obj,key)
-            %takes the key from the parameter map and updates the rate
-            %object in the rates array
-            rateKeys=keys(obj.rates);
-            updateKeys=cell2mat(rateKeys(cell2mat(rateKeys)==key));
-            for i=1:length(updateKeys)
-                obj.rates(updateKeys(i))=obj.parameterMap(key);
-            end
-        end
-        
         function obj=updateConstrainedRates(obj)
             %applies the constraints to the constrained rates map
             keySet = keys(obj.constraints);
@@ -312,7 +351,46 @@ classdef Mechanism
                     obj=updateMicroscopicReversibility(obj,constraint.cycle_no);
                 end
             end
+        end       
+        
+    end
+    
+    methods(Access=private)
+        function obj=validateParam(obj,key,value)
+            if ~obj.parameterMap.isKey(key)
+                fprintf('[WARN] trying to update unknown param %s\n',key)
+                
+            else
+                %the parameter is known - validate against limits
+                rate = obj.parameterMap(key);
+                update=1;
+                if ~ isempty(rate.limits)
+                    if (value <= rate.limits(1) && value >= rate.limits(2))
+                        fprintf('[WARN] param %s out of range\n',key)
+                        update=0;
+                    elseif (value <= 1e-15 && value >= 1e+10)
+                        fprintf('[WARN] param %s out of  DEFAULT range\n',key)
+                        update=0;                       
+                    end                            
+                end
+                if update
+                    rate.rate_constant=value;
+                    obj.parameterMap(key)=rate;
+                end
+            end
+            
         end
+        
+        function obj=updateRate(obj,key)
+            %takes the key from the parameter map and updates the rate
+            %object in the rates array
+            rateKeys=keys(obj.rates);
+            updateKeys=cell2mat(rateKeys(cell2mat(rateKeys)==key));
+            for i=1:length(updateKeys)
+                obj.rates(updateKeys(i))=obj.parameterMap(key);
+            end
+        end
+        
         
         function obj=updateMicroscopicReversibility(obj,cycle_no)
             

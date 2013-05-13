@@ -1,12 +1,12 @@
 classdef Simplex < Optimisation
     properties
-        step=10;
+        step=5;
         reflect=1.0;
         extend=2;
         contract=0.5;
-        shrink=0.5;
+        shrink=0.25;
         res=10.0;
-        per=0.1; %relative error xopts for convergence
+        per=0.001; %relative error xopts for convergence
         error=0.001; %relative error for convergence
         max_evaluation=100000; %maximum number of function evaluations to make
     end
@@ -102,7 +102,9 @@ classdef Simplex < Optimisation
             restart=true;
             while restart
                 %make the simplex structure
-                fprintf('Iteration %d best likelihood %f\n',iterations,function_values(1))
+                if (mod (iterations,100) == 0)
+                    fprintf('Iteration %d best likelihood %f\n',iterations,function_values(1))
+                end
                 
                 %A - sort the simplex structure by function value
                 [simplex_points,function_values] = Simplex.sort_simplex(simplex_points,function_values);
@@ -198,7 +200,7 @@ classdef Simplex < Optimisation
                                 %point, so for all but the best point we SHRINK the other
                                 %vertices and then goto A
                                 %shrink the simplex
-                                [simplex_points,function_values]=Simplex.shrink_simplex(simplex_points,param_keys,obj.shrink);
+                                [simplex_points,function_values]=Simplex.shrink_simplex(simplex_points,param_keys,obj.shrink,funct,opts);
                                 
                                 %fprintf('iteration %d SHRUNK  lik=%f\n',iterations,function_values(1))
                             end
