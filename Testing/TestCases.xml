@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- set of TestCases to be run for MarkovModel
+In some sense it would make sense to recode the models from mec
+to XML for Matlab, that is TODO-->
+
+<TestCases>
+	<AbsCodePath>/Volumes/Dropbox/Dropbox/Academic/PhD/Code/git-repo/</AbsCodePath>
+	<MatlabExecutable>/Applications/MATLAB_R2013a.app/bin/matlab -nojvm -nodisplay</MatlabExecutable>
+	<TestDataDir>TestData/</TestDataDir>
+	<TestOutputDir>Results/</TestOutputDir>
+	<Model id="1">
+		<name>CH82</name>
+		<enabled>False</enabled>
+		<mechanismfilepath>IO/DataController.read_mechanism_demo()</mechanismfilepath>
+		<data_set>CH82.scn</data_set>
+		<epsilon>0.00001</epsilon>
+		<ParameterSweep>
+			<ParameterValues set="1">
+				<!-- these are just initial default parameter values -->
+				<concentration>1e-7</concentration>
+				<tres>0.0001</tres>
+				<tcrit>0.004</tcrit>
+				<parameter id="1" name="beta1">15</parameter>
+				<parameter id="2" name="beta2">15000</parameter>
+				<parameter id="3" name="alpha1">3000</parameter>
+				<parameter id="4" name="alpha2">500</parameter>
+				<parameter id="5" name="k(-1)">2000</parameter>
+				<parameter id="6" name="2k(-2)">4000</parameter>
+				<parameter id="7" name="2k(+1)">1e+8</parameter>
+				<parameter id="8" name="k*(+2)">5e+8</parameter>
+				<parameter id="9" name="k(+2)">5e+8</parameter>
+				<parameter id="10" name="2k*(-2)">0.66667</parameter>
+			</ParameterValues>
+			
+			<ParameterValues set="2">
+				<!-- these are parameter values from a different starting point -->
+				<concentration>1e-7</concentration>
+				<tres>0.0001</tres>
+				<tcrit>0.004</tcrit>
+				<parameter id="1" name="beta1">100</parameter>
+				<parameter id="2" name="beta2">3000</parameter>
+				<parameter id="3" name="alpha1">10000</parameter>
+				<parameter id="4" name="alpha2">100</parameter>
+				<parameter id="5" name="k(-1)">1000</parameter>
+				<parameter id="6" name="2k(-2)">1000</parameter>
+				<parameter id="7" name="2k(+1)">1e+7</parameter>
+				<parameter id="8" name="k*(+2)">5e+7</parameter>
+				<parameter id="9" name="k(+2)">6e+7</parameter>
+				<parameter id="10" name="2k*(-2)">10</parameter>
+			</ParameterValues>
+			
+			<ParameterValues set="3">
+				<!-- these are pathologicalparameter values that crash the python code -->
+				<concentration>1e-7</concentration>
+				<tres>0.0001</tres>
+				<tcrit>0.004</tcrit>
+				<parameter id="1" name="beta1">150000</parameter>
+				<parameter id="2" name="beta2">148000</parameter>
+				<parameter id="3" name="alpha1">364000</parameter>
+				<parameter id="4" name="alpha2">362</parameter>
+				<parameter id="5" name="k(-1)">1220</parameter>
+				<parameter id="6" name="2k(-2)">2440</parameter>
+				<parameter id="7" name="2k(+1)">1e+8</parameter>
+				<parameter id="8" name="k*(+2)">5e+8</parameter>
+				<parameter id="9" name="k(+2)">2.5e+8</parameter>
+				<parameter id="10" name="2k*(-2)">55</parameter>
+			</ParameterValues>
+			
+		</ParameterSweep>
+	</Model>
+	
+	<Model id="2">
+		<name>CS 1985</name>
+		<enabled>True</enabled>
+		<mechanismfilepath mec_id="2">/TestData/demomec.mec</mechanismfilepath>
+		<data_set>test_10.scn</data_set>
+		<epsilon>0.00001</epsilon>
+		<constraints>
+			<!-- XML Constraints not currently in use -->
+			<constraint id="12" type="mr" function="@(rate,factor)rate*factor" cycle_no="1">1</constraint>
+			<constraint id="7" type="dependent" function="@(rate,factor)rate*factor" on_id="11">1</constraint>
+			<constraint id="8" type="dependent" function="@(rate,factor)rate*factor" on_id="12">1</constraint>
+			<constraint id="9" type="dependent" function="@(rate,factor)rate*factor" on_id="13">1</constraint>
+			<constraint id="10" type="dependent" function="@(rate,factor)rate*factor" on_id="14">1</constraint>
+		</constraints>
+		<ParameterSweep>
+		
+			<ParameterValues set="1">
+				<!-- these are just initial parameter values -->
+				<concentration>3e-8</concentration>
+				<tres>0.000025</tres>
+				<tcrit>0.0035</tcrit>
+				<parameter id="1" name="alpha2">2.1269e+03</parameter>
+				<parameter id="2" name="beta2">5.2245e+04</parameter>
+				<parameter id="3" name="alpha1a">5.9530e+03</parameter>
+				<parameter id="4" name="beta1a">56.7086</parameter>
+				<parameter id="5" name="alpha1b">5.6161e+04</parameter>
+				<parameter id="6" name="beta1b">88.9629</parameter>
+				<parameter id="7" name="k(-2)a">1.5213e+03</parameter>
+				<parameter id="8" name="k(+2)a">100000000</parameter>
+				<parameter id="9" name="k(-2)b">9.4659e+03</parameter>
+				<parameter id="10" name="k(+2)b">414601856</parameter>
+				<parameter id="11" name="k(-1)a">1.5213e+03</parameter>
+				<parameter id="12" name="k(+1)a">100000000</parameter>
+				<parameter id="13" name="k(-1)b">9.4659e+03</parameter>
+				<parameter id="14" name="k(+1)b">414601856</parameter>			
+			</ParameterValues>
+			<ParameterValues set="2">
+				<!-- true 1  parameter values from 2003 paper -->
+				<concentration>3e-8</concentration>
+				<tres>0.000025</tres>
+				<tcrit>0.0035</tcrit>
+				<parameter id="1" name="alpha2">2000</parameter>
+				<parameter id="2" name="beta2">52000</parameter>
+				<parameter id="3" name="alpha1a">6000</parameter>
+				<parameter id="4" name="beta1a">50</parameter>
+				<parameter id="5" name="alpha1b">50000</parameter>
+				<parameter id="6" name="beta1b">150</parameter>
+				<parameter id="7" name="k(-2)a">1500</parameter>
+				<parameter id="8" name="k(+2)a">200000000</parameter>
+				<parameter id="9" name="k(-2)b">10000</parameter>
+				<parameter id="10" name="k(+2)b">400000000</parameter>
+				<parameter id="11" name="k(-1)a">1500</parameter>
+				<parameter id="12" name="k(+1)a">200000000</parameter>
+				<parameter id="13" name="k(-1)b">10000</parameter>
+				<parameter id="14" name="k(+1)b">400000000</parameter>			
+			</ParameterValues>
+			<ParameterValues set="3">
+				<!-- parameter values from fitting HJCFIT -->
+				<concentration>3e-8</concentration>
+				<tres>0.000025</tres>
+				<tcrit>0.0035</tcrit>
+				<parameter id="1" name="alpha2">501.394</parameter>
+				<parameter id="2" name="beta2">15234.9</parameter>
+				<parameter id="3" name="alpha1a">3304.12</parameter>
+				<parameter id="4" name="beta1a">18.9276</parameter>
+				<parameter id="5" name="alpha1b">178617</parameter>
+				<parameter id="6" name="beta1b">2.50601</parameter>
+				<parameter id="7" name="k(-2)a">1518.50</parameter>
+				<parameter id="8" name="k(+2)a">0.100000E+09</parameter>
+				<parameter id="9" name="k(-2)b">2550.15</parameter>
+				<parameter id="10" name="k(+2)b">0.182501E+10</parameter>
+				<parameter id="11" name="k(-1)a">1518.50</parameter>
+				<parameter id="12" name="k(+1)a">0.100000E+09</parameter>
+				<parameter id="13" name="k(-1)b">2550.15</parameter>
+				<parameter id="14" name="k(+1)b">0.182501E+10</parameter>			
+			</ParameterValues>
+			<ParameterValues set="4">
+				<!-- guesses 1 from 2003 paper -->
+				<concentration>3e-8</concentration>
+				<tres>0.000025</tres>
+				<tcrit>0.0035</tcrit>
+				<parameter id="1" name="alpha2">1500</parameter>
+				<parameter id="2" name="beta2">50000</parameter>
+				<parameter id="3" name="alpha1a">13000</parameter>
+				<parameter id="4" name="beta1a">50</parameter>
+				<parameter id="5" name="alpha1b">15000</parameter>
+				<parameter id="6" name="beta1b">10</parameter>
+				<parameter id="7" name="k(-2)a">6000</parameter>
+				<parameter id="8" name="k(+2)a">0.100000E+09</parameter>
+				<parameter id="9" name="k(-2)b">5000</parameter>
+				<parameter id="10" name="k(+2)b">0.1E+09</parameter>
+				<parameter id="11" name="k(-1)a">6000</parameter>
+				<parameter id="12" name="k(+1)a">0.100000E+09</parameter>
+				<parameter id="13" name="k(-1)b">5000</parameter>
+				<parameter id="14" name="k(+1)b">0.1E+09</parameter>			
+			</ParameterValues>
+		
+			<ParameterValues set="5">
+				<!-- fitting from test_10.scn from 2003 paper -->
+				<concentration>3e-8</concentration>
+				<tres>0.000025</tres>
+				<tcrit>0.0035</tcrit>
+				<parameter id="1" name="alpha2">1908.92</parameter>
+				<parameter id="2" name="beta2">49848.4</parameter>
+				<parameter id="3" name="alpha1a">5723.26</parameter>
+				<parameter id="4" name="beta1a">52.7201</parameter>
+				<parameter id="5" name="alpha1b">48954.4</parameter>
+				<parameter id="6" name="beta1b">79.7131</parameter>
+				<parameter id="7" name="k(-2)a">1497.4</parameter>
+				<parameter id="8" name="k(+2)a">0.100000E+09</parameter>
+				<parameter id="9" name="k(-2)b">10428.4</parameter>
+				<parameter id="10" name="k(+2)b">0.413331E+09</parameter>
+				<parameter id="11" name="k(-1)a">1497.4</parameter>
+				<parameter id="12" name="k(+1)a">0.100000E+09</parameter>
+				<parameter id="13" name="k(-1)b">10428.4</parameter>
+				<parameter id="14" name="k(+1)b">0.413331E+09</parameter>			
+			</ParameterValues>
+        		
+		</ParameterSweep>
+	</Model>	
+</TestCases>
