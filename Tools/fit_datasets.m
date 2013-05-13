@@ -1,6 +1,8 @@
-%runs for all files in Testing/TestData dir
+function scratch_sims(datadir,mechParams)
 
-a=ls('test_*');
+%runs for all files in datadir
+
+a=ls([datadir 'test_*']);
 c=strsplit(a);
 c=c(1:end-1); %last one is blank
 params=zeros(1000,14);
@@ -10,7 +12,7 @@ parfor i=1:length(c)
     fprintf('Fit %i Fitting to datafile %s\n',i,c{i})
     d=strsplit(c{i},'_');
     e=strsplit(d{2},'.');
-    [final_likelihood,fittedRates,min_parameters]=fit_simplex(c{i},'/Volumes/Users/Dropbox/Academic/PhD/Code/git-repo/Testing/Results/matlab_params_CS 1985_4.mat');
+    [final_likelihood,fittedRates,min_parameters]=fit_simplex(c{i},mechParams);%'/Volumes/Users/Dropbox/Academic/PhD/Code/git-repo/Testing/Results/matlab_params_CS 1985_4.mat'
     index = str2double(e{1});
     params(i,:)=fittedRates(:,2);
     likelihoods(i)=final_likelihood;
