@@ -1,4 +1,4 @@
-function simulation=generate(mec,duration,conc)
+function simulation=generate(mec,duration,conc,state_transitions)
 
 %%Generates a simulated data file for a given mechanism
 %mec - the mechanism used to generate the data
@@ -6,9 +6,9 @@ function simulation=generate(mec,duration,conc)
 %duration - how long to simulate data for (in seconds)
 %concnetration (effector)
 
-sprintf('Generating ion-channel recording for %s mechanism in %s file',mec.name)
+sprintf('Generating ion-channel recording for %s mechanism',mec.name)
 
-Q=mec.refreshRates(conc);
+Q=mec.setupQ(conc).Q;
 states=mec.states;
 %derive the equilibrium occupanies to we can simulate a start position
 %u_k+1(SST )^?1
@@ -25,6 +25,10 @@ currentIndex=start_state(1);
 sojournTimes=[];
 amplitudes=[];
 jumps=0;
+
+
+currentObservedSojourn = 0;
+observed_transitions = 0;
 while (current_time<duration)
     jumps=jumps+1;
     %holding time is expon
@@ -33,27 +37,52 @@ while (current_time<duration)
     periodtime=exprnd(-1/Q(currentIndex,currentIndex));
     sojournTimes(jumps)=periodtime;
     amplitudes(jumps)=state(jumps).conductance;
+    
+    %current 'time' of the generation process
     current_time=current_time+periodtime;
+    
+
+    
     %calculate q(ij)/-q(ii) to get the next jump probabilities
     jumpProbabilities=Q(currentIndex,:)./-Q(currentIndex,currentIndex);
     jumpProbabilities(currentIndex)=0; %we have to jump states
     random=unifrnd(0,1);
     jumpTo=find(cumsum(jumpProbabilities)>random, 1, 'first');
-    %disp(cumsum(jumpProbabilities))
-    currentState=states(jumpTo);
+
     currentIndex=jumpTo;
-           
-    if mod(jumps,10) ==0
+    if jumps>1 && state(jumps).conductance ~= state(jumps-1).conductance
+          observed_transitions=observed_transitions+1;
+          observedSojournTimes(observed_transitions)= currentObservedSojourn;
+          observedAmplitudes(observed_transitions)=state(jumps-1).conductance;
+          currentObservedSojourn = periodtime;
+          if mod(observed_transitions,1000) == 0
+              disp (['transition count is now ' num2str(observed_transitions)]);
+          end
+          if state_transitions <= (observed_transitions + 1)
+              %keep the last incompleted transition as the nth
+              observedSojournTimes(observed_transitions+1) = periodtime;
+              observedAmplitudes(observed_transitions+1) = state(jumps).conductance;
+              break; 
+          end
+    else
+        %current 'time' of the observable process i.e. open or closed
+        currentObservedSojourn = currentObservedSojourn + periodtime;
+    end
+    if mod(jumps,1000) == 0
        disp (['time is now ' num2str(current_time)]); 
     end
+
 end
 
-status(1:jumps)=0;
+status(1:state_transitions)=0;
 % we also set all amplitudes to integers for dc-pyps
 amplitudes(amplitudes~=0)=5;
 sojournTimes=sojournTimes*1000; %in msec
 
-simulation=ScnRecording(sojournTimes,amplitudes,status,jumps);
+observedSojournTimes=observedSojournTimes*1000; %in msec 
+observedAmplitudes(observedAmplitudes~=0)=5;
+simulation=ScnRecording(observedSojournTimes,observedAmplitudes,status,state_transitions);
+fprintf('Transitions %i\n',state_transitions)
 %simulation=struct('states', states, 'sojourns',sojournTimes);
 
 
