@@ -1,4 +1,4 @@
-function [param_values,profile_likelihoods]=profileLikelihood(dataFile,paramsFile,points,param_no)
+function [param_values,profile_likelihoods]=profileLikelihood(dataFile,paramsFile,points,param_no,min,max)
     %dataFile - scn file containing the recording
     %paramsFile - file containing which mechanism to use and initial
     %parameter values
@@ -42,12 +42,6 @@ function [param_values,profile_likelihoods]=profileLikelihood(dataFile,paramsFil
     param_values = zeros(points,init_params.length()+1);
     profile_likelihoods = zeros(1,points);
     
-    
-    if isempty(rate.limits)
-        min = 1e+2;
-        max = 1e+8;
-    end
-
     %calculate exponential schedule between min and max containing
     %points
 
