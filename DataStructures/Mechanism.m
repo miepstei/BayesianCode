@@ -182,6 +182,25 @@ classdef Mechanism
             %value = struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',5,'args',2);
             obj.constraints(rate_id) = constraint;
             
+            %if it is a constraint it cannot be a parameter...
+            if obj.parameterMap.isKey(rate_id)
+                obj.parameterMap.remove(rate_id);
+            end            
+            
+            
+        end
+        
+        
+        function obj=removeConstraint(obj,rate_id)
+            %public function to allow the importation of mec files whilst
+            %post-hoc setting constraints akin to parsing ini files.
+            %constraints are of the form - containers.Map('KeyType', 'int32','ValueType','any');
+            %value = struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',5,'args',2);
+            obj.constraints.remove(rate_id);
+            if ~obj.parameterMap.isKey(rate_id)
+                obj.parameterMap(rate_id) = obj.rates(rate_id);
+            end
+            
         end
         
         function obj=setRate(obj,rate_id,rate_value,update_constraints)
