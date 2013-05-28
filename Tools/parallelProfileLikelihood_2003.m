@@ -11,7 +11,7 @@ function parallelProfileLikelihood_2003(points,outfile,datafile,mechfile)
     max=[4000,80000,10000,200,100000,500,3000,15000,600000000];
 
 
-    for i=1:length(parameter_keys)
+    parfor i=1:length(parameter_keys)
         [a,b]=profileLikelihood(datafile,mechfile,points,parameter_keys(i),min(i),max(i));
         profiles(:,:,i)=a;
         profile_likelihoods(i,:) = b;
