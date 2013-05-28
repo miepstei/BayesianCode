@@ -1,4 +1,4 @@
-function fit_datasets(datadir,mechParams)
+function fit_datasets(datadir,mechParams,outfile)
 
 %runs for all files in datadir
 
@@ -18,4 +18,4 @@ parfor i=1:length(c)
     likelihoods(i)=final_likelihood;
     fprintf('Fit %i SAVED, final likeihood %f %i simulations out of %i done\n\n',i,final_likelihood,i,length(c))
 end
-save([datadir,'fits.mat'],'params','likelihoods');
+save([datadir,outfile],'params','likelihoods');
