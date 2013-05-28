@@ -74,7 +74,7 @@ to XML for Matlab, that is TODO-->
 		<name>CS 1985</name>
 		<enabled>True</enabled>
 		<mechanismfilepath mec_id="2">/TestData/demomec.mec</mechanismfilepath>
-		<data_set>test_10.scn</data_set>
+		<data_set>CH82.scn</data_set>
 		<epsilon>0.00001</epsilon>
 		<constraints>
 			<!-- XML Constraints not currently in use -->
