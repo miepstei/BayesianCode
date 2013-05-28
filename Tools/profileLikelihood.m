@@ -39,7 +39,7 @@ function [param_values,profile_likelihoods]=profileLikelihood(dataFile,paramsFil
     test_params.mechanism.setConstraint(param_no,constraint);
     
     init_params=test_params.mechanism.getParameters(true);
-    param_values = zeros(points,init_params.length()+1);
+    param_values = zeros(init_params.length()+1,points);
     profile_likelihoods = zeros(1,points);
     
     %calculate exponential schedule between min and max containing
@@ -59,15 +59,15 @@ function [param_values,profile_likelihoods]=profileLikelihood(dataFile,paramsFil
             fprintf('Fitting for profile point %i Rate name %s value %f\n', p_rate,rate.name,profile_rates(p_rate));
             [min_function_value,min_parameters,~]=splx.run_simplex(lik,start_params,test_params);
             profile_likelihoods(p_rate)=min_function_value;
-            param_values(p_rate,1) = log(profile_rates(p_rate));
-            param_values(p_rate,2:end)=cell2mat(min_parameters.values);
+            param_values(1,p_rate) = log(profile_rates(p_rate));
+            param_values(2:end,p_rate)=cell2mat(min_parameters.values);
         catch MExc
             fprintf('Fitting for profile point %i (%d) failed (%s)\n', p_rate,profile_rates(p_rate),MExc.message);
             fprintf(test_params.mechanism.toString());
             fprintf('\nmoving on...\n')
             profile_likelihoods(p_rate)=NaN;
-            param_values(p_rate,1) = profile_rates(p_rate);
-            param_values(p_rate,2:end)=NaN;
+            param_values(1,p_rate) = profile_rates(p_rate);
+            param_values(2:end,p_rate)=NaN;
             %need to restart fit from 'init params'
             test_params.mechanism.setParameters(init_params);
         end

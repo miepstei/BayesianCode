@@ -16,6 +16,10 @@ test_args.mechanism = ModelSetup(paramsFile);
 
 test_args.epsilon = epsilon;
 
+test_args.tres = tres;
+test_args.tcrit = tcrit;
+test_args.isCHS = 1;
+
 test_args.debug.on=1; %collect the debugging matrices
 
 
