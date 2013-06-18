@@ -25,13 +25,15 @@ def usage():
 def main(py_file):
    
     params = pickle.load(open(py_file,"rb"))
+    print "Loading " + py_file + "\n"
+    
     if params['model'] in ("CH82","CS 1985"): 
         #setup parametersi and mechanism
         tres = params['tres']
         tcrit = params['tcrit'] #separation of time between bursts is 4000 \mus or 4ms
 
         #setup data
-        filename = params['data_set']
+        filename = params['DataSet']
         ioffset, nint, calfac, header = dcio.scn_read_header(filename)
         tint, iampl, iprops = dcio.scn_read_data(filename, ioffset, nint, calfac)
         rec1 = dataset.TimeSeries(filename, header, tint, iampl, iprops)
@@ -51,6 +53,9 @@ def main(py_file):
         opts['tcrit'] = tcrit
         opts['isCHS'] = True
         opts['data'] = rec1.bursts
+        opts['TestTres'] = params['TestTres']
+        opts['TestTcrit'] = params['TestTcrit']
+        opts['DataSet'] = params['DataSet']
 
         if params['model'] == "CH82":
 
@@ -119,6 +124,7 @@ def main(py_file):
     dcp.exact_likelihood_matrices(mec,opts,params['dcpMatrixResultsFile'],params['dcpAsymptoticResultsFile'])
     dcp.mr(mec,opts,params['dcpMrResultsFile'])
     dcp.exact_likelihood_value(mec,opts,params['dcpLikelihoodsResultsFile'])
+    dcp.bursts(opts,params['dcpBurstsResultsFile'])
     #dcp.simplex(mec,opts,params['dcpSimplexResultsFile'])
     sys.stdout.write('Test for model ' + params['model'] + ' with parameters finished\n\n')
 

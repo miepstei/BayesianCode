@@ -26,12 +26,34 @@ def runTests(dom,projectDir):
     #get the local path to the MATLAB instance
     matNode=dom.getElementsByTagName("MatlabExecutable")
     matExe = xmlUtils.getText(matNode[0].childNodes)
+   
+    #params to be saved for tests
+    params  = {};
+    
+    #tests based on parsing data for single ion-channels
+    dataTestParams = dom.getElementsByTagName("DataTestParams")
+    params['DataSet'] = path.join(dataDir,xmlUtils.getElementText(dataTestParams[0].getElementsByTagName("DataSet")))
+    
+    testTresSet = dataTestParams[0].getElementsByTagName("tres")
+    params['TestTres'] = []
+    for tres in testTresSet[0].getElementsByTagName("value"):
+        params['TestTres'].append(float(tres.childNodes[0].data))
+        print params['TestTres']
+    
+    testTcritSet = dataTestParams[0].getElementsByTagName("tcrit")
+    params['TestTcrit'] = []
+    for tcrit in testTcritSet[0].getElementsByTagName("value"):
+        params['TestTcrit'].append(float(tcrit.childNodes[0].data))
+        print params['TestTcrit']
+ 
+	#for matlabTestScript in ('TestCaseBursts'): 
+    	#executable = "try %s(\'%s\',\'%s\'),quit; catch err; disp('[ERROR]: in evaluating %s'); disp(err);,quit; end" % (matlabTestScript,mat_file,'false',matlabTestScript)
+                      
 
     #iterate through the test cases in the models
     models = dom.getElementsByTagName("Model")
     for model in models:
           modelName=model.getElementsByTagName("name")
-          params  = {};
           for node in modelName:
               params['model'] = xmlUtils.getText(node.childNodes)
           
@@ -40,8 +62,6 @@ def runTests(dom,projectDir):
           params['epsilon'] = float(xmlUtils.getElementText(model.getElementsByTagName("epsilon")))
           if modelTestsEnabled == "True":
               print "Testing model: " + params['model'] +  "\n\n"
-              testDataSet = path.join(dataDir,xmlUtils.getElementText(model.getElementsByTagName("data_set")))
-              params['data_set'] = testDataSet
               parameterSweeps = model.getElementsByTagName("ParameterSweep")
               print "PARAMETER SWEEPS " + str(len (parameterSweeps))
               for node in parameterSweeps:
@@ -57,9 +77,9 @@ def runTests(dom,projectDir):
 
                          
                           #file locations for python results
-                          for filename in ('AsymptoticResultsFile','MatrixResultsFile','MrResultsFile','FunctionsResultsFile','LikelihoodsResultsFile','SimplexResultsFile'):
+                          for filename in ('AsymptoticResultsFile','MatrixResultsFile','MrResultsFile','FunctionsResultsFile','LikelihoodsResultsFile','SimplexResultsFile','BurstsResultsFile'):
                                params['dcp' + filename] = path.join(resultsDir,xmlUtils.fileString('dcp' + filename,params['model'],setNumber,'.mat'))
-                               params['mat' + filename] = path.join(resultsDir,xmlUtils.fileString('mat' + filename    ,params['model'],setNumber,'.mat'))
+                               params['mat' + filename] = path.join(resultsDir,xmlUtils.fileString('mat' + filename,params['model'],setNumber,'.mat'))
 
                           params['matSetupResultsFile'] = path.join(resultsDir,xmlUtils.fileString('matlab_setup',params['model'],setNumber,'.mat'))
 
@@ -91,7 +111,7 @@ def runTests(dom,projectDir):
                           tc_run_sweep.main(py_file)
 
                           #run through the MATLAB scripts which generates equivilent functions and tests output 
-                          for matlabTestScript in ('TestCaseAsymptoticRoots','TestCaseExactLikelihoodSetup','TestCaseConstraints','TestCaseMissedEventsPdfs','TestCaseExactLikeihood','TestCaseVectorisedLikelihood'): 
+                          for matlabTestScript in ('TestCaseBursts','TestCaseAsymptoticRoots','TestCaseExactLikelihoodSetup','TestCaseConstraints','TestCaseMissedEventsPdfs','TestCaseExactLikeihood','TestCaseVectorisedLikelihood'): 
                               executable = "try %s(\'%s\',\'%s\'),quit; catch err; disp('[ERROR]: in evaluating %s'); disp(err);,quit; end" % (matlabTestScript,mat_file,'false',matlabTestScript)
                               print "Executing MATLAB test " + executable + "\n"
                               system(matExe + ' -r \"' + executable + "\"")

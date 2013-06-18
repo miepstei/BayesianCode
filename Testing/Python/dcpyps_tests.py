@@ -14,6 +14,97 @@ from dcpyps import dataset
 from dcpyps import mechanism
 
 
+def bursts(opts,outfile):
+
+    test_treses = opts["TestTres"]
+    test_tcrits = opts["TestTcrit"]
+    test_tcrit_number=len(test_tcrits)
+    test_tres_number=len(test_treses)
+    
+    data={}; # to be saved as mat file
+    
+    p_tres_tests = np.zeros(test_tres_number)
+    p_tres_resolved = np.zeros(test_tres_number)
+    p_tres_ave_length = np.zeros(test_tres_number)
+    p_tres_ave_openings = np.zeros(test_tres_number)
+    
+    p_tcrit_tests = np.zeros(test_tcrit_number)
+    p_tcrit_resolved = np.zeros(test_tcrit_number)
+    p_tcrit_ave_length = np.zeros(test_tcrit_number)
+    p_tcrit_ave_openings = np.zeros(test_tcrit_number)   
+
+    # LOAD DATA.
+    filename = opts["DataSet"]
+    
+    tres=test_treses[0]
+    tcrit_count=0   
+    # alter tcrit holding tres constant
+    for tcrit in test_tcrits:
+        ioffset, nint, calfac, header = dcio.scn_read_header(filename)
+        tint, iampl, iprops = dcio.scn_read_data(filename, ioffset, nint, calfac)
+        rec1 = dataset.TimeSeries(filename, header, tint, iampl, iprops)
+        rec1.impose_resolution(tres)
+        rec1.get_open_shut_periods()
+        rec1.get_bursts(tcrit)
+        
+        #print('\nNumber of resolved intervals = {0:d}'.format(len(rec1.rtint)))
+        p_tcrit_resolved[tcrit_count] = len(rec1.rtint)
+        
+        #print('\nNumber of bursts = {0:d}'.format(len(rec1.bursts)))
+        p_tcrit_tests[tcrit_count]=len(rec1.bursts)
+        
+        blength = rec1.get_burst_length_list()
+        #print('Average length = {0:.9f} millisec'.format(np.average(blength)))
+        p_tcrit_ave_length[tcrit_count] = np.average(blength)
+        
+        openings = rec1.get_openings_burst_list()
+        #print('Average number of openings= {0:.9f}'.format(np.average(openings)))
+        p_tcrit_ave_openings[tcrit_count] = np.average(openings)
+
+        tcrit_count=tcrit_count+1
+    
+    
+    tcrit=test_tcrits[0]
+    
+    tres_count=0 
+    # alter tres holding tcrit constant
+    for tres in test_treses:
+        ioffset, nint, calfac, header = dcio.scn_read_header(filename)
+        tint, iampl, iprops = dcio.scn_read_data(filename, ioffset, nint, calfac)
+        rec1 = dataset.TimeSeries(filename, header, tint, iampl, iprops)
+        rec1.impose_resolution(tres)
+        rec1.get_open_shut_periods()
+        rec1.get_bursts(tcrit)
+        
+        #print('\nNumber of resolved intervals = {0:d}'.format(len(rec1.rtint)))
+        p_tres_resolved[tres_count] = len(rec1.rtint)
+        
+        #print('\nNumber of bursts = {0:d}'.format(len(rec1.bursts)))
+        p_tres_tests[tres_count]=len(rec1.bursts)
+        
+        blength = rec1.get_burst_length_list()
+        #print('Average length = {0:.9f} millisec'.format(np.average(blength)))
+        p_tres_ave_length[tres_count] = np.average(blength)
+        
+        openings = rec1.get_openings_burst_list()
+        #print('Average number of openings= {0:.9f}'.format(np.average(openings)))
+        p_tres_ave_openings[tres_count] = np.average(openings)
+        
+        tres_count=tres_count+1
+    
+    data['p_tcrit_tests']=p_tcrit_tests
+    data['p_tcrit_resolved']=p_tcrit_resolved
+    data['p_tcrit_ave_length']=p_tcrit_ave_length
+    data['p_tcrit_ave_openings']=p_tcrit_ave_openings
+                
+    data['p_tres_tests']=p_tres_tests
+    data['p_tres_resolved']=p_tres_resolved
+    data['p_tres_ave_length']=p_tres_ave_length
+    data['p_tres_ave_openings']=p_tres_ave_openings
+    
+    sp.savemat(outfile,data)
+    sys.stdout.write('Bursts generation finished\noutput saved to ' + outfile +'\n\n')    	
+
 def simplex(mec,opts,outfile):
     sys.stdout.write('Generation of Simplex optimisation output starting\n')
 

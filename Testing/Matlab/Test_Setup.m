@@ -8,7 +8,7 @@ load(paramsFile);
 
 %test_args.localpath=getpref('ME','matpath');
 dc = DataController;
-[~,data]=dc.read_scn_file(data_set);
+[~,data]=dc.read_scn_file(DataSet);
 
 test_args.conc = concentration;
 
@@ -19,6 +19,8 @@ test_args.epsilon = epsilon;
 test_args.tres = tres;
 test_args.tcrit = tcrit;
 test_args.isCHS = 1;
+test_args.testTres = TestTres;
+test_args.testTcrit = TestTcrit;
 
 test_args.debug.on=1; %collect the debugging matrices
 
@@ -35,6 +37,8 @@ test_args.functionsInFile = dcpFunctionsResultsFile;
 test_args.functionsOutFile = matFunctionsResultsFile;
 test_args.likelihoodsInFile = dcpLikelihoodsResultsFile;
 test_args.likelihoodsOuFile = matLikelihoodsResultsFile;
+test_args.burstsInFile = dcpBurstsResultsFile;
+test_args.burstsOutFile = matBurstsResultsFile;
 
 %rescale intervals into \mu(s)
 test_args.data=data;
