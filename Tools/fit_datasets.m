@@ -2,7 +2,7 @@ function fit_datasets(datadir,mechParams,outfile)
 
 %runs for all files in datadir
 
-a=ls([datadir 'test_*']);
+a=ls([datadir 'data_*']);
 c=strsplit(a);
 c=c(1:end-1); %last one is blank
 params=zeros(1000,14);
