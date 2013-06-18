@@ -9,6 +9,7 @@ classdef Simplex < Optimisation
         per=0.001; %relative error xopts for convergence
         error=0.001; %relative error for convergence
         max_evaluation=100000; %maximum number of function evaluations to make
+        MAX_ITERATIONS=2000;
     end
     
     methods(Access=public)
@@ -71,7 +72,7 @@ classdef Simplex < Optimisation
             
         end
         
-        function [min_function_value,min_parameters,debug] = run_simplex(obj,funct,init_params,opts)
+        function [min_function_value,min_parameters,iter,debug] = run_simplex(obj,funct,init_params,opts)
             
             %funct - a handle to the object with a function to be
             %optimised. This object must implement an interface functions
@@ -100,7 +101,7 @@ classdef Simplex < Optimisation
             end
             
             restart=true;
-            while restart
+            while restart && iterations < obj.MAX_ITERATIONS
                 %make the simplex structure
                 if (mod (iterations,100) == 0)
                     fprintf('Iteration %d best likelihood %f\n',iterations,function_values(1))
@@ -217,7 +218,10 @@ classdef Simplex < Optimisation
             end
             min_function_value=function_values(1);
             min_parameters=simplex_points{1};
-
+			iter=iterations;
+			if iterations==obj.MAX_ITERATIONS
+				fprintf('WARNING, MAX ITERATIONS (%i) HIT\n',obj.MAX_ITERATIONS)
+			end
         end
     end
     

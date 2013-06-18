@@ -76,7 +76,7 @@ test_names={'[TEST 1] - test H_AA(s)','[TEST 2] - test H_FF(s)','[TEST 3] - test
         if sum(passed_tests)==total_tests
         fprintf('[ALL TESTS PASSED] - Asymptotic Root calculations are the same %d tests passed\n\n',total_tests)
         else
-        fprintf('\n\n[FAILED TESTS]\n\n',failed)
+        fprintf('\n\n[%i FAILED TESTS]\n\n',failed)
         failed_tests = find(passed_tests==0);
         for i=1:length(failed_tests)
         fprintf('\t%s - [DIFF] %f\n',test_names{failed_tests(i)},diffs(failed_tests(i)))

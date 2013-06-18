@@ -1,13 +1,14 @@
-dc=DataController();
-mecs=dc.list_mechanisms('~/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/Samples/demomec.mec');
-mec2=dc.load_mechanism('~/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/Samples/demomec.mec',mecs.mec_struct(2));
+function gen_scn_file(outname,mec_file,mec_num,constraints,conc)
+    dc=DataController();
+    mecs=dc.list_mechanisms(mec_file);%'Testing/TestData/demomec.mec');
+    %constraints=containers.Map('KeyType', 'int32','ValueType','any');
+    mec2=dc.create_mechanism('Testing/TestData/demomec.mec',mecs.mec_struct(mec_num),constraints);
 
-%apply concentration to dependent rates
-%mec2=mec2.refreshRates(0.00000001);
-%mec=dc.read_mechanism_demo();
-datasim=generate(mec2,900,0.00000001);
-%resolved=RecordingManipulator.imposeResolution(datasim,0.0025);
-test_scn='~/Dropbox/Academic/PhD/Code/bayesiancode/trunk/MarkovModel/samples/test.scn';
+    %apply concentration to dependent rates
+    %mec2=mec2.refreshRates(0.00000001);
+    %mec=dc.read_mechanism_demo();
+    datasim=generate(mec2,1000*60*15,conc,20000);
+    %resolved=RecordingManipulator.imposeResolution(datasim,0.0025);
 
-handle=fopen(test_scn,'w','n','UTF-8');
-dc.write_scn_file(handle,datasim);
+    handle=fopen(outname,'w','n','UTF-8');
+    dc.write_scn_file(handle,datasim);

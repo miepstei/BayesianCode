@@ -51,7 +51,41 @@ function mechanism = ModelSetup(paramsFile)
 		mechanism.setRate(12,p12,update_constraints);
 		mechanism.setRate(13,p13,update_constraints);
 		mechanism.setRate(14,p14,update_constraints);
+
+    elseif strcmp(model,'CS 1985 k_+2a unconstrained')
+
+        mecs=DataController.list_mechanisms(mechanismfilepath);
+        
+        %set constraints here
+        constraints=containers.Map('KeyType', 'int32','ValueType','any');
+        constraints(7)=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',11,'args',1);
+        constraints(9)=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',13,'args',1);
+        constraints(10)=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',14,'args',1);
+        constraints(12)=struct('type','mr','function',@(rate,factor)rate,'rate_id',12,'cycle_no',1);
+
+
+        mechanism=DataController.create_mechanism(mechanismfilepath,mecs.mec_struct(2),constraints);
+        update_constraints=0;
+
+        mechanism.setRate(1,p1,update_constraints);
+        mechanism.setRate(2,p2,update_constraints);
+        mechanism.setRate(3,p3,update_constraints);
+        mechanism.setRate(4,p4,update_constraints);
+        mechanism.setRate(5,p5,update_constraints);
+        mechanism.setRate(6,p6,update_constraints);
+        mechanism.setRate(7,p7,update_constraints);
+        mechanism.setRate(8,p8,update_constraints);
+        mechanism.setRate(9,p9,update_constraints);
+        mechanism.setRate(10,p10,update_constraints);
+        mechanism.setRate(11,p11,update_constraints);
+        mechanism.setRate(12,p12,update_constraints);
+        mechanism.setRate(13,p13,update_constraints);
+        mechanism.setRate(14,p14,update_constraints);
+
     elseif strcmp(model,'CS 1985 unconstrained')
+        mecs=DataController.list_mechanisms(mechanismfilepath);
+        
+        %set constraints here
         constraints=containers.Map('KeyType', 'int32','ValueType','any');
         constraints(8)=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',8,'args',1);%FIXED in order to get some fit!
         constraints(12)=struct('type','mr','function',@(rate,factor)rate,'rate_id',12,'cycle_no',1);
