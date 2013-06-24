@@ -24,7 +24,7 @@ to XML for Matlab, that is TODO-->
 	</DataTestParams>
 	<Model id="1">
 		<name>CH82</name>
-		<enabled>True</enabled>
+		<enabled>False</enabled>
 		<mechanismfilepath>IO/DataController.read_mechanism_demo()</mechanismfilepath>		
 		<epsilon>0.00001</epsilon>
 		<ParameterSweep>
@@ -84,7 +84,7 @@ to XML for Matlab, that is TODO-->
 	
 	<Model id="2">
 		<name>CS 1985</name>
-		<enabled>False</enabled>
+		<enabled>True</enabled>
 		<mechanismfilepath mec_id="2">/TestData/demomec.mec</mechanismfilepath>
 		<epsilon>0.00001</epsilon>
 		<constraints>
@@ -276,7 +276,7 @@ to XML for Matlab, that is TODO-->
 	</Model>
 	<Model id="4">
 		<name>CS 1985 k_+2a unconstrained</name>
-		<enabled>True</enabled>
+		<enabled>False</enabled>
 		<mechanismfilepath mec_id="2">/TestData/demomec.mec</mechanismfilepath>
 		<epsilon>0.00001</epsilon>
 		<constraints>

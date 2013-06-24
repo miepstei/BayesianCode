@@ -385,12 +385,12 @@ classdef Mechanism
                 update=1;
                 if ~ isempty(rate.limits)
                     if (value <= rate.limits(1) && value >= rate.limits(2))
-                        fprintf('[WARN] param %s out of range\n',key)
+                        fprintf('[WARN] param %s out of range %f value\n',key,value)
                         update=0;
-                    elseif (value <= 1e-15 && value >= 1e+10)
-                        fprintf('[WARN] param %s out of  DEFAULT range\n',key)
-                        update=0;                       
-                    end                            
+                    end
+                elseif (value <= 1e-15 || value >= 1e+10)
+                        fprintf('[WARN] param %s out of  DEFAULT range %f value\n',key,value)
+                        update=0;                                               
                 end
                 if update
                     rate.rate_constant=value;

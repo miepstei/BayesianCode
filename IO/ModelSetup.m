@@ -36,7 +36,9 @@ function mechanism = ModelSetup(paramsFile)
 		constraints(12)=struct('type','mr','function',@(rate,factor)rate,'rate_id',12,'cycle_no',1);
 	
 		mechanism=DataController.create_mechanism(mechanismfilepath,mecs.mec_struct(2),constraints);
-		update_constraints=0;
+        mechanism.cycles(1).mr_constrainted_rate=12;
+        
+        update_constraints=0;
 		mechanism.setRate(1,p1,update_constraints);
 		mechanism.setRate(2,p2,update_constraints);
 		mechanism.setRate(3,p3,update_constraints);
@@ -65,8 +67,9 @@ function mechanism = ModelSetup(paramsFile)
 
 
         mechanism=DataController.create_mechanism(mechanismfilepath,mecs.mec_struct(2),constraints);
+        mechanism.cycles(1).mr_constrainted_rate=12;
+        
         update_constraints=0;
-
         mechanism.setRate(1,p1,update_constraints);
         mechanism.setRate(2,p2,update_constraints);
         mechanism.setRate(3,p3,update_constraints);
@@ -91,6 +94,8 @@ function mechanism = ModelSetup(paramsFile)
         constraints(12)=struct('type','mr','function',@(rate,factor)rate,'rate_id',12,'cycle_no',1);
         
         mechanism=DataController.create_mechanism(mechanismfilepath,mecs.mec_struct(2),constraints);
+        mechanism.cycles(1).mr_constrainted_rate=12;
+        
         update_constraints=0;
         
 		mechanism.setRate(1,p1,update_constraints);
