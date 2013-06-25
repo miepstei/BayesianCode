@@ -84,34 +84,56 @@ classdef Simplex < Optimisation
             function_calls = 0;
             restart_simplex = false;
             simplex_size = init_params.length()+1;
-            param_keys = keys(init_params);
+            param_keys = init_params.keys;
             
             [simplex_points,function_values] = Simplex.setup_simplex(init_params,obj.step,funct,opts);
+            
+            %keep the record of the best params
+            
+            best_params.params = simplex_points(1);
+            best_params.lik = function_values(1);
             
             if opts.debugOn
                 debug.start.simplex = simplex_points;
                 debug.start.likelihoods = function_values;
-                min_function_value=0;
-                min_parameters=0;
-            end
-
-            if opts.debugOn
-                 debug.sort.likelihoods=function_values;
-                 debug.sort.simplex=simplex_points;
             end
             
             restart=true;
-            while restart && iterations < obj.MAX_ITERATIONS
-                %make the simplex structure
-                if (mod (iterations,100) == 0)
-                    fprintf('Iteration %d best likelihood %f\n',iterations,function_values(1))
+            rejig = false;
+            rejig_count=0;
+            while restart && iterations < obj.MAX_ITERATIONS && rejig_count <= 3
+
+                if function_values(1) < best_params.lik
+                    best_params.params = simplex_points(1);
+                    best_params.lik = function_values(1);                    
+                end    
+                
+                if rejig && rejig_count < 4
+                    fprintf('Shuffling the best params...\n')
+                    %jitter the parameters
+                    %keys=best_params.keys;
+                    params = best_params.params{1};
+                    for i=1:length(param_keys)
+                        orig = params(param_keys{i});
+                        params(param_keys{i}) = log(lognrnd(orig,0.1));
+                    end
+                    [simplex_points,function_values] = Simplex.setup_simplex(params,obj.step,funct,opts);
+                    rejig_count=rejig_count+1;
+                    rejig=false; 
                 end
                 
                 %A - sort the simplex structure by function value
                 [simplex_points,function_values] = Simplex.sort_simplex(simplex_points,function_values);
+
+
+
+                fprintf('Iteration %d best likelihood %f\n',iterations,function_values(1))
+                if (mod (iterations,254) == 0)
+                    fprintf('Iteration %d best likelihood %f\n',iterations,function_values(1))
+                end
                 
                 %B - check for algorithm convergence
-                [hasConverged,simp_diff,lik_diff] = Simplex.converge_simplex(simplex_points,function_values,param_keys,obj.error,obj.error);
+                [hasConverged,~,~] = Simplex.converge_simplex(simplex_points,function_values,param_keys,obj.error,obj.error);
                 
                 if hasConverged
                     %perform local search- this involves calculating
@@ -148,12 +170,23 @@ classdef Simplex < Optimisation
                     %to A
                     
                     reflected = Simplex.transform_point(centre,simplex_points{end},param_keys,obj.reflect,true);
-                    reflect_lik = funct.evaluate_function(reflected,opts);
+                    try 
+                        reflect_lik = funct.evaluate_function(reflected,opts);
+                    catch err
+                        disp(err)
+                        rejig=true;
+                    end
                     
                     if reflect_lik < function_values(1)
                          %E - if reflected point is best so far try extending it
                          extended = Simplex.transform_point(centre,reflected,param_keys,obj.extend,false);
-                         extended_lik = funct.evaluate_function(extended,opts);
+                         
+                         try 
+                             extended_lik = funct.evaluate_function(extended,opts);
+                         catch err
+                             disp(err) 
+                             rejig=true;
+                         end
                          if extended_lik < reflect_lik
                             %fprintf('iteration %d EXTENDED lik=%f\n',iterations,extended_lik)
                             % E1 - if expanded point is better then reflected point
@@ -185,7 +218,14 @@ classdef Simplex < Optimisation
                             %its not better than the second worst - perform
                             %a contaction
                             contracted = Simplex.transform_point(centre,simplex_points{end},param_keys,obj.contract,false);
-                            contracted_lik = funct.evaluate_function(contracted,opts);
+                            
+                            try
+                                contracted_lik = funct.evaluate_function(contracted,opts);
+                            catch err
+                                disp(err) 
+                                rejig=true;
+                            end
+                            
                             if contracted_lik <= function_values(end)
                                 %F - by this stage we know that the reflected point is NOT
                                 %better than the second worst point. So we try a CONTRACTED
@@ -201,9 +241,13 @@ classdef Simplex < Optimisation
                                 %point, so for all but the best point we SHRINK the other
                                 %vertices and then goto A
                                 %shrink the simplex
-                                [simplex_points,function_values]=Simplex.shrink_simplex(simplex_points,param_keys,obj.shrink,funct,opts);
-                                
-                                %fprintf('iteration %d SHRUNK  lik=%f\n',iterations,function_values(1))
+                                try
+                                    [simplex_points,function_values]=Simplex.shrink_simplex(simplex_points,param_keys,obj.shrink,funct,opts);
+                                catch err
+                                    disp(err) 
+                                    rejig=true;
+                                end
+                                fprintf('iteration %d SHRUNK  lik=%f\n',iterations,function_values(1))
                             end
                             
                         end
@@ -211,6 +255,11 @@ classdef Simplex < Optimisation
                         
                     end
                     iterations=iterations+1;
+                    if opts.debugOn
+                        [simplex_points,function_values]=Simplex.sort_simplex(simplex_points,function_values);
+                        debug.iter_simplex(iterations) = {simplex_points};
+                        debug.iter_liks(iterations) = {function_values};
+                    end
                 end
 
                 %restart=false;

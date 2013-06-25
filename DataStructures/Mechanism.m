@@ -297,14 +297,12 @@ classdef Mechanism
             
             
             for rate_no=1:length(keySet)
+                temp_rate = obj.parameterMap(keySet{rate_no});
+                rate_constant=temp_rate.rate_constant;
                 if log_values
-                    temp_rate = obj.parameterMap(keySet{rate_no});
-                    log_rate_constant=log(temp_rate.rate_constant);
-                    params(keySet{rate_no})=log_rate_constant;             
-                else
-                    params(keySet{rate_no})=values(rate_no);    
-                    
+                    rate_constant=log(rate_constant);                    
                 end
+                params(keySet{rate_no})=rate_constant;
             end
         end
 
