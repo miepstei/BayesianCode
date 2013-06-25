@@ -9,7 +9,11 @@ classdef Simplex < Optimisation
         per=0.001; %relative error xopts for convergence
         error=0.001; %relative error for convergence
         max_evaluation=100000; %maximum number of function evaluations to make
+    end
+    properties (Constant)
         MAX_ITERATIONS=2000;
+        JITTER_SIGMA=0.1;
+        RESTARTS=3;
     end
     
     methods(Access=public)
@@ -101,21 +105,21 @@ classdef Simplex < Optimisation
             restart=true;
             rejig = false;
             rejig_count=0;
-            while restart && iterations < obj.MAX_ITERATIONS && rejig_count <= 3
+            while restart && iterations < obj.MAX_ITERATIONS && rejig_count <= Simplex.RESTARTS
 
                 if function_values(1) < best_params.lik
                     best_params.params = simplex_points(1);
                     best_params.lik = function_values(1);                    
                 end    
                 
-                if rejig && rejig_count < 4
-                    fprintf('Shuffling the best params...\n')
+                if rejig && rejig_count <= Simplex.RESTARTS
+                    fprintf('Rejig called - Shuffling the best params...\n')
                     %jitter the parameters
                     %keys=best_params.keys;
                     params = best_params.params{1};
                     for i=1:length(param_keys)
                         orig = params(param_keys{i});
-                        params(param_keys{i}) = log(lognrnd(orig,0.1));
+                        params(param_keys{i}) = log(lognrnd(orig,Simplex.JITTER_SIGMA));
                     end
                     [simplex_points,function_values] = Simplex.setup_simplex(params,obj.step,funct,opts);
                     rejig_count=rejig_count+1;
@@ -125,10 +129,7 @@ classdef Simplex < Optimisation
                 %A - sort the simplex structure by function value
                 [simplex_points,function_values] = Simplex.sort_simplex(simplex_points,function_values);
 
-
-
-                fprintf('Iteration %d best likelihood %f\n',iterations,function_values(1))
-                if (mod (iterations,254) == 0)
+                if (mod (iterations,100) == 0)
                     fprintf('Iteration %d best likelihood %f\n',iterations,function_values(1))
                 end
                 
@@ -244,10 +245,10 @@ classdef Simplex < Optimisation
                                 try
                                     [simplex_points,function_values]=Simplex.shrink_simplex(simplex_points,param_keys,obj.shrink,funct,opts);
                                 catch err
-                                    disp(err) 
+                                    disp(err.message) 
                                     rejig=true;
                                 end
-                                fprintf('iteration %d SHRUNK  lik=%f\n',iterations,function_values(1))
+                                %fprintf('iteration %d SHRUNK  lik=%f\n',iterations,function_values(1))
                             end
                             
                         end
@@ -265,12 +266,21 @@ classdef Simplex < Optimisation
                 %restart=false;
 
             end
+            
             min_function_value=function_values(1);
             min_parameters=simplex_points{1};
 			iter=iterations;
-			if iterations==obj.MAX_ITERATIONS
-				fprintf('WARNING, MAX ITERATIONS (%i) HIT\n',obj.MAX_ITERATIONS)
+            
+            fprintf('Fitting finished. Max likelihood %f\n',min_function_value)
+            fprintf('\tIterations: %i\n',iter)
+            fprintf('\tRestarts: %i\n\n',rejig_count)
+            
+			if iterations==Simplex.MAX_ITERATIONS
+				fprintf('WARNING, MAX ITERATIONS (%i) HIT\n',Simplex.MAX_ITERATIONS)
+            elseif  rejig_count==Simplex.RESTARTS
+                fprintf('WARNING, MAX JITTERS (%i) HIT\n',Simplex.MAX_ITERATIONS)
 			end
+            
         end
     end
     
