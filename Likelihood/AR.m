@@ -48,10 +48,8 @@ for i=1:kx
    r=W(end,1:end-1);
    if rcond(x)< 1e-16
        err = MException('AR:SingularMatrix', ...
-        'left eigenvectors - x matrix from reduced Q-method is singular %f',rcond(x));
+        'LEFT eigenvectors - x matrix from reduced Q-method is singular %f',rcond(x));
        throw(err);
-       %fprintf('-r*x Matrix close to singular\n')
-       %disp(x)
    end
    solution = -r*x^-1;
    solution(length(solution)+1) = 1-sum(solution);
@@ -65,6 +63,12 @@ for i=1:kx
    x=bsxfun(@minus,W(1:end-1,:),W(end,:));
    x=x(:,1:end-1);
    r=W(end,1:end-1);
+   if rcond(x)< 1e-16
+       err = MException('AR:SingularMatrix', ...
+       'RIGHT eigenvectors - x matrix from reduced Q-method is singular %f',rcond(x));
+       throw(err);
+   end   
+
    solution = -r*x^-1;
    solution(length(solution)+1) = 1-sum(solution);
    right(i,:)=solution;

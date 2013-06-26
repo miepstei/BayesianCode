@@ -76,7 +76,7 @@ classdef Simplex < Optimisation
             
         end
         
-        function [min_function_value,min_parameters,iter,debug] = run_simplex(obj,funct,init_params,opts)
+        function [min_function_value,min_parameters,iter,rejigs,errors,debug] = run_simplex(obj,funct,init_params,opts)
             
             %funct - a handle to the object with a function to be
             %optimised. This object must implement an interface functions
@@ -85,9 +85,7 @@ classdef Simplex < Optimisation
             %init_params - initial Map of parameters of the function
             
             iterations = 0;
-            function_calls = 0;
-            restart_simplex = false;
-            simplex_size = init_params.length()+1;
+            errors = 0;
             param_keys = init_params.keys;
             
             [simplex_points,function_values] = Simplex.setup_simplex(init_params,obj.step,funct,opts);
@@ -114,8 +112,6 @@ classdef Simplex < Optimisation
                 
                 if rejig && rejig_count <= Simplex.RESTARTS
                     fprintf('Rejig called - Shuffling the best params...\n')
-                    %jitter the parameters
-                    %keys=best_params.keys;
                     params = best_params.params{1};
                     for i=1:length(param_keys)
                         orig = params(param_keys{i});
@@ -124,6 +120,15 @@ classdef Simplex < Optimisation
                     [simplex_points,function_values] = Simplex.setup_simplex(params,obj.step,funct,opts);
                     rejig_count=rejig_count+1;
                     rejig=false; 
+                    
+                    %if debugging we want to record this
+                    if opts.debugOn
+                        debug.rejig(rejig_count).prevbest.params = best_params.params{1};
+                        debug.rejig(rejig_count).prevbest.lik = best_params.lik;
+                        debug.rejig(rejig_count).newbest.params = params;
+                        debug.rejig(rejig_count).newbest.lik = funct.evaluate_function(params,opts);
+                    end
+                    
                 end
                 
                 %A - sort the simplex structure by function value
@@ -175,6 +180,12 @@ classdef Simplex < Optimisation
                         reflect_lik = funct.evaluate_function(reflected,opts);
                     catch err
                         disp(err)
+                        errors=errors+1;
+                        if opts.debugOn
+                            %we want to catch the parameters
+                            %which caused this error        
+                            debug.errors(errors).params=err.params;                        
+                        end
                         rejig=true;
                     end
                     
@@ -225,6 +236,12 @@ classdef Simplex < Optimisation
                             catch err
                                 disp(err) 
                                 rejig=true;
+                                errors=errors+1;
+                                if opts.debugOn
+                                    %we want to catch the parameters
+                                    %which caused this error        
+                                    debug.errors(errors).params=err.params;                        
+                                end
                             end
                             
                             if contracted_lik <= function_values(end)
@@ -245,8 +262,15 @@ classdef Simplex < Optimisation
                                 try
                                     [simplex_points,function_values]=Simplex.shrink_simplex(simplex_points,param_keys,obj.shrink,funct,opts);
                                 catch err
-                                    disp(err.message) 
+                                    disp(err.message)
+                                    disp(err.cause{1}.message)
                                     rejig=true;
+                                    errors=errors+1;
+                                    if opts.debugOn
+                                        %we want to catch the parameters
+                                        %which caused this error        
+                                        debug.errors(errors).params=err.params;                        
+                                    end
                                 end
                                 %fprintf('iteration %d SHRUNK  lik=%f\n',iterations,function_values(1))
                             end
@@ -270,9 +294,11 @@ classdef Simplex < Optimisation
             min_function_value=function_values(1);
             min_parameters=simplex_points{1};
 			iter=iterations;
+            rejigs=rejig_count;
             
             fprintf('Fitting finished. Max likelihood %f\n',min_function_value)
             fprintf('\tIterations: %i\n',iter)
+            fprintf('\tErrors: %i\n',errors)
             fprintf('\tRestarts: %i\n\n',rejig_count)
             
 			if iterations==Simplex.MAX_ITERATIONS

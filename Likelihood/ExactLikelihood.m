@@ -344,9 +344,11 @@ classdef ExactLikelihood < Likelihood
             try
                 obj=setup_likelihood(obj, function_opts.mechanism, function_opts.conc, function_opts.tres,function_opts.tcrit, function_opts.isCHS);
             catch err
-                loc=MException('ExactLikelihood:setup_likelihood','error in likelihood setup');
-                err.addCause(loc);
-                rethrow(err);
+                %make a copy of the param map causing the error
+                errorMap = containers.Map(func_params.keys,func_params.values);
+                loc=SetupMException('ExactLikelihood:setup_likelihood','error in likelihood setup',errorMap);
+                loc=addCause(loc,err);
+                throw(loc);
             end
             log_likelihood=calculate_likelihood_vectorised(obj,function_opts.bursts,function_opts.open_times,function_opts.closed_times,function_opts.withinburst_count,function_opts.l_openings);  
         end
