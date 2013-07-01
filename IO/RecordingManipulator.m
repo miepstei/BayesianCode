@@ -32,28 +32,27 @@ classdef RecordingManipulator
             %this function returns a list of bursts from a resolved time
             %series for a given separable t_crit
             
-            %the intervals of shut times > t_crit
-            burst_intervals=getShutIntervalGreaterThan(res_ts,t_crit);
-            %burst_array=[];
-            %we want to create the bursts which pertain to between these
-            %indices
+            %the intervals of shut times > t_crit. The first resolved
+            %interval is an open time so we add the 0th index as a long
+            %shut time in order to capture this opening in a burst.
+            long_closed_intervals=[0 getShutIntervalGreaterThan(res_ts,t_crit)];
+
+            %we want to create the bursts which are defined between the
+            %intervals of the long shut times
             
-            for interval=2:length(burst_intervals)
-                %burst starts AFTER the initial long shut period
-                burst_start=burst_intervals(interval-1)+1;
+            for long_closed_interval=1:length(long_closed_intervals)-1
+                %the burst indices are non-inclusively between the nth long shut period and
+                %the n+1th long shut period. Ie. if n=3, n+1=7, we want
+                %4,5,6 representing the indices in the burst.
                 
-                %burst ends BEFORE the next long shutting
-                burst_end = burst_intervals(interval)-1;
+                %we want the loop to continue until long_closed_interval =
+                %n-1 as we use the nth interval as the forward marker.
                 
-                %mean_amp=0; %mean open amplitude across the burst
-                %open_burst=0; %open time during the burst
-                %burst_length=0; %total time of the burst
-                %indiv_open_length=[]; %individual open intervals 
-                %openings=0; %number of openings during the burst
-                                
-                wb_amps = res_ts.getAmps(burst_start,burst_end);
-                wb_intervals = res_ts.getInts(burst_start,burst_end);
-                wb_status=res_ts.getStatuses(burst_start,burst_end);
+                burst_interval=long_closed_intervals(long_closed_interval)+1:long_closed_intervals(long_closed_interval+1)-1;
+                          
+                wb_amps = res_ts.getAmps(burst_interval(1),burst_interval(end));
+                wb_intervals = res_ts.getInts(burst_interval(1),burst_interval(end));
+                wb_status=res_ts.getStatuses(burst_interval(1),burst_interval(end));
                 wb=struct('amps',wb_amps,'intervals',wb_intervals,'status',wb_status);
                 
                 openings=sum(wb_amps>0);
@@ -65,8 +64,8 @@ classdef RecordingManipulator
                 burst_status=sum(wb_status==ScnRecording.STATUS_BAD);
                 burst=Burst(wb,openings,open_burst,burst_length,burst_status,indiv_open_length,mean_amp);
                
-                %now create the burst
-                burst_array(interval-1)=burst;
+                %now add the burst
+                burst_array(long_closed_interval)=burst;
                 
             end
             
@@ -91,15 +90,20 @@ classdef RecordingManipulator
             index=1;
             found_period=false;
             
+            %we need to find the first resolvable period
             while ~found_period
-                if (raw_ts.getIntervalAt(index) > res) && (raw_ts.getStatusAt(index) ~= ScnRecording.STATUS_BAD)
-                    found_period=true;
-                    
-                else    
-                    index=index+1;
+                if (raw_ts.getIntervalAt(index) > res) && (raw_ts.getStatusAt(index) ~= ScnRecording.STATUS_BAD) && raw_ts.getAmpAt(index) < RecordingManipulator.EPSILON
+                    found_period=true;  
                 end
+                index=index+1;
             end
-                                 
+            %the actual first resolved interval in the resolved record is
+            %the second unresolved (n+1) interval which is open; the n-1 interval is unresoved
+            %which means we don't actually know how long the nth closed resolved
+            %period actually is.
+           
+            
+            
             resolved_intervals(1)=raw_ts.getIntervalAt(index);
             resolved_status(1)=raw_ts.getStatusAt(index);
             resolved_ampls(1)=  raw_ts.getAmpAt(index);
@@ -150,6 +154,16 @@ classdef RecordingManipulator
        
             %we have one more interval which I don't think we use as we don't
             %know how long it lasts for
+                
+            end
+            
+            if resolved_ampls(end) > 0
+                %we don't know how long the last open interval will last so
+                %we don't want to include it in the resolved record. If it
+                %is closed we don't care
+                resolved_ampls=resolved_ampls(1:end-1);
+                resolved_status=resolved_status(1:end-1);
+                resolved_intervals=resolved_intervals(1:end-1);
                 
             end
         

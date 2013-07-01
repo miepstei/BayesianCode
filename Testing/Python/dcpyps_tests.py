@@ -42,17 +42,26 @@ def bursts(opts,outfile):
     for tcrit in test_tcrits:
         ioffset, nint, calfac, header = dcio.scn_read_header(filename)
         tint, iampl, iprops = dcio.scn_read_data(filename, ioffset, nint, calfac)
-        rec1 = dataset.TimeSeries(filename, header, tint, iampl, iprops)
-        rec1.impose_resolution(tres)
+        rec1 = dataset.SCRecord(filename, header, tint, iampl, iprops)
+        rec1.impose_resolution(tres*1000)
         rec1.get_open_shut_periods()
-        rec1.get_bursts(tcrit)
-        
+        rec1.get_bursts(tcrit*1000)
         #print('\nNumber of resolved intervals = {0:d}'.format(len(rec1.rtint)))
-        p_tcrit_resolved[tcrit_count] = len(rec1.rtint)
         
+        #for burst in rec1.bursts:
+        #    print burst,"\n"
+
+        p_tcrit_resolved[tcrit_count] = len(rec1.rtint)
+
+        #print "[%s, %f, %s]" % ("tcrit", tcrit, "\n")
+        #print "[%s, %f, %s]" % ("tres", tres, "\n")
+        #print "resolved intervals\n"
+        #print len(rec1.rtint)
+        
+        #print rec1.rtint         
         #print('\nNumber of bursts = {0:d}'.format(len(rec1.bursts)))
         p_tcrit_tests[tcrit_count]=len(rec1.bursts)
-        
+       
         blength = rec1.get_burst_length_list()
         #print('Average length = {0:.9f} millisec'.format(np.average(blength)))
         p_tcrit_ave_length[tcrit_count] = np.average(blength)
@@ -71,11 +80,10 @@ def bursts(opts,outfile):
     for tres in test_treses:
         ioffset, nint, calfac, header = dcio.scn_read_header(filename)
         tint, iampl, iprops = dcio.scn_read_data(filename, ioffset, nint, calfac)
-        rec1 = dataset.TimeSeries(filename, header, tint, iampl, iprops)
-        rec1.impose_resolution(tres)
+        rec1 = dataset.SCRecord(filename, header, tint, iampl, iprops)
+        rec1.impose_resolution(tres*1000)
         rec1.get_open_shut_periods()
-        rec1.get_bursts(tcrit)
-        
+        rec1.get_bursts(tcrit*1000)
         #print('\nNumber of resolved intervals = {0:d}'.format(len(rec1.rtint)))
         p_tres_resolved[tres_count] = len(rec1.rtint)
         
@@ -211,7 +219,7 @@ def exact_likelihood_value(mec,opts,outfile):
 
     sys.stdout.write('Generation of exact likelihood value\n')
     #run through a simplex fit and save the values in the q_matrix
-    p_sim,_ = scl.HJClik(np.log(mec.theta()),opts)
+    p_sim, newrates = scl.HJClik(np.log(mec.theta()),opts)
     data={}
     data['p_sim']=p_sim
     sp.savemat(outfile,data)
@@ -236,18 +244,26 @@ def exact_likelihood_functions(mec,opts,outfile):
     phiF = qml.phiHJC(eGFA, eGAF, mec.kF)
     startB = qml.phiHJC(eGAF, eGFA, mec.kA)
     endB = np.ones((mec.kF, 1))
+    #interface change
+    eigen, A = qml.eigs(-mec.Q)
 
-    Aeigvals, AZ00, AZ10, AZ11,_,_,_,_,_,_ = qml.Zxx(mec.Q, mec.kA, mec.QFF,
+    Aeigvals, AZ00, AZ10, AZ11,_,_,_,_,_,_ = qml.Zxx(mec.Q,eigen,A ,mec.kA, mec.QFF,
         mec.QAF, mec.QFA, expQFF, True)
-    Aroots,_ = scl.asymptotic_roots(tres,
+    Aroots,a_initial = scl.asymptotic_roots(tres,
         mec.QAA, mec.QFF, mec.QAF, mec.QFA, mec.kA, mec.kF)
+    Aroots = np.sort(Aroots,axis=None)
+    a_initial = np.sort(a_initial)
+ 
     AR = qml.AR(Aroots, tres, mec.QAA, mec.QFF, mec.QAF, mec.QFA, mec.kA, mec.kF)
-    Feigvals, FZ00, FZ10, FZ11,_,_,_,_,_,_ = qml.Zxx(mec.Q, mec.kA, mec.QAA,
-        mec.QFA, mec.QAF, expQAA, False)
-    Froots,_ = scl.asymptotic_roots(tres,
-        mec.QFF, mec.QAA, mec.QFA, mec.QAF, mec.kF, mec.kA)
-    FR = qml.AR(Froots, tres, mec.QFF, mec.QAA, mec.QFA, mec.QAF, mec.kF, mec.kA)
 
+    #interface change
+
+    Feigvals, FZ00, FZ10, FZ11,_,_,_,_,_,_ = qml.Zxx(mec.Q,eigen, A, mec.kA, mec.QAA,
+        mec.QFA, mec.QAF, expQAA, False)
+    Froots,f_initial = scl.asymptotic_roots(tres,
+        mec.QFF, mec.QAA, mec.QFA, mec.QAF, mec.kF, mec.kA)
+    Froots=np.sort(Froots,axis=None)
+    FR = qml.AR(Froots, tres, mec.QFF, mec.QAA, mec.QFA, mec.QAF, mec.kF, mec.kA)
     startB, endB = qml.CHSvec(Froots, tres, tcrit,
          mec.QFA, mec.kA, expQAA, phiF, FR)
 
@@ -309,11 +325,12 @@ def exact_likelihood_matrices(mec,opts,matrix_outfile,asy_outfile):
     #sys.stdout.write('Generating phi matrices\n\n')
     phiA = qml.phiHJC(eGAF, eGFA, mec.kA)
     phiF = qml.phiHJC(eGFA, eGAF, mec.kF)
-    Aeigvals, AZ00, AZ10, AZ11,AC00,AC10,AC11,AA1,AD,spec_A = qml.Zxx(mec.Q, mec.kA, mec.QFF,
+    eigen,A=qml.eigs(-mec.Q)
+    Aeigvals, AZ00, AZ10, AZ11,AC00,AC10,AC11,AA1,AD,spec_A = qml.Zxx(mec.Q,eigen,A, mec.kA, mec.QFF,
             mec.QAF, mec.QFA, expQFF, True)
 
 #eigen, Z00, Z10, Z11,C00,A1,D,A
-    Feigvals, FZ00, FZ10, FZ11,FC00,FC10,FC11,FA1,FD,spec_F = qml.Zxx(mec.Q, mec.kA, mec.QAA,
+    Feigvals, FZ00, FZ10, FZ11,FC00,FC10,FC11,FA1,FD,spec_F = qml.Zxx(mec.Q,eigen,A, mec.kA, mec.QAA,
             mec.QFA, mec.QAF, expQAA, False)
 
     data = {}
@@ -375,8 +392,18 @@ def exact_likelihood_matrices(mec,opts,matrix_outfile,asy_outfile):
     Froots,f_initial = scl.asymptotic_roots(tres,
             mec.QFF, mec.QAA, mec.QFA, mec.QAF, mec.kF, mec.kA)
 
+    #don't always come out in order in dc-pyps
+    Aroots.sort()
+    Froots.sort()
+
+    #these are numpy arrays and we want to sort them by the first column
+    a_initial = a_initial[a_initial[:,1].argsort()]
+    f_initial = f_initial[f_initial[:,1].argsort()]
+
+
     asymptotic_data['p_a_initial']=a_initial
     asymptotic_data['p_f_initial']=f_initial
+    
     asymptotic_data['p_Aroots']=Aroots
     asymptotic_data['p_Froots']=Froots
 

@@ -26,7 +26,7 @@ function TestCaseBursts(paramsFile,verbose)
     tcrit_ave_openings = zeros(tcrit_test_no,1);
     
     data=test_params.data;
-    
+    test_params.tcrit = test_params.testTcrit(1);
     for i=1:length(tres_tests)
         %preprocess data and apply resolution
         

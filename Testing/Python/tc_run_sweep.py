@@ -36,12 +36,12 @@ def main(py_file):
         filename = params['DataSet']
         ioffset, nint, calfac, header = dcio.scn_read_header(filename)
         tint, iampl, iprops = dcio.scn_read_data(filename, ioffset, nint, calfac)
-        rec1 = dataset.TimeSeries(filename, header, tint, iampl, iprops)
+        rec1 = dataset.SCRecord(filename, header, tint, iampl, iprops)
 
         # Impose resolution, get open/shut times and bursts.
-        rec1.impose_resolution(tres)
+        rec1.impose_resolution(tres*1000)
         rec1.get_open_shut_periods()
-        rec1.get_bursts(tcrit)
+        rec1.get_bursts(tcrit*1000)
  
         #print burst infoi
         print('\nNumber of resolved intervals = {0:d}'.format(len(rec1.rtint)))
