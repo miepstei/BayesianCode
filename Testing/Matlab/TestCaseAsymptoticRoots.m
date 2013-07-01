@@ -29,7 +29,7 @@ test_names={'[TEST 1] - test H_AA(s)','[TEST 2] - test H_FF(s)','[TEST 3] - test
     % setup functions
     HAA = Hs(s,test_params.tres,Q_rep.Q_AA,Q_rep.Q_FF,Q_rep.Q_AF,Q_rep.Q_FA,test_params.mechanism.kE);
     HFF = Hs(s,test_params.tres,Q_rep.Q_FF,Q_rep.Q_AA,Q_rep.Q_FA,Q_rep.Q_AF,test_params.mechanism.kA);
-    WAA=Ws(s,test_params.tres,Q_rep.Q_AA,Q_rep.Q_FF,Q_rep.Q_AF,Q_rep.Q_FA,test_params.mechanism.kA,test_params.mechanism.kE);
+    WAA=Ws_mex(s,test_params.tres,Q_rep.Q_AA,Q_rep.Q_FF,Q_rep.Q_AF,Q_rep.Q_FA,test_params.mechanism.kA,test_params.mechanism.kE);
     WFF=Ws(s,test_params.tres,Q_rep.Q_FF,Q_rep.Q_AA,Q_rep.Q_FA,Q_rep.Q_AF,test_params.mechanism.kE,test_params.mechanism.kA);
     [open_roots,debug]=asymptotic_roots(test_params.tres,Q_rep.Q_AA,Q_rep.Q_FF,Q_rep.Q_AF,Q_rep.Q_FA,test_params.mechanism.kA,test_params.mechanism.kE,1); 
     a_intervals=debug.intervals.convert();
@@ -38,7 +38,6 @@ test_names={'[TEST 1] - test H_AA(s)','[TEST 2] - test H_FF(s)','[TEST 3] - test
     A_dW=dW_ds(open_roots(1),test_params.tres,Q_rep.Q_AF,Q_rep.Q_FF,Q_rep.Q_FA,test_params.mechanism.kA,test_params.mechanism.kE);
     F_dW=dW_ds(closed_roots(1),test_params.tres,Q_rep.Q_FA,Q_rep.Q_AA,Q_rep.Q_AF,test_params.mechanism.kE,test_params.mechanism.kA);
     a_AR=AR(open_roots,test_params.tres,Q_rep.Q_AA,Q_rep.Q_FF,Q_rep.Q_AF,Q_rep.Q_FA,test_params.mechanism.kA,test_params.mechanism.kE);
-    
     f_AR=AR(closed_roots,test_params.tres,Q_rep.Q_FF,Q_rep.Q_AA,Q_rep.Q_FA,Q_rep.Q_AF,test_params.mechanism.kE,test_params.mechanism.kA);
 
     [passed_tests(1),diffs(1)] = TestCompare(HAA,p_HAA,epsilon);

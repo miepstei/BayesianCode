@@ -545,7 +545,7 @@ classdef ExactLikelihood < Likelihood
             second_densities=ExactLikelihood.f0_vectorised(t(second_times)-tres,eig_valsQ,Z00)-ExactLikelihood.f1_vectorised(t(second_times)-(2*tres),eig_valsQ,Z10,Z11);
             asymptotic_densities=ExactLikelihood.asymptotic_vectorised(t(asymptotic_times)-tres,AR,roots,Qxy ,exp_xx);
                      
-            density=zeros(length(t),size(first_densities,2),size(first_densities,3));
+            density=zeros(length(t),size(Z00,2),size(Z00,3));
             density(first_times,:,:)=first_densities;
             density(second_times,:,:)=second_densities;
             density(asymptotic_times,:,:)=asymptotic_densities;
