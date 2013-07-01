@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- set of TestCases to be run for MarkovModel
+In some sense it would make sense to recode the models from mec
+to XML for Matlab, that is TODO-->
+
+<TestCases>
+	<AbsCodePath>/Volumes/Dropbox/Dropbox/Academic/PhD/Code/git-repo/</AbsCodePath>
+	<MatlabExecutable>/Applications/MATLAB_R2013a.app/bin/matlab -nojvm -nodisplay</MatlabExecutable>
+	<TestDataDir>../Samples/Simulations/20000/</TestDataDir>
+	<TestOutputDir>Results/</TestOutputDir>
+	<DataTestParams>
+		<DataSet>test_1.scn</DataSet>
+		<tres>
+			<value>0.000025</value>
+			<value>0.000050</value>
+			<value>0.000100</value>
+		</tres>
+		<tcrit>
+			<value>0.004</value>
+			<value>0.01</value>
+			<value>0.02</value>
+		</tcrit>
+	</DataTestParams>	
+	<Model id="1">
+		<name>CS 1985</name>
+		<enabled>True</enabled>
+		<mechanismfilepath mec_id="2">/TestData/demomec.mec</mechanismfilepath>
+		<epsilon>0.00001</epsilon>
+		<constraints>
+			<!-- XML Constraints not currently in use -->
+			<constraint id="12" type="mr" function="@(rate,factor)rate*factor" cycle_no="1">1</constraint>
+			<constraint id="7" type="dependent" function="@(rate,factor)rate*factor" on_id="11">1</constraint>
+			<constraint id="8" type="dependent" function="@(rate,factor)rate*factor" on_id="12">1</constraint>
+			<constraint id="9" type="dependent" function="@(rate,factor)rate*factor" on_id="13">1</constraint>
+			<constraint id="10" type="dependent" function="@(rate,factor)rate*factor" on_id="14">1</constraint>
+		</constraints>
+		<ParameterSweep>
+			<!--
+			<ParameterValues set="1">
+				these are just pathological parameter values 
+				<concentration>3e-8</concentration>
+				<tres>0.000025</tres>
+				<tcrit>0.0035</tcrit>
+				<parameter id="1" name="alpha2">9.095977453761527e+03</parameter>
+				<parameter id="2" name="beta2">1.217408275903862e+05</parameter>
+				<parameter id="3" name="alpha1a">5.920028948322338e+03</parameter>
+				<parameter id="4" name="beta1a">58.976737247911345</parameter>
+				<parameter id="5" name="alpha1b">4.901600425891413e+04</parameter>
+				<parameter id="6" name="beta1b">74.838096944335831</parameter>
+				<parameter id="7" name="k(-2)a">1.638409654463575e+03</parameter>
+				<parameter id="8" name="k(+2)a">200000000</parameter>
+				<parameter id="9" name="k(-2)b">3.690261462348405e+03</parameter>
+				<parameter id="10" name="k(+2)b">3.327955187896532e+08</parameter>
+				<parameter id="11" name="k(-1)a">1.638409654463575e+03</parameter>
+				<parameter id="12" name="k(+1)a">200000000</parameter>
+				<parameter id="13" name="k(-1)b">3.690261462348405e+03</parameter>
+				<parameter id="14" name="k(+1)b">3.327955187896532e+08</parameter>			
+			</ParameterValues>  
+			-->
+			
+			<ParameterValues set="1">
+				<!-- guesses 1 from 2003 paper -->
+				<concentration>3e-8</concentration>
+				<tres>0.000025</tres>
+				<tcrit>0.0035</tcrit>
+				<parameter id="1" name="alpha2">1500</parameter>
+				<parameter id="2" name="beta2">50000</parameter>
+				<parameter id="3" name="alpha1a">13000</parameter>
+				<parameter id="4" name="beta1a">50</parameter>
+				<parameter id="5" name="alpha1b">15000</parameter>
+				<parameter id="6" name="beta1b">10</parameter>
+				<parameter id="7" name="k(-2)a">6000</parameter>
+				<parameter id="8" name="k(+2)a">0.100000E+09</parameter>
+				<parameter id="9" name="k(-2)b">5000</parameter>
+				<parameter id="10" name="k(+2)b">0.1E+09</parameter>
+				<parameter id="11" name="k(-1)a">6000</parameter>
+				<parameter id="12" name="k(+1)a">0.100000E+09</parameter>
+				<parameter id="13" name="k(-1)b">5000</parameter>
+				<parameter id="14" name="k(+1)b">0.1E+09</parameter>			
+			</ParameterValues>	
+			
+		</ParameterSweep>
+	</Model>
+</TestCases>
