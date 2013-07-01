@@ -1,7 +1,15 @@
-function [min_function_value,fittedRates,min_parameters] = fit_simplex( dataFile,paramsFile,varargin )
-%fit_simplex Summary of this function goes here
-%   Detailed explanation goes here
-
+function [min_function_value,fittedRates,min_parameters,iterations,rejigs,errors,debug] = fit_simplex( dataFile,paramsFile,varargin )
+    %fit_simplex - a simplex fitting for a mechanism, datafile, params and
+    %optional starting rates
+    %INPUTS:
+    %   datafile: the .scn file to calculate the likelihood for
+    %   paramsfile: the set of parameters and mechanism 
+    %   varargin: a parameter map (int,double) of starting parameters
+    %OUTPUT:
+    %   min_function_value: double, negative log likelihood of the best fit
+    %   fitted_rates: all fitted rates from the mechanism (inc constrained
+    %   min parameters: best fit of the parameters
+    
     load(paramsFile);
 
     [~,data]=DataController.read_scn_file(dataFile);
@@ -33,7 +41,7 @@ function [min_function_value,fittedRates,min_parameters] = fit_simplex( dataFile
     init_params=test_params.mechanism.getParameters(true);
     splx=Simplex();
 
-    a=tic;[min_function_value,min_parameters,debug]=splx.run_simplex(lik,init_params,test_params);toc(a);
+    a=tic;[min_function_value,min_parameters,iterations,rejigs,errors,debug]=splx.run_simplex(lik,init_params,test_params);toc(a);
 
     test_params.mechanism.toString()
     fittedRates = test_params.mechanism.getRates();
