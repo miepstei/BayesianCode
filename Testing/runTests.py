@@ -38,13 +38,11 @@ def runTests(dom,projectDir):
     params['TestTres'] = []
     for tres in testTresSet[0].getElementsByTagName("value"):
         params['TestTres'].append(float(tres.childNodes[0].data))
-        print params['TestTres']
     
     testTcritSet = dataTestParams[0].getElementsByTagName("tcrit")
     params['TestTcrit'] = []
     for tcrit in testTcritSet[0].getElementsByTagName("value"):
         params['TestTcrit'].append(float(tcrit.childNodes[0].data))
-        print params['TestTcrit']
  
 	#for matlabTestScript in ('TestCaseBursts'): 
     	#executable = "try %s(\'%s\',\'%s\'),quit; catch err; disp('[ERROR]: in evaluating %s'); disp(err);,quit; end" % (matlabTestScript,mat_file,'false',matlabTestScript)
