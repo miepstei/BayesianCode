@@ -1,4 +1,4 @@
-function parallelProfileLikelihood_2003(points,parameter_keys,param_key,min_rng,max_rng,outfile,datafile,mechfile)
+function clusterProfileLikelihood(points,parameter_keys,param_key,min_rng,max_rng,outfile,datafile,mechfile)
        
     %need to generate some starting values
     random_start = zeros(points,length(parameter_keys)-1);
