@@ -37,9 +37,7 @@ function ml_script(outfile,random_starts,datafile,paramsFile)
     lik = ExactLikelihood();
     [test_params.open_times,test_params.closed_times,test_params.withinburst_count,test_params.l_openings]=lik.calculate_burst_parameters(bursts);
     clear lik; 
-
-
-
+    
     fitted_params=zeros(random_starts,length(parameter_keys));
     fitted_lik = zeros(random_starts,1);
     fitted_iter = zeros(random_starts,1);
@@ -70,7 +68,7 @@ function ml_script(outfile,random_starts,datafile,paramsFile)
             [min_function_value,min_parameters,iter,rejigs,errors,~]=splx.run_simplex(lik,init_params,test_params);
             fitted_params(i,:) = cell2mat(min_parameters.values);
             fitted_lik(i) = min_function_value;
-            fitted_iter(i) = iter
+            fitted_iter(i) = iter;
             fitted_rejigs(i) = rejigs;
             fitted_errors(i) = errors;
         catch err
@@ -88,7 +86,7 @@ function ml_script(outfile,random_starts,datafile,paramsFile)
     end
     d=toc(c);
     fprintf('\nsecs taken OVERALL = %f\n',d)
-    save(outfile,'fitted_params','fitted_lik','fitted_iter','start_params')
+    save(outfile,'fitted_params','fitted_lik','fitted_iter','start_params','fitted_rejigs','fitted_errors')
 end
 
 
