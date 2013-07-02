@@ -180,6 +180,7 @@ classdef Simplex < Optimisation
                         reflect_lik = funct.evaluate_function(reflected,opts);
                     catch err
                         disp(err)
+                        disp(err.cause{1}.message)
                         errors=errors+1;
                         if opts.debugOn
                             %we want to catch the parameters
@@ -234,7 +235,8 @@ classdef Simplex < Optimisation
                             try
                                 contracted_lik = funct.evaluate_function(contracted,opts);
                             catch err
-                                disp(err) 
+                                disp(err)
+                                disp(err.cause{1}.message)
                                 rejig=true;
                                 errors=errors+1;
                                 if opts.debugOn

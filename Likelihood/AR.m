@@ -30,6 +30,7 @@ R=zeros(kx,kx,kx);
 left=zeros(kx,kx);
 right=zeros(kx,kx);
 u=ones(kx,1);
+EPS_VALUE=eps;
 
 for i=1:kx
    W=Ws_mex(roots(i),tres,Qxx,Qyy,Qxy,Qyx,kx,ky);
@@ -39,38 +40,46 @@ for i=1:kx
    % not sure why we can't use the eigenvectors of say eigs(Ws) here
    u=ones(length(W),1);
    S=[W u];
+   rc=rcond(S*S');
+   if rc < EPS_VALUE
+       %solving using the reduced Q-method to prevent ill-conditioned arrors
+       %when (S*S') is singular
+       x=bsxfun(@minus,W(1:end-1,:),W(end,:));
+       x=x(:,1:end-1);   
+       r=W(end,1:end-1);
    
-   if rcond(S*S')< 1e-16
-       err = MException('AR:SingularMatrix', ...
-           'LEFT eigenvectors - x matrix from reduced Q-method is singular %f',rcond(x));
-       throw(err)
+       if rcond(x)< EPS_VALUE 
+           err = MException('AR:SingularMatrix', ...
+             'LEFT eigenvectors - both reduced Q-method and S method produce singular matrices %f',rcond(x));
+           throw(err);
+   
+       end
+       solution = -r*x^-1;
+       solution(length(solution)+1) = 1-sum(solution);
+       left(i,:) = solution;       
+   else
+       left(i,:) = u'*(S*S')^-1;
    end
 
-   left(i,:) = u'*(S*S')^-1;
-   
-   %solving using the reduced Q-method to prevent ill-conditioned arrors
-   %when (S*S') is singular
-   %x=bsxfun(@minus,W(1:end-1,:),W(end,:));
-   %x=x(:,1:end-1);
-   %r=W(end,1:end-1);
-   %if rcond(x)< 1e-16
-   %    err = MException('AR:SingularMatrix', ...
-   %     'LEFT eigenvectors - x matrix from reduced Q-method is singular %f',rcond(x));
-       %throw(err);
-   %end
-   %solution = -r*x^-1;
-   %solution(length(solution)+1) = 1-sum(solution);
-   %left(i,:) = solution;
-   
    %right eigenvectors
    S=[W' u]; 
-   if rcond(S*S')< 1e-16
-       err = MException('AR:SingularMatrix', ...
-       'RIGHT eigenvectors - x matrix from reduced Q-method is singular %f',rcond(x));
-       %throw(err);
-   end      
-   
-   right(i,:)=u'*(S*S')^-1;
+   rc=rcond(S*S');
+   if rc < EPS_VALUE
+       W=W';
+       x=bsxfun(@minus,W(1:end-1,:),W(end,:));
+       x=x(:,1:end-1);
+       r=W(end,1:end-1);
+       if rcond(x)< EPS_VALUE
+           err = MException('AR:SingularMatrix', ...
+          'LEFT eigenvectors - both reduced Q-method and S method produce singular matrices %f',rcond(x));
+           throw(err);
+       end   
+       solution = -r*x^-1;
+       solution(length(solution)+1) = 1-sum(solution);
+       right(i,:)=solution;       
+   else      
+       right(i,:)=u'*(S*S')^-1;
+   end
    
    %W=W';
    %x=bsxfun(@minus,W(1:end-1,:),W(end,:));
