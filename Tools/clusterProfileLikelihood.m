@@ -17,8 +17,8 @@ function clusterProfileLikelihood(points,parameter_keys,param_key,min_rng,max_rn
     end
     
     fprintf('Profiling likelihood for parameter %i\n',parameter_keys(fixed_param_key_idx))
-    [profiles,profile_likelihoods]=profileLikelihood(datafile,mechfile,points,param_key,min_rng(fixed_param_key_idx),max_rng(fixed_param_key_idx),free_parameter_map);
-    save(outfile, 'profiles','profile_likelihoods','points','parameter_keys','min_rng','max_rng','outfile','datafile','mechfile','free_parameter_map');
+    [profiles,profile_likelihoods,profile_errors,profile_iter,profile_rejigs]=profileLikelihood(datafile,mechfile,points,param_key,min_rng(fixed_param_key_idx),max_rng(fixed_param_key_idx),free_parameter_map);
+    save(outfile, 'profile_errors','profile_iter','profile_rejigs','profiles','profile_likelihoods','points','parameter_keys','min_rng','max_rng','outfile','datafile','mechfile','free_parameter_map');
 
 end
 

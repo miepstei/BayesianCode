@@ -1,4 +1,4 @@
-function [param_values,profile_likelihoods]=profileLikelihood(dataFile,paramsFile,points,param_no,min_rng,max_rng,param_start_values)
+function [param_values,profile_likelihoods,profile_errors,profile_iter,profile_rejigs]=profileLikelihood(dataFile,paramsFile,points,param_no,min_rng,max_rng,param_start_values)
     
     %INPUTS:
     %dataFile - scn file containing the recording
@@ -46,6 +46,9 @@ function [param_values,profile_likelihoods]=profileLikelihood(dataFile,paramsFil
     init_params=test_params.mechanism.getParameters(true);
     param_values = zeros(init_params.length()+1,points);
     profile_likelihoods = zeros(points,1);
+    profile_errors = zeros(points,1);
+    profile_iter = zeros(points,1);
+    profile_rejigs = zeros(points,1);
       
     %calculate exp schedule between min and max containing points
     profile_rates=exp(linspace(log(min_rng),log(max_rng),points));
@@ -65,8 +68,11 @@ function [param_values,profile_likelihoods]=profileLikelihood(dataFile,paramsFil
         
         try
             fprintf('Fitting for profile point %i Rate name %s value %f\n', p_rate,rate.name,profile_rates(p_rate));
-            [min_function_value,min_parameters,~]=splx.run_simplex(lik,start_params,test_params);
+            [min_function_value,min_parameters,iter,rejigs,errors,~]=splx.run_simplex(lik,start_params,test_params);
             profile_likelihoods(p_rate)=min_function_value;
+            profile_errors(p_rate) = errors;
+            profile_iter(p_rate) = iter;
+            profile_rejigs(p_rate)=rejigs;
             param_values(1,p_rate) = log(profile_rates(p_rate));
             param_values(2:end,p_rate)=cell2mat(min_parameters.values);
         catch MExc
@@ -76,6 +82,10 @@ function [param_values,profile_likelihoods]=profileLikelihood(dataFile,paramsFil
             profile_likelihoods(p_rate)=NaN;
             param_values(1,p_rate) = profile_rates(p_rate);
             param_values(2:end,p_rate)=NaN;
+            profile_errors(p_rate) = NaN;
+            profile_iter(p_rate) = NaN;
+            profile_rejigs(p_rate)=NaN;            
+            
 
         end
 
