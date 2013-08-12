@@ -27,7 +27,7 @@ function TestCaseExactLikelihood(paramsFile,verbose)
     
     if verbose
         if sum(passed_tests)==total_tests
-            fprintf('[ALL TESTS PASSED] - Maximum likelihoods are the same %d tests passed\n\n',total_tests)
+            fprintf('[ALL TESTS PASSED] - Maximum likelihoods %f are the same %d tests passed\n\n',log_likelihood,total_tests)
         else
             fprintf('\n\n[%i FAILED TESTS]\n\n',total_tests-sum(passed_tests))
             fprintf('Likelihoods - MATLAB %f PYTHON %f',log_likelihood,p_sim)

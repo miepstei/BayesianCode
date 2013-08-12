@@ -109,7 +109,7 @@ def runTests(dom,projectDir):
                           tc_run_sweep.main(py_file)
 
                           #run through the MATLAB scripts which generates equivilent functions and tests output 
-                          for matlabTestScript in ('TestCaseBursts','TestCaseAsymptoticRoots','TestCaseExactLikelihoodSetup','TestCaseConstraints','TestCaseMissedEventsPdfs','TestCaseExactLikeihood','TestCaseVectorisedLikelihood'): 
+                          for matlabTestScript in ('TestCaseBursts','TestCaseAsymptoticRoots','TestCaseExactLikelihoodSetup','TestCaseConstraints','TestCaseMissedEventsPdfs','TestCaseExactLikelihood','TestCaseVectorisedLikelihood'): 
                               executable = "try %s(\'%s\',\'%s\'),quit; catch err; disp('[ERROR]: in evaluating %s'); disp(err);,quit; end" % (matlabTestScript,mat_file,'false',matlabTestScript)
                               print "Executing MATLAB test " + executable + "\n"
                               system(matExe + ' -r \"' + executable + "\"")

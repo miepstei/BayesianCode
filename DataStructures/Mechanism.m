@@ -365,6 +365,7 @@ classdef Mechanism
                     constrained_rate.rate_constant=constrainted_rate_constant;
                     obj.rates(keySet{i}) = constrained_rate;
                 elseif strcmp(constraint.type,'mr')
+                    %TODO:this should always be done last
                     obj=updateMicroscopicReversibility(obj,constraint.cycle_no);
                 end
             end

@@ -11,12 +11,7 @@ classdef DataController
 
            %now read the data
            data=DataController.read_scn_data(header,scn_handle);
-                     
-           %sprintf(header.toString(header))
-           %sprintf(data.toString())
-           %sprintf(data.toString())
-           %disp(data.getAmpAt(data.getPoints))
-           
+
            fclose(scn_handle);
 
         end
@@ -89,7 +84,7 @@ classdef DataController
            mechanisms=struct('version',version,'mec_struct',meclist,'max_mecnum',max([meclist.mec_num]));
         end
         
-        function [rate_list cycle_mechanism ratetitle] = read_mechanism(mecfile,mec_header)
+        function [rate_list, cycle_mechanism, ratetitle] = read_mechanism(mecfile,mec_header)
            f=fopen(mecfile);
            
            start=mec_header.start;
@@ -355,14 +350,14 @@ classdef DataController
         
         function mec=create_mechanism(mecfile,mec_header,constraints)
             %mec files don't come in with constraints so we need to add
-            %these here
-                   
+            %these here                 
             [rate_list, cycle_mechanism, ratetitle] = DataController.read_mechanism(mecfile,mec_header);
-            %constraints=containers.Map('KeyType', 'int32','ValueType','any'); 
-            mec=Mechanism(rate_list,cycle_mechanism,constraints,ratetitle);   
+            
+             
+            mec=MechanismUpdate(rate_list,cycle_mechanism,constraints,ratetitle);   
         end
            
-        function mechanism=read_mechanism_demo()
+        function mechanism=read_mechanism_demo(refactor)
             %this is effectively Colqhoun '82 
             ARS  = State('A', 'AR*', 60e-12,1);
             A2RS = State('A', 'A2R*', 60e-12,2);
@@ -449,9 +444,14 @@ classdef DataController
            constraints(8)=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',8,'args',1); %FIXED!
            constraints(10)=struct('type','mr','function',@(rate,factor)rate,'rate_id',10,'cycle_no',1);
            
-           mechanism=Mechanism(rate_list,cycles,constraints,'FIVE STATE MODEL');
+           if refactor
+               mechanism=MechanismUpdate(rate_list,cycles,constraints,'FIVE STATE MODEL');
+           else
+               mechanism=Mechanism(rate_list,cycles,constraints,'FIVE STATE MODEL');
+           end
             
         end
+        
         
 
         function write_mec_file(mechanism,outfile)
@@ -508,10 +508,11 @@ classdef DataController
             if t_int(end) == 0 && i_props(end) ~= 8
                 i_props(end)=8;
                 
-            elseif t_int(end) == 0
+            else %if t_int(end) == 0
                 t_int(end+1)=-1;
                 i_ampl(end+1)=0;
                 i_props(end+1)=8;
+                n_int=n_int+1;
             end
             
         

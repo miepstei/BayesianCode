@@ -1,10 +1,10 @@
 classdef Simplex < Optimisation
     properties
-        step=5;
+        step=10;
         reflect=1.0;
-        extend=2;
+        extend=2.0;
         contract=0.5;
-        shrink=0.25;
+        shrink=0.5;
         res=10.0;
         per=0.001; %relative error xopts for convergence
         error=0.001; %relative error for convergence
@@ -135,7 +135,7 @@ classdef Simplex < Optimisation
                 [simplex_points,function_values] = Simplex.sort_simplex(simplex_points,function_values);
 
                 if (mod (iterations,100) == 0)
-                    fprintf('Iteration %d best likelihood %f\n',iterations,function_values(1))
+                    fprintf('Iteration %d best likelihood %f params %s\n',iterations,function_values(1),mat2str(cellfun(@exp,simplex_points{1}.values)))
                 end
                 
                 %B - check for algorithm convergence
