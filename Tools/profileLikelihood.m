@@ -1,4 +1,4 @@
-function [param_values,profile_likelihoods,profile_errors,profile_iter,profile_rejigs]=profileLikelihood(dataFile,paramsFile,points,param_no,min_rng,max_rng,param_start_values)
+function [param_values,profile_likelihoods,profile_errors,profile_iter,profile_rejigs]=profileLikelihood(dataFile,paramsFile,points,param_no,min_rng,max_rng,param_start_values,newMech)
     
     %INPUTS:
     %dataFile - scn file containing the recording
@@ -25,22 +25,32 @@ function [param_values,profile_likelihoods,profile_errors,profile_iter,profile_r
     test_params.isCHS = 1; 
     test_params.data = data;
     test_params.conc = concentration;
+    test_params.newMech = newMech;
 
     %preprocess data and apply resolution
     resolvedData = RecordingManipulator.imposeResolution(data,test_params.tres);
     bursts = RecordingManipulator.getBursts(resolvedData,test_params.tcrit);
-    test_params.bursts=bursts;
+    if test_params.newMech
+        dcprogs_bursts = [bursts.withinburst];
+        dcprogs_bursts = {dcprogs_bursts.intervals};
+        test_params.bursts=dcprogs_bursts;
+    else
+        test_params.bursts=bursts;
+    end
 
-    lik = ExactLikelihood();
-    [test_params.open_times,test_params.closed_times,test_params.withinburst_count,test_params.l_openings]=lik.calculate_burst_parameters(bursts);
-       
+   
     %we need mix and max limits for each param. Need to treat the param as
     %fixed to generate the profile likelihood
-    
+    ratename = test_params.mechanism.rates(param_no).name;
+    lik=DCProgsExactLikelihood();
     %fix the parameter to be profiled as a constraint
-    rate = test_params.mechanism.rates(param_no);
-    constraint=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',param_no,'args',1);
-    test_params.mechanism.setConstraint(param_no,constraint);
+    if test_params.newMech
+        test_params.mechanism.setConstraint(param_no,param_no,1);
+    else
+        constraint=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',param_no,'args',1);
+        test_params.mechanism.setConstraint(param_no,param_no,1);
+    end
+    
     
     %set up the return matrices
     init_params=test_params.mechanism.getParameters(true);
@@ -63,11 +73,17 @@ function [param_values,profile_likelihoods,profile_errors,profile_iter,profile_r
         
         %fit the profile rate and get the new start parameters after
         %applying constraints
-        test_params.mechanism.setRate(param_no,profile_rates(p_rate),true);
+        if test_params.newMech
+            rates=containers.Map(param_no,profile_rates(p_rate));
+            test_params.mechanism.setRates(rates);
+        else
+            test_params.mechanism.setRate(param_no,profile_rates(p_rate),true);
+        end
+        
         start_params = test_params.mechanism.getParameters(true);
         
         try
-            fprintf('Fitting for profile point %i Rate name %s value %f\n', p_rate,rate.name,profile_rates(p_rate));
+            fprintf('Fitting for profile point %i Rate name %s value %f\n', p_rate,ratename,profile_rates(p_rate));
             [min_function_value,min_parameters,iter,rejigs,errors,~]=splx.run_simplex(lik,start_params,test_params);
             profile_likelihoods(p_rate)=min_function_value;
             profile_errors(p_rate) = errors;

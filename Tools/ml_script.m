@@ -30,7 +30,7 @@ function ml_script(outfile,random_starts,datafile,paramsFile)
         start_params(i,:)=cell2mat(rand_params.values);
         a=tic;
         try
-            [min_function_value,fittedRates,min_parameters,iter,rejigs,errors,~] = fit_simplex( datafile,paramsFile,1,rand_params );
+            [min_function_value,fittedRates,~,iter,rejigs,errors,~] = fit_simplex( datafile,paramsFile,1,rand_params );
             fitted_params(i,:) = cell2mat(fittedRates.values);
             fitted_lik(i) = min_function_value;
             fitted_iter(i) = iter;

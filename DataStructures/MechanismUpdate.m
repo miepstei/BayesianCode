@@ -52,7 +52,7 @@ classdef MechanismUpdate < handle
                 if strcmp('dependent',constraint.type)
                     obj.linear_constraint_matrix(con_rate,con_rate)=0; %needs to be first as can be constrained on itself!
                     obj.linear_constraint_matrix(con_rate,constraint.rate_id)=constraint.args;  
-                else strcmp('mr',constraint.type)
+                elseif strcmp('mr',constraint.type)
                     cycles(constraint.cycle_no).mr_constrainted_rate=constraint.rate_id;
                 end
             end
@@ -133,6 +133,27 @@ classdef MechanismUpdate < handle
             obj.kF=obj.kA+obj.kB;
             
             obj.k=length(obj.states);
+            
+        end
+        
+        function setConstraint(obj,rate_id,constrained_to_id,factor)
+            %INPUTS - rate_id of the rate to be constrained
+            %       - constrained_to_id: id of the rate to be constrained to
+            %       - factor - linear constraint factor
+            obj.linear_constraint_matrix(rate_id,rate_id)=0;
+            obj.linear_constraint_matrix(rate_id,constrained_to_id)=factor;
+            obj.constraints(end+1)=rate_id;
+            obj.constraints=sort(obj.constraints);
+            obj.parameters(obj.parameters==rate_id)=[];
+        end
+        
+        function removeConstraint(obj,rate_id)
+            %INPUTS - rate_id of the rate to be constrained
+            obj.linear_constraint_matrix(rate_id,:)=0;
+            obj.linear_constraint_matrix(rate_id,rate_id)=1;
+            obj.constraints(obj.constraints==rate_id)=[];
+            obj.parameters(end+1)=rate_id;
+            obj.parameters=sort(obj.parameters);            
             
         end
         

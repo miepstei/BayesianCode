@@ -1,4 +1,4 @@
-function [min_function_value,fittedRates,min_parameters,iterations,rejigs,errors,debug] = fit_simplex( dataFile,paramsFile,mex,varargin )
+function [min_function_value,fittedRates,min_parameters,iterations,rejigs,errors,debug] = fit_simplex( dataFile,paramsFile,mex,newMech,varargin )
     %fit_simplex - a simplex fitting for a mechanism, datafile, params and
     %optional starting rates
     %INPUTS:
@@ -29,7 +29,7 @@ function [min_function_value,fittedRates,min_parameters,iterations,rejigs,errors
     test_params.data = data;
     test_params.conc = concentration;
     test_params.debugOn=1;
-    test_params.newMech=1;
+    test_params.newMech=newMech;
 
     %preprocess data and apply resolution
     resolvedData = RecordingManipulator.imposeResolution(data,test_params.tres);
