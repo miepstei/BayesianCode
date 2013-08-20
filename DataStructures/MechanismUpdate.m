@@ -244,10 +244,10 @@ classdef MechanismUpdate < handle
                     end
                     if (rate_value < lower_limit)
                         rate_value = lower_limit;
-                        fprintf('[WARN] param %i out of range - set to LOWER (%f) value\n',key,lower_limit)
+                        fprintf('[WARN] param %i out of range - set to LOWER (%f) value\n\n',lower_limit)
                     elseif rate_value > upper_limit
                         rate_value = upper_limit;
-                        fprintf('[WARN] param %i out of range - set to UPPER (%f) value\n',key,upper_limit)
+                        fprintf('[WARN] param %i out of range - set to UPPER (%f) value\n\n',upper_limit)
                     end                  
                     obj.rates(keys{i}).rate_constant=rate_value;                   
                 else 

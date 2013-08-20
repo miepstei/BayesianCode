@@ -12,7 +12,7 @@ parfor i=1:length(c)
     fprintf('Fit %i Fitting to datafile %s\n',i,c{i})
     d=strsplit(c{i},'_');
     e=strsplit(d{2},'.');
-    [final_likelihood,fittedRates,min_parameters]=fit_simplex(c{i},mechParams);%'/Volumes/Users/Dropbox/Academic/PhD/Code/git-repo/Testing/Results/matlab_params_CS 1985_4.mat'
+    [final_likelihood,fittedRates,min_parameters]=fit_simplex(c{i},mechParams);
     index = str2double(e{1});
     params(i,:)=fittedRates(:,2);
     likelihoods(i)=final_likelihood;

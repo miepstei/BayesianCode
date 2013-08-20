@@ -1,108 +1,81 @@
-function [param_values,profile_likelihoods,profile_errors,profile_iter,profile_rejigs]=profileLikelihood(dataFile,paramsFile,points,param_no,min_rng,max_rng,param_start_values,newMech)
-    
+function [param_values,profile_likelihoods,profile_errors,profile_iter,profile_rejigs,free_parameter_map]=profileLikelihood(experiment,points,param_no,min_rng,max_rng)
+    %This script generates a likelihood profile for a given parameter
+
     %INPUTS:
-    %dataFile - scn file containing the recording
-    %paramsFile - file containing which mechanism to use and initial
-    %points  - the number of points in which to sample the min-max param
-    %param_no - the key with which to run the profile likeihood for
-    %min_rng - min value of the parameter from which to start the profile
-    %max_rng - max value of the parameter from which to start the profile
-    %param_start_values - a cell array of maps with starting values
+    %experiment - struct,experimental setup including data, model and params
+    %points - the number of points in the profile likelihood
+    %param_no - the parameter with which to run the profile likeihood for
+    %min_rng - array - min values of the params in the model
+    %max_rng - array - max values of the params in the model
+    %param_start_values - a cell array of maps with [points] starting values
     
     %OUTPUTS:
     %param_values - the fitted param profile params (k,points)
     %profile_likelihoods - the fitted param profile likelihoods (points,1)
 
-    load(paramsFile);
-    [~,data]=DataController.read_scn_file(dataFile);
-    data.intervals=data.intervals/1000;
-
-    test_params.mechanism=ModelSetup(paramsFile);
-    test_params.islogspace=true;
-    test_params.debugOn=true;
-    test_params.tres = tres; 
-    test_params.tcrit = tcrit;  
-    test_params.isCHS = 1; 
-    test_params.data = data;
-    test_params.conc = concentration;
-    test_params.newMech = newMech;
-
-    %preprocess data and apply resolution
-    resolvedData = RecordingManipulator.imposeResolution(data,test_params.tres);
-    bursts = RecordingManipulator.getBursts(resolvedData,test_params.tcrit);
-    if test_params.newMech
-        dcprogs_bursts = [bursts.withinburst];
-        dcprogs_bursts = {dcprogs_bursts.intervals};
-        test_params.bursts=dcprogs_bursts;
-    else
-        test_params.bursts=bursts;
-    end
-
-   
     %we need mix and max limits for each param. Need to treat the param as
     %fixed to generate the profile likelihood
-    ratename = test_params.mechanism.rates(param_no).name;
-    lik=DCProgsExactLikelihood();
-    %fix the parameter to be profiled as a constraint
-    if test_params.newMech
-        test_params.mechanism.setConstraint(param_no,param_no,1);
-    else
-        constraint=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',param_no,'args',1);
-        test_params.mechanism.setConstraint(param_no,param_no,1);
+    ratename = experiment.model.rates(param_no).name;
+    
+    %fix the parameter to be profiled as a constraint in the model
+    experiment.model.setConstraint(param_no,param_no,1);
+
+    %generate some random starting position
+    init_params=experiment.model.getParameters(true);
+    parameter_keys = cell2mat(init_params.keys);
+    random_start = zeros(points,init_params.Count);
+    free_parameter_map=cell(points,1);
+    
+    %find the indices and values of all other free params into the range
+    %arrays
+    range_param_idx=find(parameter_keys~=param_no);
+   
+    for j=1:length(range_param_idx)   
+        random_start(:,j)=randi([min_rng(range_param_idx(j)) max_rng(range_param_idx(j))],points,1);   
+    end
+    for profile_point=1:points
+        free_parameter_map{profile_point} = containers.Map(int32(parameter_keys),random_start(profile_point,:));
     end
     
-    
     %set up the return matrices
-    init_params=test_params.mechanism.getParameters(true);
     param_values = zeros(init_params.length()+1,points);
     profile_likelihoods = zeros(points,1);
     profile_errors = zeros(points,1);
     profile_iter = zeros(points,1);
     profile_rejigs = zeros(points,1);
+    
+
       
     %calculate exp schedule between min and max containing points
-    profile_rates=exp(linspace(log(min_rng),log(max_rng),points));
+    profile_rates=exp(linspace(log(min_rng(param_no)),log(max_rng(param_no)),points));
     
-    splx=Simplex();
     for p_rate=1:length(profile_rates)
         %set rates on mechanism, specified from param_start_values typically either from random starting
         %positions or from constant rates
         
-        start_values = param_start_values{p_rate} ;
-        test_params.mechanism.setParameters(start_values);
-        
-        %fit the profile rate and get the new start parameters after
-        %applying constraints
-        if test_params.newMech
-            rates=containers.Map(param_no,profile_rates(p_rate));
-            test_params.mechanism.setRates(rates);
-        else
-            test_params.mechanism.setRate(param_no,profile_rates(p_rate),true);
-        end
-        
-        start_params = test_params.mechanism.getParameters(true);
-        
+        start_values = free_parameter_map{p_rate} ;
+        experiment.model.setParameters(start_values);
+        experiment.model.setRates(containers.Map(param_no,profile_rates(p_rate)));
+               
         try
             fprintf('Fitting for profile point %i Rate name %s value %f\n', p_rate,ratename,profile_rates(p_rate));
-            [min_function_value,min_parameters,iter,rejigs,errors,~]=splx.run_simplex(lik,start_params,test_params);
-            profile_likelihoods(p_rate)=min_function_value;
-            profile_errors(p_rate) = errors;
-            profile_iter(p_rate) = iter;
-            profile_rejigs(p_rate)=rejigs;
+            fit = fit_experiment(experiment);
+            profile_likelihoods(p_rate)=fit.likelihood;
+            profile_errors(p_rate) = fit.errors;
+            profile_iter(p_rate) = fit.iterations;
+            profile_rejigs(p_rate)=fit.rejigs;
             param_values(1,p_rate) = log(profile_rates(p_rate));
-            param_values(2:end,p_rate)=cell2mat(min_parameters.values);
+            param_values(2:end,p_rate)=cell2mat(fit.parameters.values)';
         catch MExc
             fprintf('Fitting for profile point %i (%d) failed (%s)\n', p_rate,profile_rates(p_rate),MExc.message);
-            fprintf(test_params.mechanism.toString());
-            fprintf('\nmoving on...\n')
+            fprintf(experiment.model.toString());
+            fprintf('\nmoving on to next point...\n')
             profile_likelihoods(p_rate)=NaN;
             param_values(1,p_rate) = profile_rates(p_rate);
             param_values(2:end,p_rate)=NaN;
             profile_errors(p_rate) = NaN;
             profile_iter(p_rate) = NaN;
             profile_rejigs(p_rate)=NaN;            
-            
-
         end
 
     end

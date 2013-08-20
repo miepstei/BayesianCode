@@ -348,13 +348,16 @@ classdef DataController
            
         end
         
-        function mec=create_mechanism(mecfile,mec_header,constraints)
+        function mec=create_mechanism(mecfile,mec_header,constraints,refactor)
             %mec files don't come in with constraints so we need to add
             %these here                 
             [rate_list, cycle_mechanism, ratetitle] = DataController.read_mechanism(mecfile,mec_header);
             
-             
-            mec=MechanismUpdate(rate_list,cycle_mechanism,constraints,ratetitle);   
+            if refactor
+                mec=MechanismUpdate(rate_list,cycle_mechanism,constraints,ratetitle);   
+            else
+                mec=Mechanism(rate_list,cycle_mechanism,constraints,ratetitle);  
+            end
         end
            
         function mechanism=read_mechanism_demo(refactor)

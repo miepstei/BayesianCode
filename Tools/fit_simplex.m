@@ -1,4 +1,4 @@
-function [min_function_value,fittedRates,min_parameters,iterations,rejigs,errors,debug] = fit_simplex( dataFile,paramsFile,mex,newMech,varargin )
+function [min_function_value,fittedRates,min_parameters,iterations,rejigs,errors,debug] = fit_simplex( dataFile,paramsFile,dcprogs,newMech,varargin )
     %fit_simplex - a simplex fitting for a mechanism, datafile, params and
     %optional starting rates
     %INPUTS:
@@ -20,7 +20,7 @@ function [min_function_value,fittedRates,min_parameters,iterations,rejigs,errors
     [~,data]=DataController.read_scn_file(dataFile);
     data.intervals=data.intervals/MSEC_CORRECTION;
 
-    test_params.mechanism=ModelSetup(paramsFile); 
+    test_params.mechanism=ModelSetup(paramsFile,newMech); 
     test_params.islogspace=true;
     test_params.debugOn=true;
     test_params.tres = tres; 
@@ -34,7 +34,7 @@ function [min_function_value,fittedRates,min_parameters,iterations,rejigs,errors
     %preprocess data and apply resolution
     resolvedData = RecordingManipulator.imposeResolution(data,test_params.tres);
     bursts = RecordingManipulator.getBursts(resolvedData,test_params.tcrit);
-    if test_params.newMech
+    if dcprogs
         dcprogs_bursts = [bursts.withinburst];
         dcprogs_bursts = {dcprogs_bursts.intervals};
         test_params.bursts=dcprogs_bursts;
@@ -55,7 +55,7 @@ function [min_function_value,fittedRates,min_parameters,iterations,rejigs,errors
         test_params.mechanism.setParameters(varargin{1});       
     end
 
-    if mex
+    if dcprogs
         lik=DCProgsExactLikelihood();
     else
         lik = ExactLikelihood();
