@@ -16,29 +16,31 @@ function [param_values,profile_likelihoods,profile_errors,profile_iter,profile_r
     %we need mix and max limits for each param. Need to treat the param as
     %fixed to generate the profile likelihood
     ratename = experiment.model.rates(param_no).name;
+    init_params=experiment.model.getParameters(true);
+    parameter_keys = cell2mat(experiment.model.getParameters(true).keys);
     
     %fix the parameter to be profiled as a constraint in the model
     experiment.model.setConstraint(param_no,param_no,1);
 
     %generate some random starting position
-    init_params=experiment.model.getParameters(true);
-    parameter_keys = cell2mat(init_params.keys);
-    random_start = zeros(points,init_params.Count);
+
+    random_start = zeros(points,init_params.Count-1); %fixing one parameter
     free_parameter_map=cell(points,1);
     
     %find the indices and values of all other free params into the range
     %arrays
     range_param_idx=find(parameter_keys~=param_no);
+    range_profile_idx = find(parameter_keys==param_no);
    
     for j=1:length(range_param_idx)   
         random_start(:,j)=randi([min_rng(range_param_idx(j)) max_rng(range_param_idx(j))],points,1);   
     end
     for profile_point=1:points
-        free_parameter_map{profile_point} = containers.Map(int32(parameter_keys),random_start(profile_point,:));
+        free_parameter_map{profile_point} = containers.Map(int32(parameter_keys(range_param_idx)),random_start(profile_point,:));
     end
     
     %set up the return matrices
-    param_values = zeros(init_params.length()+1,points);
+    param_values = zeros(init_params.length(),points);
     profile_likelihoods = zeros(points,1);
     profile_errors = zeros(points,1);
     profile_iter = zeros(points,1);
@@ -47,7 +49,7 @@ function [param_values,profile_likelihoods,profile_errors,profile_iter,profile_r
 
       
     %calculate exp schedule between min and max containing points
-    profile_rates=exp(linspace(log(min_rng(param_no)),log(max_rng(param_no)),points));
+    profile_rates=exp(linspace(log(min_rng(range_profile_idx)),log(max_rng(range_profile_idx)),points));
     
     for p_rate=1:length(profile_rates)
         %set rates on mechanism, specified from param_start_values typically either from random starting
