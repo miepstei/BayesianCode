@@ -168,7 +168,10 @@ classdef MechanismUpdate < handle
 
             mr_rates = obj.mr_constraint_matrix*log(constrained_rates);
             mr_idx = find(mr_rates);
-            constrained_rates(mr_idx)=exp(mr_rates(mr_idx));
+            
+            %need the result to be really accurate, e.g
+            %consider exp(log(100000000))...
+            constrained_rates(mr_idx)=double(vpa(exp(mr_rates(mr_idx))));
             
             for i=1:length(constrained_rates)
                 obj.rates(i).rate_constant=constrained_rates(i);
@@ -218,10 +221,10 @@ classdef MechanismUpdate < handle
                 end
                 if (rate_value < lower_limit)
                     rate_value = lower_limit;
-                    fprintf('[WARN] param %i out of range - set to LOWER (%f) value\n',key,lower_limit)
+                    fprintf('[WARN] param %i out of range - set to LOWER (%f) value\n\n',keys{i},lower_limit)
                 elseif rate_value > upper_limit
                     rate_value = upper_limit;
-                    fprintf('[WARN] param %i out of range - set to UPPER (%f) value\n',key,upper_limit)
+                    fprintf('[WARN] param %i out of range - set to UPPER (%f) value\n\n',keys{i},upper_limit)
                 end                  
                 obj.rates(keys{i}).rate_constant=rate_value;                   
             end
@@ -229,7 +232,7 @@ classdef MechanismUpdate < handle
             
         end
         
-        function obj=setParameters(obj,func_params)
+        function setParameters(obj,func_params)
             keys = func_params.keys;
             for i=1:func_params.Count
                 if sum(obj.parameters==keys{i})
@@ -244,10 +247,10 @@ classdef MechanismUpdate < handle
                     end
                     if (rate_value < lower_limit)
                         rate_value = lower_limit;
-                        fprintf('[WARN] param %i out of range - set to LOWER (%f) value\n\n',lower_limit)
+                        fprintf('[WARN] param %i out of range - set to LOWER (%f) value\n\n',keys{i},lower_limit)
                     elseif rate_value > upper_limit
                         rate_value = upper_limit;
-                        fprintf('[WARN] param %i out of range - set to UPPER (%f) value\n\n',upper_limit)
+                        fprintf('[WARN] param %i out of range - set to UPPER (%f) value\n\n',keys{i},upper_limit)
                     end                  
                     obj.rates(keys{i}).rate_constant=rate_value;                   
                 else 
@@ -264,14 +267,14 @@ classdef MechanismUpdate < handle
 
             for i=1:length(obj.rates)
                 rate = obj.rates(i);       
-                mechStr=strcat(mechStr,sprintf('\n\tRate name %s - value %f\n',rate.name,rate.rate_constant));              
+                mechStr=strcat(mechStr,sprintf('\n\tRate name %s - value %.16f\n',rate.name,rate.rate_constant));              
             end
             
             mechStr=strcat(mechStr,sprintf('\n\n%i Parameters\n\n',length(obj.parameters)));
 
             for i=1:length(obj.parameters)
                 rate = obj.rates(obj.parameters(i));       
-                mechStr=strcat(mechStr,sprintf('\n\tRate name %s - value %f\n',rate.name,rate.rate_constant));              
+                mechStr=strcat(mechStr,sprintf('\n\tRate name %s - value %.16f\n',rate.name,rate.rate_constant));              
             end            
             
             
@@ -279,7 +282,7 @@ classdef MechanismUpdate < handle
             for i=1:length(obj.constraints)
                 constraint = obj.constraints(i);
                 rate = obj.rates(constraint);
-                mechStr=strcat(mechStr,sprintf('\n\tRate name %s - value %f\n',rate.name,rate.rate_constant));                  
+                mechStr=strcat(mechStr,sprintf('\n\tRate name %s - value %.16f\n',rate.name,rate.rate_constant));                  
             end               
             
         end

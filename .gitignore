@@ -1,10 +1,10 @@
 *.mexmaci64
 *.mexa64
-
 *.o
 *.DS_Store
 *.RData
 *.Rhistory
+*.pyc
 Tools/Mechanisms/*
 Tools/unused/*
 Tools/ClusterScripts/*

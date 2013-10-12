@@ -4,12 +4,19 @@ function fit = fit_experiment(experiment)
     %INPUTS - experiment, a struct containing the model, data and
     %experimental parameters
     
-    %OUTPUTS - a mechanism with the fitted parameters
+    %OUTPUTS - struct - the mechanism with the fitted parameters
+    %                 - maximum log-likelihood
+    %                 - number of simplex iterations
+    %                 - number of "shuffles" necessary as the likelihood becomes uncalculatable
+    %                 - number of function errors
+    %                 - debug info, if requested
+    %                 - the hessian of the ML fit, by finite-difference
     
+
     lik=DCProgsExactLikelihood();   
     splx=Simplex();
     tic;
-    [min_function_value,min_parameters,iterations,rejigs,errors,~]=splx.run_simplex(lik,experiment.model.getParameters(true),experiment);
+    [min_function_value,min_parameters,iterations,rejigs,errors,debug_info]=splx.run_simplex(lik,experiment.model.getParameters(true),experiment);
     toc;
     %transfform the parameters back to real space 
     if experiment.parameters.fit_logspace
@@ -25,7 +32,8 @@ function fit = fit_experiment(experiment)
     fit.rejigs = rejigs;
     fit.errors = errors;
     if experiment.parameters.debug_on
-        fit.debug = debug;
+        fit.debug = debug_info;
     end
+    fit.hessian = calc_hessian(experiment);
     
 end

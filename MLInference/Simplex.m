@@ -397,6 +397,9 @@ classdef Simplex < Optimisation
                 point_likelihoods(point_no) = funct.evaluate_function(simplex_points{point_no},args);
             end
             
+            %TODO: Need to bring back rates from function evaluation in case they have been changed
+            %by imposition of limits
+            
         end
         
         function centre = centre_simplex(simplex_points,param_keys)
