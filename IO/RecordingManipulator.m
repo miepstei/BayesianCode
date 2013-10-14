@@ -73,24 +73,25 @@ classdef RecordingManipulator
             %lon_closed_intervals(end):res_ts(end). We need to add this
             %back on to assure compatibility with dcprogs
             
-            burst_interval=long_closed_intervals(end)+1:length(res_ts.intervals)-1;
-            if (length(burst_interval)>0)
-                wb_amps = res_ts.getAmps(burst_interval(1),burst_interval(end));
-                wb_intervals = res_ts.getInts(burst_interval(1),burst_interval(end));
-                wb_status=res_ts.getStatuses(burst_interval(1),burst_interval(end));
-                wb=struct('amps',wb_amps,'intervals',wb_intervals,'status',wb_status);
-                openings=sum(wb_amps>0);
-                indiv_open_length=wb_intervals(wb_amps>0);
-                burst_length=sum(wb_intervals);
-                open_burst=sum(wb_intervals(wb_amps>0));
-                open_amps=wb_amps(wb_amps>0);
-                mean_amp=sum(indiv_open_length.*open_amps)/openings;
-                burst_status=sum(wb_status==ScnRecording.STATUS_BAD);
-                burst=Burst(wb,openings,open_burst,burst_length,burst_status,indiv_open_length,mean_amp);
-               
-                %now add the burst
-                burst_array(end+1)=burst;
-            end
+%             burst_interval=long_closed_intervals(end)+1:length(res_ts.intervals)-1;
+%             if (length(burst_interval)>0)
+%                 wb_amps = res_ts.getAmps(burst_interval(1),burst_interval(end));
+%                 wb_intervals = res_ts.getInts(burst_interval(1),burst_interval(end));
+%                 wb_status=res_ts.getStatuses(burst_interval(1),burst_interval(end));
+%                 wb=struct('amps',wb_amps,'intervals',wb_intervals,'status',wb_status);
+%                 openings=sum(wb_amps>0);
+%                 indiv_open_length=wb_intervals(wb_amps>0);
+%                 burst_length=sum(wb_intervals);
+%                 open_burst=sum(wb_intervals(wb_amps>0));
+%                 open_amps=wb_amps(wb_amps>0);
+%                 mean_amp=sum(indiv_open_length.*open_amps)/openings;
+%                 burst_status=sum(wb_status==ScnRecording.STATUS_BAD);
+%                 burst=Burst(wb,openings,open_burst,burst_length,burst_status,indiv_open_length,mean_amp);
+%                
+%                 %now add the burst
+%                 burst_array(end+1)=burst;
+%             end
+            
             
         end
         

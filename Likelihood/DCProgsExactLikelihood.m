@@ -3,7 +3,7 @@ classdef DCProgsExactLikelihood < Likelihood
     methods(Access=public)
         
         
-        function log_likelihood = calculate_likelihood(obj,experiment)      
+        function [log_likelihood,error] = calculate_likelihood(obj,experiment)      
             
             log_likelihood = 0;
             for i = 1:length(experiment.parameters.concs)
@@ -12,11 +12,17 @@ classdef DCProgsExactLikelihood < Likelihood
                     %interface change for new mech
                     qmat=qmat.Q;  
                 end
-                log_likelihood = log_likelihood-likelihood_mex(experiment.data{i},qmat,experiment.parameters.tres(i),experiment.parameters.tcrit(i),experiment.model.kA);
+                [likelihood , error] = likelihood_mex(experiment.data{i},qmat,experiment.parameters.tres(i),experiment.parameters.tcrit(i),experiment.model.kA);
+                if error == 1
+                    log_likelihood = 0;
+                    break;
+                else
+                    log_likelihood = log_likelihood-likelihood;
+                end
             end
         end
         
-        function log_likelihood = evaluate_function(obj,params,function_opts)
+        function [log_likelihood,return_params,error] = evaluate_function(obj,params,function_opts)
             
             %transform the parameters from log space if necessary
             func_params=containers.Map(params.keys,params.values);            
@@ -42,9 +48,23 @@ classdef DCProgsExactLikelihood < Likelihood
                     %interface change for new mech
                     qmat=qmat.Q;  
                 end
-                log_likelihood = log_likelihood-likelihood_mex(function_opts.data{i},qmat,function_opts.parameters.tres(i),function_opts.parameters.tcrit(i),function_opts.model.kA);
+                [likelihood, error] = likelihood_mex(function_opts.data{i},qmat,function_opts.parameters.tres(i),function_opts.parameters.tcrit(i),function_opts.model.kA);
+                if error == 1
+                    log_likelihood = 0;
+                    break;
+                else
+                    log_likelihood = log_likelihood-likelihood;
+                end                  
             end
-
+            
+            %the proposed parameters might have hit limits in the mechanism
+            %so return what is actually on the new mechanism as the simplex
+            %values 
+            if function_opts.parameters.fit_logspace
+                return_params=function_opts.model.getParameters(1);
+            else
+                return_params=function_opts.model.getParameters(0);
+            end
         end
     end
 end

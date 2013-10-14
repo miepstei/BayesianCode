@@ -2,12 +2,12 @@
 project_home = getenv('P_HOME');
 
 %example data, model and params
-datafiles={[project_home '/Samples/Simulations/20000/test_1.scn'],[project_home '/Samples/Simulations/HighConc/20000/data_1.scn']};
+datafiles={[project_home '/Samples/Simulations/20000/test_1.scn']};
 modelfile=[project_home '/Tools/Mechanisms/model_params_CS 1985_4.mat'];
-concs = [3e-8 0.000001];
-tcrits= [0.0035 0.0035];
-tres = [0.000025 0.000025];
-use_chs = [1 1];
+concs = [3e-8];
+tcrits= [0.0035];
+tres = [0.000025];
+use_chs = [1];
 debug_on = 1;
 fit_logspace=1;
 
@@ -24,8 +24,8 @@ for i=1:experiment.description.data.file_number
     fprintf('tcrit %f\n',tcrits(i));
     fprintf('Intervals: %i\n',experiment.description.data.dataset(i).interval_no)
     fprintf('Burst number: %i\n',experiment.description.data.dataset(i).burst_no)
-    fprintf('Burst length: %f\n',experiment.description.data.dataset(i).average_openings_per_burst)
-    fprintf('Openings per burst: %f\n\n',experiment.description.data.dataset(i).average_burst_length)
+    fprintf('Burst length: %.16f\n',experiment.description.data.dataset(i).average_openings_per_burst)
+    fprintf('Openings per burst: %.16f\n\n',experiment.description.data.dataset(i).average_burst_length)
 end
 fprintf('***End of description***\n\n')
 

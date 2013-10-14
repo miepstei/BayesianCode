@@ -20,7 +20,7 @@ function [ml_param_values,ml_likelihoods,ml_errors,ml_iter,ml_rejigs,ml_hessians
     
     %generate some random starting position
 
-    random_start = zeros(calculations,init_params.Count-1); %fixing one parameter
+    random_start = zeros(calculations,init_params.Count);
     free_parameter_map=cell(calculations,1);
    
     for j=1:length(min_rng)   

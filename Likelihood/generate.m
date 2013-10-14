@@ -6,9 +6,9 @@ function simulation=generate(mec,duration,conc,state_transitions)
 %duration - how long to simulate data for (in seconds)
 %concnetration (effector)
 
-sprintf('Generating ion-channel recording for %s mechanism',mec.name)
+sprintf('Generating ion-channel recording for %s mechanism',mec.mechanism_name)
 
-Q=mec.setupQ(conc).Q;
+Q=mec.setupQ(conc);
 states=mec.states;
 %derive the equilibrium occupanies to we can simulate a start position
 %u_k+1(SST )^?1

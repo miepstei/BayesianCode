@@ -3,19 +3,9 @@
 #include <vector>
 #include "likelihood.h"
 #include <iostream>
-#include "limits.h"
-#include "math.h"
 
-
-using namespace std;
-void mex_test();
 
 void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
-    /* params */
-    
-    /* first is the array of burst intervals
-     needs to be parsed into a vector of vectors*/
-    
     if (nrhs != 5)
         mexErrMsgTxt ("Five arguments expected - bursts,Q-matrix,tau,tcrit,open_states");
     
@@ -26,26 +16,38 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
     
     int n = mxGetNumberOfElements (prhs[0]);
 
+    mexPrintf("DCProgs::t_Bursts bursts {\n");
     for (int i = 0; i < n; i++) {
         mxArray* mburst = mxGetCell (prhs[0], i);
         
         int ncols = mxGetN(mburst);
         int nrows = mxGetM(mburst);
         
-       
+        //mexPrintf("rows, cols %i,%i\n",ncols,nrows);
+        
         if (ncols < nrows || nrows != 1){
             mxFree(mburst);
             mexErrMsgTxt ("burst array should be 1*n");   
         } 
         
         double *elements = mxGetPr(mburst);
-        DCProgs::t_Burst dburst;       
+        DCProgs::t_Burst dburst;
+        mexPrintf("{");
         for (int j=0; j < ncols; j++){
             dburst.push_back(elements[j]);
+            if (j+1 == ncols)
+                mexPrintf("%.16f",elements[j]);
+            else
+                mexPrintf("%.16f,",elements[j]);
         }
+        if (i+1 != n)
+            mexPrintf("},\n");
+        else
+            mexPrintf("}\n");
         dbursts.push_back(dburst);
         dburst.clear();
     }
+    mexPrintf("};\n");
     
     /* second is the Q matrix */
     
@@ -58,48 +60,42 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
     }
 
     DCProgs::t_rmatrix matrix(nrows ,ncols);
-    
+    mexPrintf("DCProgs::t_rmatrix matrix(%i ,%i);",nrows,ncols);
+    mexPrintf("matrix << ");
     for (int i=0; i<nrows; i++){
         for (int j=0;j<ncols;j++){
             matrix(i,j) = qMatrix[(i*ncols)+j];
+            mexPrintf("%.16f,",qMatrix[(i*ncols)+j]);
         }
     }
-
+    mexPrintf(";\n");
     /* third is \tau, the resolution time (in seconds)*/
     double tau = mxGetScalar(prhs[2]);
+ 
     
     /* fourth is the t_Crit time */
     double t_crit = mxGetScalar(prhs[3]);
-    
+   
     /* fifth is the number of open states */
     int open_states = mxGetScalar(prhs[4]);
-    
-    /*Attempt calculation */
 
-    int error = 0;
-    DCProgs::t_real result;
-    
-    try {
-        DCProgs::Log10Likelihood likelihood(dbursts, open_states, tau, t_crit);
-        result = likelihood(matrix);
-    }
-    catch (std::exception& e) {
-        mexPrintf("[WARN]: DCProgs - Error thrown in DCProgs\n");
-        mexPrintf(e.what());
-        error = 1;
-        plhs[0] = mxCreateDoubleScalar(0); /*set likelihood to zero*/
-        plhs[1] = mxCreateDoubleScalar(error);
-        return;
-    }
 
-    if (fabs(result) == std::numeric_limits<double>::infinity() || std::isnan(result)){
-        mexPrintf("[WARN]: DCProgs - Likelihood NaN or Inf -> set to 0\n");
-        result = 0;
-        error = 1;
-    }    
-       
+    mexPrintf("DCProgs::Log10Likelihood likelihood(bursts, %i, /*tau=*/%.16f, /*tcrit=*/%.16f);\n",open_states,tau,t_crit);
+    mexPrintf("DCProgs::t_real const result = likelihood(matrix);\n");
+    
+    DCProgs::Log10Likelihood likelihood(dbursts, open_states, tau, t_crit);
+    
+
+    DCProgs::t_real const result = likelihood(matrix);
+    mexPrintf("print (\%.16f ,result);\n" );
+    
+    //mex_test();
+    /* return the result */
+    
     plhs[0] = mxCreateDoubleScalar(result*log(10));
-    plhs[1] = mxCreateDoubleScalar(error);
+
+    
+    
 }
 
 void mex_test() {
@@ -130,5 +126,8 @@ void mex_test() {
 
     DCProgs::t_real const result = likelihood(matrix);
     mexPrintf("Computation 1: %f \n" ,result*log(10));
-     
+
+ 
+    
+    
 }

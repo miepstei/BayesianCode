@@ -14,6 +14,7 @@ classdef Simplex < Optimisation
         MAX_ITERATIONS=2000;
         JITTER_SIGMA=0.1;
         RESTARTS=3;
+        REJIG=0;
     end
     
     methods(Access=public)
@@ -38,22 +39,22 @@ classdef Simplex < Optimisation
             
             x=tic;
             debug.centre.point=Simplex.centre_simplex(debug.sorted.simplex_points,param_keys);
-            debug.centre.lik=funct.evaluate_function(debug.centre.point,opts);
+            [debug.centre.lik, ~,~]=funct.evaluate_function(debug.centre.point,opts);
             times.centre=toc(x);          
             
             x=tic;
             debug.reflect.point = Simplex.transform_point(debug.centre.point,debug.sorted.simplex_points{end},param_keys,obj.reflect,true);
-            debug.reflect.lik=funct.evaluate_function(debug.reflect.point,opts);
+            [debug.reflect.lik,~,~] = funct.evaluate_function(debug.reflect.point,opts);
             times.reflect=toc(x);            
             
             x=tic;
             debug.extend.point = Simplex.transform_point(debug.centre.point,debug.reflect.point,param_keys,obj.extend,false);
-            debug.extend.lik=funct.evaluate_function(debug.extend.point,opts);
+            [debug.extend.lik, ~,~] =funct.evaluate_function(debug.extend.point,opts);
             times.extend=toc(x);             
             
             x=tic;
             debug.contract.point = Simplex.transform_point(debug.centre.point,debug.sorted.simplex_points{end},param_keys,obj.contract,false);
-            debug.contract.lik=funct.evaluate_function(debug.contract.point,opts);
+            [debug.contract.lik, ~,~] = funct.evaluate_function(debug.contract.point,opts);
             times.contract=toc(x);            
             
             x=tic;
@@ -123,11 +124,9 @@ classdef Simplex < Optimisation
                     rejig=false; 
                     
                     %if debugging we want to record this
-                    if opts.debugOn
-                        debug_simplex.rejig(rejig_count).prevbest.params = best_params.params{1};
-                        debug_simplex.rejig(rejig_count).prevbest.lik = best_params.lik;
-                        debug_simplex.rejig(rejig_count).newbest.params = params;
-                        debug_simplex.rejig(rejig_count).newbest.lik = funct.evaluate_function(params,opts);
+                    if opts.parameters.debug_on
+                        debug_simplex.rejig(rejig_count).prevbest.params = best_params.values;
+                        debug_simplex.rejig(rejig_count).prevbest.lik = best_params.lik;                       
                     end
                     
                 end
@@ -146,8 +145,8 @@ classdef Simplex < Optimisation
                     %perform local search- this involves calculating
                     %likelihood +/- tolerance level
                     [lower,higher]=Simplex.embed_point(simplex_points{1},param_keys,obj.error);
-                    lower_lik = funct.evaluate_function(lower,opts);
-                    higher_lik = funct.evaluate_function(higher,opts);
+                    [lower_lik,lower,~] = funct.evaluate_function(lower,opts);
+                    [higher_lik,higher,~] = funct.evaluate_function(higher,opts);
                     
                     %if the move within tolerance produces a lower
                     %likelihood then restart with a restricted step
@@ -177,29 +176,30 @@ classdef Simplex < Optimisation
                     %to A
                     
                     reflected = Simplex.transform_point(centre,simplex_points{end},param_keys,obj.reflect,true);
-                    try 
-                        reflect_lik = funct.evaluate_function(reflected,opts);
-                    catch err
-                        disp(err)
-                        disp(err.cause{1}.message)
+                    [reflect_lik,reflected,err] = funct.evaluate_function(reflected,opts);
+                    if err
                         errors=errors+1;
-                        if opts.debugOn
+                        if opts.parameters.debug_on
                             %we want to catch the parameters
                             %which caused this error        
-                            debug_simplex.errors(errors).params=err.params;                        
+                            debug_simplex.errors(errors).params=reflected.values;                        
                         end
-                        rejig=true;
+                        rejig=Simplex.REJIG;
                     end
                     
                     if reflect_lik < function_values(1)
                          %E - if reflected point is best so far try extending it
                          extended = Simplex.transform_point(centre,reflected,param_keys,obj.extend,false);
                          
-                         try 
-                             extended_lik = funct.evaluate_function(extended,opts);
-                         catch err
-                             disp(err) 
-                             rejig=true;
+                         [extended_lik,extended,err] = funct.evaluate_function(extended,opts);
+                         if err
+                            errors=errors+1; 
+                            if opts.parameters.debug_on
+                                %we want to catch the parameters
+                                %which caused this error        
+                                debug_simplex.errors(errors).params=extended.values;                        
+                            end
+                            rejig=Simplex.REJIG;
                          end
                          if extended_lik < reflect_lik
                             %fprintf('iteration %d EXTENDED lik=%f\n',iterations,extended_lik)
@@ -233,17 +233,12 @@ classdef Simplex < Optimisation
                             %a contaction
                             contracted = Simplex.transform_point(centre,simplex_points{end},param_keys,obj.contract,false);
                             
-                            try
-                                contracted_lik = funct.evaluate_function(contracted,opts);
-                            catch err
-                                disp(err)
-                                disp(err.cause{1}.message)
-                                rejig=true;
+                            [contracted_lik,contracted,err] = funct.evaluate_function(contracted,opts);
+                            if err
+                                rejig=Simplex.REJIG;
                                 errors=errors+1;
-                                if opts.debugOn
-                                    %we want to catch the parameters
-                                    %which caused this error        
-                                    debug_simplex.errors(errors).params=err.params;                        
+                                if opts.parameters.debug_on   
+                                    debug_simplex.errors(errors).params=contracted.values;                        
                                 end
                             end
                             
@@ -262,17 +257,14 @@ classdef Simplex < Optimisation
                                 %point, so for all but the best point we SHRINK the other
                                 %vertices and then goto A
                                 %shrink the simplex
-                                try
-                                    [simplex_points,function_values]=Simplex.shrink_simplex(simplex_points,param_keys,obj.shrink,funct,opts);
-                                catch err
-                                    disp(err.message)
-                                    disp(err.cause{1}.message)
-                                    rejig=true;
+                                [simplex_points,function_values]=Simplex.shrink_simplex(simplex_points,param_keys,obj.shrink,funct,opts);
+                                if err
+                                    rejig=Simplex.REJIG;
                                     errors=errors+1;
-                                    if opts.debugOn
+                                    if opts.parameters.debug_on
                                         %we want to catch the parameters
                                         %which caused this error        
-                                        debug_simplex.errors(errors).params=err.params;                        
+                                        debug_simplex.errors(errors).params=matricise_simplex(simplex_points,param_keys);                        
                                     end
                                 end
                                 %fprintf('iteration %d SHRUNK  lik=%f\n',iterations,function_values(1))
@@ -285,7 +277,7 @@ classdef Simplex < Optimisation
                     iterations=iterations+1;
                     if opts.parameters.debug_on
                         [simplex_points,function_values]=Simplex.sort_simplex(simplex_points,function_values);
-                        debug_simplex.iter_simplex(iterations) = {simplex_points};
+                        debug_simplex.iter_simplex(iterations) = {Simplex.matricise_simplex(simplex_points,param_keys)};
                         debug_simplex.iter_liks(iterations) = {function_values};
                     end
                 end
@@ -325,11 +317,10 @@ classdef Simplex < Optimisation
             %is good at
             
             simplex_points=cell(param_length+1,1); %can't allocate an array of maps
-            simplex_points{1}=init_params;
-           
+          
             %function_values - n+1 vector of function values pertaining to
             %the n+1 points
-            simplex_points{1}=init_params;
+            simplex_points{1}=containers.Map(init_params.keys,init_params.values);
             
             log_step = log(step);
             fact = (sqrt(param_length+1) - 1) / (param_length * sqrt(2));
@@ -394,12 +385,9 @@ classdef Simplex < Optimisation
             point_likelihoods = zeros(points,1);
             
             for point_no=1:points
-                point_likelihoods(point_no) = funct.evaluate_function(simplex_points{point_no},args);
+                [point_likelihoods(point_no),simplex_points{point_no},~] = funct.evaluate_function(simplex_points{point_no},args);
             end
-            
-            %TODO: Need to bring back rates from function evaluation in case they have been changed
-            %by imposition of limits
-            
+
         end
         
         function centre = centre_simplex(simplex_points,param_keys)
