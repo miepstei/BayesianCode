@@ -86,15 +86,17 @@ classdef MechanismUpdate < handle
                     cycles(cycle).forwardRateIds(rate,1) = fwdrate.rate_id;
                     cycles(cycle).backwardRateIds(rate,1) = bckrate.rate_id;                   
                 end
-                fwd=sum(cycles(cycle).forwardRateIds == cycles(cycle).mr_constrainted_rate);
-                if fwd
-                    %fwd rates contain the constrained rate and therefore are neg in
-                    %the matrix
-                    obj.mr_constraint_matrix(cycles(cycle).mr_constrainted_rate,cycles(cycle).forwardRateIds(cycles(cycle).forwardRateIds~=cycles(cycle).mr_constrainted_rate))=-1;
-                    obj.mr_constraint_matrix(cycles(cycle).mr_constrainted_rate,cycles(cycle).backwardRateIds)=1;
-                else
-                    obj.mr_constraint_matrix(cycles(cycle).mr_constrainted_rate,cycles(cycle).forwardRateIds)=1;
-                    obj.mr_constraint_matrix(cycles(cycle).mr_constrainted_rate,cycles(cycle).backwardRateIds(cycles(cycle).backwardRateIds~=cycles(cycle).mr_constrainted_rate))=-1;
+                if isfield(cycles(cycle),'mr_constrainted_rate')
+                    fwd=sum(cycles(cycle).forwardRateIds == cycles(cycle).mr_constrainted_rate);
+                    if fwd
+                        %fwd rates contain the constrained rate and therefore are neg in
+                        %the matrix
+                        obj.mr_constraint_matrix(cycles(cycle).mr_constrainted_rate,cycles(cycle).forwardRateIds(cycles(cycle).forwardRateIds~=cycles(cycle).mr_constrainted_rate))=-1;
+                        obj.mr_constraint_matrix(cycles(cycle).mr_constrainted_rate,cycles(cycle).backwardRateIds)=1;
+                    else
+                        obj.mr_constraint_matrix(cycles(cycle).mr_constrainted_rate,cycles(cycle).forwardRateIds)=1;
+                        obj.mr_constraint_matrix(cycles(cycle).mr_constrainted_rate,cycles(cycle).backwardRateIds(cycles(cycle).backwardRateIds~=cycles(cycle).mr_constrainted_rate))=-1;
+                    end
                 end
             end
             
@@ -171,11 +173,14 @@ classdef MechanismUpdate < handle
             
             %need the result to be really accurate, e.g
             %consider exp(log(100000000))...
-            constrained_rates(mr_idx)=double(vpa(exp(mr_rates(mr_idx))));
-            
-            for i=1:length(constrained_rates)
-                obj.rates(i).rate_constant=constrained_rates(i);
-            end            
+            if ~isempty(mr_idx)
+                %if we have an mr constraint
+                constrained_rates(mr_idx)=double(vpa(exp(mr_rates(mr_idx))));
+
+                for i=1:length(constrained_rates)
+                    obj.rates(i).rate_constant=constrained_rates(i);
+                end
+            end
             
         end
         

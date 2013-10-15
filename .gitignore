@@ -7,7 +7,6 @@
 *.pyc
 Tools/Mechanisms/*
 Tools/unused/*
-Tools/ClusterScripts/*
 Testing/TestData/*
 Testing/Results/*
 Testing/Debug/*

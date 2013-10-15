@@ -79,7 +79,21 @@ function mechanism = ModelSetup(paramsFile,refactorMechanism)
         mechanism.setRates(rates);
         if refactorMechanism
             mechanism.updateRates();
-        end       
+        end
+    elseif strcmp(model,'CS 1985 desensitised')
+        mecs=DataController.list_mechanisms(mechanismfilepath);
+        %set constraints here
+        constraints=containers.Map('KeyType', 'int32','ValueType','any');
+        %constraints(16)=struct('type','mr','function',@(rate,factor)rate,'rate_id',16,'cycle_no',1); 
+        
+        mechanism=DataController.create_mechanism(mechanismfilepath,mecs.mec_struct(1),constraints,refactorMechanism);
+        
+        %create parameter map
+        rates = containers.Map([1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16],[p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12 p13 p14 p15 p16]);        
+        mechanism.setRates(rates);
+        if refactorMechanism
+            mechanism.updateRates();
+        end
         
 	else
 		fprintf('Model %s is currently undefined in this context, ignoring model construction\n',model)
