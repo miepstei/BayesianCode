@@ -12,7 +12,7 @@ classdef DCProgsExactLikelihood < Likelihood
                     %interface change for new mech
                     qmat=qmat.Q;  
                 end
-                [likelihood , error] = likelihood_mex(experiment.data{i},qmat,experiment.parameters.tres(i),experiment.parameters.tcrit(i),experiment.model.kA);
+                [likelihood , error] = likelihood_mex(experiment.data{i},qmat,experiment.parameters.tres(i),experiment.parameters.tcrit(i),experiment.model.kA,experiment.parameters.use_chs(i));
                 if error == 1
                     log_likelihood = 0;
                     break;
@@ -48,7 +48,7 @@ classdef DCProgsExactLikelihood < Likelihood
                     %interface change for new mech
                     qmat=qmat.Q;  
                 end
-                [likelihood, error] = likelihood_mex(function_opts.data{i},qmat,function_opts.parameters.tres(i),function_opts.parameters.tcrit(i),function_opts.model.kA);
+                [likelihood, error] = likelihood_mex(function_opts.data{i},qmat,function_opts.parameters.tres(i),function_opts.parameters.tcrit(i),function_opts.model.kA,function_opts.parameters.use_chs(i));
                 if error == 1
                     log_likelihood = 0;
                     break;

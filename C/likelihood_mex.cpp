@@ -16,8 +16,8 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
     /* first is the array of burst intervals
      needs to be parsed into a vector of vectors*/
     
-    if (nrhs != 5)
-        mexErrMsgTxt ("Five arguments expected - bursts,Q-matrix,tau,tcrit,open_states");
+    if (nrhs != 6)
+        mexErrMsgTxt ("Six arguments expected - bursts,Q-matrix,tau,tcrit,open_states,useChs");
     
     if (! mxIsCell (prhs[0]))
         mexErrMsgTxt ("expects cell array of burst intervals");
@@ -74,14 +74,24 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
     /* fifth is the number of open states */
     int open_states = mxGetScalar(prhs[4]);
     
+    /*sixth is whether to use CHS vectors*/
+    int useChs = mxGetScalar(prhs[5]);
+    
     /*Attempt calculation */
 
     int error = 0;
     DCProgs::t_real result;
     
     try {
-        DCProgs::Log10Likelihood likelihood(dbursts, open_states, tau, t_crit);
-        result = likelihood(matrix);
+        
+        if (! useChs){
+            DCProgs::Log10Likelihood likelihood(dbursts, open_states, tau, -1);
+            result = likelihood(matrix);
+        }
+        else {
+            DCProgs::Log10Likelihood likelihood(dbursts, open_states, tau, t_crit);
+            result = likelihood(matrix);
+        }
     }
     catch (std::exception& e) {
         mexPrintf("[WARN]: DCProgs - Error thrown in DCProgs\n");
