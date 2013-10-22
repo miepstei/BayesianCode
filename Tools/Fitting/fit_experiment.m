@@ -35,5 +35,7 @@ function fit = fit_experiment(experiment)
         fit.debug = debug_info;
     end
     %fit.hessian = calc_hessian(experiment);
-    fit.hessian = hessian(@(x) move_Q_hessian(x,experiment),cell2mat(experiment.model.getParameters(0).values));
+    if experiment.parameters.calc_hessian
+        fit.hessian = hessian(@(x) move_Q_hessian(x,experiment),cell2mat(experiment.model.getParameters(0).values));
+    end
 end

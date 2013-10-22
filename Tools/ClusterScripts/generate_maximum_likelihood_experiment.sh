@@ -108,7 +108,7 @@ is_log=1;
 use_chs =${USE_CHS};
 debug_on=0;
 
-experiment = setup_experiment(tres,tcrits,concs,use_chs,debug_on,is_log,datafiles,modelfile);
+experiment = setup_experiment(tres,tcrits,concs,use_chs,debug_on,is_log,1,datafiles,modelfile);
 
 a=tic;
 [ml_param_values,ml_likelihoods,ml_errors,ml_iter,ml_rejigs,ml_hessians,free_parameter_map]=MaximumLikelihood(experiment,points,min_rng,max_rng);

@@ -9,6 +9,7 @@ function mechanism = ModelSetup(paramsFile,refactorMechanism)
 	%These are not currently parsed in the Matlab code
 	
 	load(paramsFile);
+    mechanismfilepath=strcat(getenv('P_HOME'),mechanismfilepath);
 
 	if strcmp(model,'CH82')
 		%this should really run from a specified mec file...
@@ -68,7 +69,7 @@ function mechanism = ModelSetup(paramsFile,refactorMechanism)
         
         %set constraints here
         constraints=containers.Map('KeyType', 'int32','ValueType','any');
-        constraints(8)=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',8,'args',1);%FIXED in order to get some fit!
+        %constraints(8)=struct('type','dependent','function',@(rate,factor)rate*factor,'rate_id',8,'args',1);%FIXED in order to get some fit!
         constraints(12)=struct('type','mr','function',@(rate,factor)rate,'rate_id',12,'cycle_no',1);
         
         mechanism=DataController.create_mechanism(mechanismfilepath,mecs.mec_struct(2),constraints,refactorMechanism);
@@ -84,7 +85,7 @@ function mechanism = ModelSetup(paramsFile,refactorMechanism)
         mecs=DataController.list_mechanisms(mechanismfilepath);
         %set constraints here
         constraints=containers.Map('KeyType', 'int32','ValueType','any');
-        %constraints(16)=struct('type','mr','function',@(rate,factor)rate,'rate_id',16,'cycle_no',1); 
+        constraints(16)=struct('type','mr','function',@(rate,factor)rate,'rate_id',16,'cycle_no',1); 
         
         mechanism=DataController.create_mechanism(mechanismfilepath,mecs.mec_struct(1),constraints,refactorMechanism);
         

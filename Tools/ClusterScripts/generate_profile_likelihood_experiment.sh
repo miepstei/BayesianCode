@@ -108,7 +108,7 @@ is_log=1;
 use_chs =${USE_CHS};
 debug_on=0;
 
-experiment = setup_experiment(tres,tcrits,concs,use_chs,debug_on,is_log,datafiles,modelfile);
+experiment = setup_experiment(tres,tcrits,concs,use_chs,debug_on,is_log,0,datafiles,modelfile);
 
 a=tic;
 [profiles,profile_likelihoods,profile_errors,profile_iter,profile_rejigs,free_parameter_map]=profileLikelihood(experiment,points,profile_param,min_rng,max_rng);

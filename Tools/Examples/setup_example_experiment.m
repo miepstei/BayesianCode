@@ -11,7 +11,8 @@ tres = [0.000025];
 use_chs = [1];
 debug_on = 1;
 fit_logspace=1;
-experiment = setup_experiment(tres,tcrits,concs,use_chs,debug_on,fit_logspace,datafiles,modelfile);
+calc_hessian=1;
+experiment = setup_experiment(tres,tcrits,concs,use_chs,debug_on,fit_logspace,calc_hessian,datafiles,modelfile);
 
 end
 

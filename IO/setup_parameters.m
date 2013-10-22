@@ -1,4 +1,4 @@
-function param_struct = setup_parameters(tres,tcrit,concs,use_chs,debug_on,fit_logspace) 
+function param_struct = setup_parameters(tres,tcrit,concs,use_chs,debug_on,fit_logspace,calc_hessian) 
     %Function returns a struct of all the experimental parameters, data and
     %model
     
@@ -16,6 +16,7 @@ function param_struct = setup_parameters(tres,tcrit,concs,use_chs,debug_on,fit_l
     param_struct.use_chs=use_chs;
     param_struct.debug_on=debug_on;
     param_struct.fit_logspace=fit_logspace;
+    param_struct.calc_hessian=calc_hessian;
     param_struct.newMech=1;
 
 end

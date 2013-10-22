@@ -35,7 +35,13 @@ classdef RecordingManipulator
             %the intervals of shut times > t_crit. The first resolved
             %interval is an open time so we add the 0th index as a long
             %shut time in order to capture this opening in a burst.
-            long_closed_intervals=[0 getShutIntervalGreaterThan(res_ts,t_crit)];
+            shut_intervals=getShutIntervalGreaterThan(res_ts,t_crit);
+            
+            if isempty(shut_intervals)
+                long_closed_intervals=[0 length(res_ts.intervals)];
+            else
+                long_closed_intervals=[0 shut_intervals];
+            end
 
             %we want to create the bursts which are defined between the
             %intervals of the long shut times

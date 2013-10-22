@@ -11,7 +11,7 @@ classdef Simplex < Optimisation
         max_evaluation=100000; %maximum number of function evaluations to make
     end
     properties (Constant)
-        MAX_ITERATIONS=2000;
+        MAX_ITERATIONS=10000;
         JITTER_SIGMA=0.1;
         RESTARTS=3;
         REJIG=0;

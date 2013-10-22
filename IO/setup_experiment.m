@@ -1,4 +1,4 @@
-function experiment = setup_experiment(tres,tcrit,concs,use_chs,debug_on,fit_logspace,datafiles,modelfile)
+function experiment = setup_experiment(tres,tcrit,concs,use_chs,debug_on,fit_logspace,calc_hessian,datafiles,modelfile)
     %sets up and experiment structure with the data, model and parameters
 
     %INPUTS:
@@ -24,7 +24,7 @@ function experiment = setup_experiment(tres,tcrit,concs,use_chs,debug_on,fit_log
     no_datasets = length(datafiles);
     
     if (isequal(no_concs , no_tres , no_chs , no_tcrits , no_datasets))
-        [experiment.parameters] = setup_parameters(tres,tcrit,concs,use_chs,debug_on,fit_logspace);
+        [experiment.parameters] = setup_parameters(tres,tcrit,concs,use_chs,debug_on,fit_logspace,calc_hessian);
         experiment.model = load_model(modelfile);
         [experiment.data,data_description] = load_data(datafiles,tres,tcrit);
     else
