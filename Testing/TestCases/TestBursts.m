@@ -12,13 +12,14 @@ classdef TestBursts < matlab.unittest.TestCase
             use_chs =[1];
             debug_on=0;
             fit_logspace=1;
+            calc_hessian=0;
             datafiles={[getenv('P_HOME') '/Samples/Simulations/20000/test_1.scn']};
             modelfile=[getenv('P_HOME') '/Tools/Mechanisms/model_params_CS 1985_4.mat'];
-            testCase.experiment = setup_experiment(tres,tcrits,concs,use_chs,debug_on,fit_logspace,datafiles,modelfile);
+            testCase.experiment = setup_experiment(tres,tcrits,concs,use_chs,debug_on,fit_logspace,calc_hessian,datafiles,modelfile);
             
             %second test case with a different input file
             datafiles2={[getenv('P_HOME') '/Samples/Simulations/20000/test_2.scn']};
-            testCase.experiment2 = setup_experiment(tres,tcrits,concs,use_chs,debug_on,fit_logspace,datafiles2,modelfile);
+            testCase.experiment2 = setup_experiment(tres,tcrits,concs,use_chs,debug_on,fit_logspace,calc_hessian,datafiles2,modelfile);
         end
     end
     
