@@ -14,7 +14,7 @@ classdef  TestFit < matlab.unittest.TestCase
             fit_logspace=1;
             calc_hessian=1;
             datafiles={[getenv('P_HOME') '/Samples/Simulations/20000/test_1.scn']};
-            modelfile=[getenv('P_HOME') '/Tools/Mechanisms/model_params_CS 1985_4.mat'];
+            modelfile=[getenv('P_HOME') '/Tools/Mechanisms/model_params_CS_1985_guess1.mat'];
             testCase.experiment = setup_experiment(tres,tcrits,concs,use_chs,debug_on,fit_logspace,calc_hessian,datafiles,modelfile);
         end
     end
