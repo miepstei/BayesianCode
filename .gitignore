@@ -5,7 +5,6 @@
 *.RData
 *.Rhistory
 *.pyc
-Tools/Mechanisms/*
 Tools/unused/*
 Testing/TestData/*
 Testing/Results/*
