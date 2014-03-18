@@ -95,7 +95,14 @@ function mechanism = ModelSetup(paramsFile,refactorMechanism)
         if refactorMechanism
             mechanism.updateRates();
         end
-        
+    elseif strcmp(model, 'TwoState')
+        mechanism=DataController.read_mechanism_two_state(1);
+        %create parameter map
+        rates = containers.Map([1 2 ],[p1 p2]);        
+        mechanism.setRates(rates);
+        if refactorMechanism
+            mechanism.updateRates();
+        end        
 	else
 		fprintf('Model %s is currently undefined in this context, ignoring model construction\n',model)
 		mechanism=Mechanism.empty(1,0);

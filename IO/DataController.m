@@ -455,6 +455,42 @@ classdef DataController
             
         end
         
+        function mechanism=read_mechanism_two_state(refactor)
+            S  = State('A', 'AR*', 60e-12,1);
+            R  = State('B', 'R', 0.0,2);
+           
+          
+           %conc=100*10^-9; %100nM
+           conc=1; %concentration no longer part of mechanism 
+           %only Q generation
+           %define our ratelist
+            
+           
+           a=TransitionRate(15, R, S, 'beta2','',1);
+           a.hasLimits=true;
+           a.limits=[1e-15,1e+7];
+           
+           b=TransitionRate(15000, S, R, 'alpha2','',2);
+           b0.hasLimits=true;
+           b.limits=[1e-15,1e+7];
+           
+           rate_list=[a,b];
+           
+           cycles=struct([]);
+           
+           %constraints belong at the level of the mechanism - Rate has no
+           %real concept of what the other rates are
+           
+           constraints=containers.Map('KeyType', 'int32','ValueType','any');
+           
+           if refactor
+               mechanism=MechanismUpdate(rate_list,cycles,constraints,'FIVE STATE MODEL');
+           else
+               mechanism=Mechanism(rate_list,cycles,constraints,'FIVE STATE MODEL');
+           end           
+            
+            
+        end
         
 
         function write_mec_file(mechanism,outfile)

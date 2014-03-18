@@ -1,0 +1,17 @@
+
+#using Bayesian Code requires the platform specific compilation of a mex wrapper for DCPROGS - the reimplementation of the DC likelihood for ion-channels
+
+#aliases to compile mex wrapper on Mac
+
+alias compile_mex='c++ -std=c++11 -stdlib=libc++ -c  -I/Users/michaelepstein/dcprogs/likelihood -I/Users/michaelepstein/dcprogs/build -I/Users/michaelepstein/Documents/eigen-eigen-ffa86ffb5570 -I/Applications/MATLAB_R2012b.app/extern/include -I/Applications/MATLAB_R2012b.app/simulink/include -DMATLAB_MEX_FILE -fno-common -no-cpp-precomp -fexceptions -arch x86_64 -isysroot / -mmacosx-version-min=10.8  -DMX_COMPAT_32 -O2 -DNDEBUG  "/Volumes/Users/Dropbox/Academic/PhD/Code/git-repo/C/likelihood_mex.cpp" -o /Volumes/Users/Dropbox/Academic/PhD/Code/git-repo/C/likelihood_mex.o'
+alias link_mex='c++ -stdlib=libc++ -O -Wl,-twolevel_namespace -undefined error -arch x86_64 -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/ -mmacosx-version-min=10.8 -bundle -Wl,-exported_symbols_list,/Applications/MATLAB_R2013a.app/extern/lib/maci64/mexFunction.map -L/usr/local/lib -o  "/Volumes/Users/Dropbox/Academic/PhD/Code/git-repo/C/likelihood_mex.mexmaci64"  /Volumes/Users/Dropbox/Academic/PhD/Code/git-repo/C/likelihood_mex.o  -L/Users/michaelepstein/anaconda/lib -l likelihood -L/Users/michaelepstein/dcprogs/build/likelihood -l likelihood  -L/Applications/MATLAB_R2013a.app/bin/maci64 -lmx -lmex -lmat -lstdc++'
+
+
+#compiling mex wrapper for dcprogs in linux
+c++ -std=c++11 -c -I/usr/local/dcprogs/include/dcprogs/ -I/usr/local/dcprogs/include/dcprogs/likelihood -I/usr/local/Eigen -I/usr/local/MATLAB/R2013a/extern/include -I/usr/local/MATLAB/R2013a/simulink/include -DMATLAB_MEX_FILE -D_GNU_SOURCE -fPIC -fno-omit-frame-pointer -pthread  -DMX_COMPAT_32 -O -DNDEBUG likelihood_mex.cpp -o likelihood_mex.o
+g++ -O -pthread -shared -Wl,--version-script,/usr/local/MATLAB/R2013a/extern/lib/glnxa64/mexFunction.map -Wl,--no-undefined -o  likelihood_mex.mexa64  likelihood_mex.o  -Wl,-rpath-link,/usr/local/MATLAB/R2013a/bin/glnxa64 -L/usr/local/MATLAB/R2013a/bin/glnxa64 -lmx -lmex -lmat -lm -L/usr/local/dcprogs/lib -llikelihood
+
+#compiling experimental mex files on linux
+g++ -c -std=c++11  -I/usr/local/dcprogs/include/dcprogs/likelihood -I/usr/local/dcprogs/include/dcprogs -I/usr/local/Eigen -I/usr/local/MATLAB/R2013a/extern/include -I/usr/local/MATLAB/R2013a/simulink/include -DMATLAB_MEX_FILE -D_GNU_SOURCE -fPIC -fno-omit-frame-pointer -pthread  -DMX_COMPAT_32 -O -DNDEBUG  "c_likelihood.cpp"
+g++ -c -std=c++11  -I/usr/local/dcprogs/include/dcprogs/likelihood -I/usr/local/dcprogs/include/dcprogs -I/usr/local/Eigen -I/usr/local/MATLAB/R2013a/extern/include -I/usr/local/MATLAB/R2013a/simulink/include -DMATLAB_MEX_FILE -D_GNU_SOURCE -fPIC -fno-omit-frame-pointer -pthread  -DMX_COMPAT_32 -O -DNDEBUG  "calc_lik_mex.cpp"
+g++ -O -pthread -shared -Wl,--version-script,/usr/local/MATLAB/R2013a/extern/lib/glnxa64/mexFunction.map -Wl,--no-undefined -o  calc_lik_mex.mexa64  calc_lik_mex.o c_likelihood.o -Wl,-rpath-link,/usr/local/MATLAB/R2013a/bin/glnxa64 -L/usr/local/MATLAB/R2013a/bin/glnxa64 -lmx -lmex -lmat -lm -L/usr/local/dcprogs/lib -llikelihood

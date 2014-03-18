@@ -191,12 +191,18 @@ classdef MechanismUpdate < handle
             
             initial_rates = [obj.rates.rate_constant]';
             
-            %apply effectors
-            for i=1:length(obj.effector_names)
-                conc_constants = diag(obj.effector_matrix(:,:,i));
-                conc_constants = conc_constants * conc;
-                conc_constants(conc_constants==0)=1;
-                constrained_rates=initial_rates.*conc_constants;
+            if(~isempty(obj.effector_names))
+                %apply effectors
+                for i=1:length(obj.effector_names)
+                    conc_constants = diag(obj.effector_matrix(:,:,i));
+                    conc_constants = conc_constants * conc;
+                    conc_constants(conc_constants==0)=1;
+                    constrained_rates=initial_rates.*conc_constants;
+                end
+            else
+                %we have no effectors so the constrained rates are as
+                %before
+                constrained_rates=initial_rates;
             end
                
             %now generate Q

@@ -1,9 +1,20 @@
-%%Plots for upgrade report
+%% Plots for upgrade report
 
-%Experiment 0a - 1000 fits to a single file using Random as the
-%starting point
+%These variables shoule never be cleared
 
 P_HOME=getenv('P_HOME');
+
+%these are the "true1" rate constants used to generate data
+true1_parameters=[2000 52000 6000 50 50000 150 1500 2e8 10000 4e8 1500 2e8 10000 4e8];
+
+
+%% 9 model parameter experiments
+parameter_keys=[1,2,3,4,5,6,11,13,14];
+param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{-1a}$','$k_{-1b}$ ','$k_{+1b}$'};
+xlims={[0 3e4],[0  2e5],[5000 10000],[0 100],[0 200000],[0 500],[0 5000],[0 15000],[0 6e8]};
+
+%EXPERIMENT 0a - 1000 fits to a single file using Random as the
+%starting point
 
 load([P_HOME '/Results/dcprogs/Exp0a_14102013.mat'])
 
@@ -35,13 +46,13 @@ title('Scatter of $\beta_2$ versus $\alpha_2$','interpreter','latex');
 xlabel('$\alpha_2$','interpreter','latex');
 ylabel('$\beta_2$','interpreter','latex'); 
 
-print(f,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp0a']);
-
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp0a']);
+close(f);
 
 f = figure();
 set(f, 'Position',[0 0 1000 1000])
-param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{-1a}$','$k_{-1b}$ ','$k_{+1b}$'};
-xlims={[0 3e4],[0  2e5],[5000 10000],[0 100],[0 200000],[0 500],[0 5000],[0 15000],[0 6e8]};
+
+
 for i=1:3;
     for j=1:3;
         ind =j+(3*(i-1));
@@ -49,21 +60,23 @@ for i=1:3;
         plt_limit=xlims{ind};
         hist_data = fitted_params((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)),ind);
         hist(hist_data,40);
+        hold on;
+        plot(true1_parameters(parameter_keys(ind)),0,'rp');
+        hold off;
         totals = sum((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)));
-        title(['Parameter ' param_names{ind} ' samples ' num2str(totals)],'interpreter','latex');
+        title(param_names{ind},'interpreter','latex');
     end
 end
 
-print(f,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp0a_allparams']);
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp0a_allparams']);
+close(f);
 
+clearvars -except P_HOME true1_parameters param_names xlims parameter_keys;
 
-clearvars -except P_HOME;
-%Experiment 0b - Profile likelihoods generated from random starting
+%EXPERIMENT 0b - Profile likelihoods generated from random starting
 %positions on one dataset
 
-
-
-%Experiment 0c - 1000 fits to a 1000 files using Random as the
+%EXPERIMENT 0c - 1000 fits to a 1000 files using Random as the
 %starting point
 
 load([P_HOME '/Results/dcprogs/Exp0c_14102013.mat'])
@@ -98,14 +111,12 @@ xlabel('$\alpha_2$','interpreter','latex');
 ylabel('$\beta_2$','interpreter','latex'); 
 
 
-print(f,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp0c']);
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp0c']);
+close(f);
 
 %plot all of the parameters
-
 f=figure();
-param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{-1a}$','$k_{-1b}$ ','$k_{+1b}$'};
 set(f, 'Position',[0 0 1000 1000])
-xlims={[0 3e4],[0  2e5],[5000 10000],[0 100],[0 200000],[0 500],[0 5000],[0 15000],[0 6e8]};
 for i=1:3;
     for j=1:3;
         ind =j+(3*(i-1));
@@ -113,21 +124,25 @@ for i=1:3;
         plt_limit=xlims{ind};
         hist_data = fitted_params((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)),ind);
         hist(hist_data,40);
+        hold on;
+        plot(true1_parameters(parameter_keys(ind)),0,'rp');
+        hold off;
         totals = sum((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)));
-        title(['Parameter ' param_names{ind} ' samples ' num2str(totals)],'interpreter','latex');
-        
+        title(param_names{ind},'interpreter','latex');
+        xlim(xlims{ind})
     end
 end
-print(f,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp0c_allparams']);
-clearvars -except P_HOME;
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp0c_allparams']);
+close(f);
+clearvars -except P_HOME true1_parameters param_names xlims parameter_keys;
 
-%Experiment 0d - fits to 1000 files using guess 1
+%EXPERIMENT 0d - 1000 fits to 1000 files using guess 1
 
 load([P_HOME '/Results/dcprogs/Exp0d_14102013.mat'])
 
 f = figure();
 set(f, 'Position',[0 0 1000 1000])
-
+parameter_keys=[1,2,3,4,5,6,11,13,14];
 subplot(2,2,1);
 hist(fitted_params(:,1),400);
 title('Distribution of $\alpha_2$','interpreter','latex');
@@ -154,31 +169,31 @@ xlabel('$\alpha_2$','interpreter','latex');
 ylabel('$\beta_2$','interpreter','latex'); 
 
 
-print(f,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp0d']);
-
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp0d']);
+close(f);
 %plot all of the parameters
 
 f=figure();
-param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{-1a}$','$k_{-1b}$ ','$k_{+1b}$'};
 set(f, 'Position',[0 0 1000 1000])
 for i=1:3;
     for j=1:3;
         ind =j+(3*(i-1));
         subplot(3,3,ind);
         hist(fitted_params(:,ind),40);
+        hold on;
+        plot(true1_parameters(parameter_keys(ind)),0,'rp');
+        hold off;
         title(param_names{ind},'interpreter','latex');
     end ;
 end
-print(f,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp0d_allparams']);
-clearvars -except P_HOME;
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp0d_allparams']);
+close(f);
+clearvars -except P_HOME true1_parameters param_names xlims parameter_keys;
 
-%Experiment 0e - Profile likelihoods to one data file using guess 1
-
+%EXPERIMENT 0e - Profile likelihoods to one data file using guess 1
 
 f=figure();
-param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{-1a}$','$k_{-1b}$ ','$k_{+1b}$'};
 set(f, 'Position',[0 0 1000 1000])
-parameter_keys=[1,2,3,4,5,6,11,13,14];%[1,2,3,4,5,6,11,13,14];
 for i=1:3;
     for j=1:3;
         ind =j+(3*(i-1));
@@ -189,10 +204,11 @@ for i=1:3;
         title(param_names{ind},'interpreter','latex');
     end ;
 end
-print(f,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp0v_allparams']);
-clearvars -except P_HOME;
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp0v_allparams']);
+close(f);
+clearvars -except P_HOME true1_parameters param_names xlims parameter_keys;
 
-%Experiment 0e - Profile likelihoods to one data file using mode 1
+%EXPERIMENT 0e - Profile likelihoods to one data file using mode 1
 
 load([P_HOME '/Results/dcprogs/Exp0c_14102013.mat'])
 %we takes the hessian of dataset 1
@@ -208,9 +224,7 @@ stdevs = sqrt(diag(transform_cov_matrix));
 chi1 = chi2inv(0.95,1);
 
 f=figure();
-param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{-1a}$','$k_{-1b}$ ','$k_{+1b}$'};
 set(f, 'Position',[0 0 1000 1000])
-parameter_keys=[1,2,3,4,5,6,11,13,14];%[1,2,3,4,5,6,11,13,14];
 for i=1:3;
     for j=1:3;
         ind =j+(3*(i-1));
@@ -237,8 +251,9 @@ for i=1:3;
         title(param_names{ind},'interpreter','latex');
     end ;
 end
-print(f,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp0v_mode1_allparams']);
-clearvars -except P_HOME;
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp0v_mode1_allparams_intervals']);
+close(f);
+clearvars -except P_HOME true1_parameters param_names xlims parameter_keys;
 
 
 %%PROFILING THE TWO MODES
@@ -255,7 +270,6 @@ fprintf('%.16f\n',mean(fitted_params(mode1,:)))
 fprintf('%.16f\n',mean(fitted_params(mode2,:)))
 
 f=figure();
-param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{-1a}$','$k_{-1b}$ ','$k_{+1b}$'};
 set(f, 'Position',[0 0 1000 333])
 modal_params=[1 2 8];
 for i=1:3;
@@ -270,8 +284,9 @@ for i=1:3;
         
     title(param_names{modal_params(i)},'interpreter','latex');
 end
-print(f,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp1a_modes']);
-clearvars -except P_HOME;
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp1a_modes']);
+close(f);
+clearvars -except P_HOME true1_parameters param_names xlims parameter_keys;
 
 %{
 experiments={'1ai','1aii'};
@@ -286,20 +301,40 @@ plot_profiles(results_dir,colours,leg,title,width,height,length(parameter_keys),
 
 %}
 
+%% plots to vary experimental conditions  
 %%VARYING DATA 
 width=3;
 height=3;
-parameter_keys=[1,2,3,4,5,6,11,13,14];
-param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{-1a}$','$k_{-1b}$ ','$k_{+1b}$'};
-experiments={'1bi','1bii','1biii','1bv','1bvi'};
 colours = {'r','b','g','y','c','m'};
 leg={'500','1000','10000','20000','30000','40000'};
 
 results_dir=strcat( P_HOME, {'/Results/dcprogs/Exp1bi','/Results/dcprogs/Exp1bii', ...
     '/Results/dcprogs/Exp1biii','/Results/dcprogs/Exp1ciii','/Results/dcprogs/Exp1bv', ...
     '/Results/dcprogs/Exp1bvi'});
-plot_profiles(results_dir,colours,leg,param_names,width,height,length(parameter_keys),parameter_keys)
-clearvars -except P_HOME width height parameter_keys param_names;
+fig=plot_profiles(results_dir,colours,leg,param_names,width,height,length(parameter_keys),parameter_keys);
+print(fig,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp1b_allparams']);
+close(fig);
+clearvars -except P_HOME width height parameter_keys param_names true1_parameters;
+
+%%Varying replicates - contrast the profile likelihoods of a pathelogical amount
+%%of data with a reasonable amount
+results_dir=strcat( P_HOME, {'/Results/dcprogs/Exp1bii','/Results/dcprogs/Exp1bii_r2', ...
+    '/Results/dcprogs/Exp1bii_r3','/Results/dcprogs/Exp1bii_r4'});
+leg={'r1','r2','r3','r4'};
+colours = {'r','b','g','y'};
+fig=plot_profiles(results_dir,colours,leg,param_names,width,height,length(parameter_keys),parameter_keys);
+print(fig,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp1b_1000_intervals_replicates']);
+close(fig);
+clearvars -except P_HOME width height parameter_keys param_names true1_parameters;
+
+results_dir=strcat( P_HOME, {'/Results/dcprogs/Exp1biii','/Results/dcprogs/Exp1biii_r2', ...
+    '/Results/dcprogs/Exp1biii_r3','/Results/dcprogs/Exp1biii_r4'});
+leg={'r1','r2','r3','r4'};
+colours = {'r','b','g','y'};
+fig=plot_profiles(results_dir,colours,leg,param_names,width,height,length(parameter_keys),parameter_keys);
+print(fig,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp1b_10000_intervals_replicates']);
+close(fig);
+clearvars -except P_HOME width height parameter_keys param_names true1_parameters;
 
 
 %%VARYING RESOLUTION TIME
@@ -308,10 +343,416 @@ colours = {'r','b','g','y','c'};
 leg={'0','10','25','50','100'};
 results_dir= strcat( P_HOME, {'/Results/dcprogs/Exp1ci','/Results/dcprogs/Exp1cii', '/Results/dcprogs/Exp1ciii', ...
 '/Results/dcprogs/Exp1civ','/Results/dcprogs/Exp1cv'});
-fig = plot_profiles(results_dir,colours,leg,title,width,height,length(parameter_keys),parameter_keys);
-print(fig,'-djpeg',[P_HOME '../../../Written/thesis_1/Figures/Exp1c_data']);
-clearvars -except P_HOME;
+fig = plot_profiles(results_dir,colours,leg,param_names,width,height,length(parameter_keys),parameter_keys);
+print(fig,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp1c_data']);
+close(fig);
+%end of the cell so clear away unneeded params
+clearvars -except P_HOME true1_parameters param_names xlims parameter_keys;
 
-%%ADDING CONCENTRATION
+%%Impact of multiple concentrations on 9 parameter model
 
+load([P_HOME '/Results/dcprogs/Exp2f/Exp2f_31102013.mat'])
+f=figure();
+set(f, 'Position',[0 0 1000 1000])
+for i=1:3;
+    for j=1:3;
+        ind =j+(3*(i-1));
+        subplot(3,3,ind);
+        hist(fitted_params(:,ind),40);
+        hold on;
+        plot(true1_parameters(parameter_keys(ind)),0,'rp');
+        hold off;
+        title(param_names{ind},'interpreter','latex');
+    end ;
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp2f_allparams_add_conc']);
+close(f);
+clearvars -except P_HOME true1_parameters;
+
+%% 10 parameter model
+%%REMOVING A CONSTRAINT AND INTRODUCING NON-IDENTIFIABILITY
+parameter_keys=[1,2,3,4,5,6,8,11,13,14];
+param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{+2a}$','$k_{-1a}$','$k_{-1b}$ ','$k_{+1b}$'};
+
+load([P_HOME '/Results/dcprogs/Exp2a/Exp2a_23102013.mat'])
+f=figure();
+set(f, 'Position',[0 0 3000 400])
+xlims={[0 3e4],[0  2e5],[5000 10000],[0 100],[0 200000],[0 500],[0 6e8],[0 5000],[0 15000],[0 6e8]};
+for i=1:2;
+    for j=1:5;
+        ind =j+(5*(i-1));
+        subplot(2,5,ind);
+        plt_limit=xlims{ind};
+        hist_data = fitted_params((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)),ind);
+        hist(hist_data,40);       
+        hold on;
+        plot(true1_parameters(parameter_keys(ind)),0,'rp');
+        hold off;
+        totals = sum((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)));
+        title(param_names{ind},'interpreter','latex');
+        xlim(xlims{ind})
+    end
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp2a_data']);
+close(f);
+
+%we can profile these modes...
+mode1=fitted_params(:,1)<2500;
+mode2=(fitted_params(:,1)>10000 & fitted_params(:,1)<30000);
+%means for the rate parameters of mode 1
+fprintf('%s\n','mode1')
+fprintf('%.16f\n',mean(fitted_params(mode1,:)))
+
+%means for the rate parameters of mode 2
+fprintf('%s\n','mode2')
+fprintf('%.16f\n',mean(fitted_params(mode2,:)))
+
+f=figure();
+modal_params=[1 2 6 7 9];
+for i=1:5;
+    subplot(1,5,i);
+    [n1,xout1]=hist(fitted_params(mode1,modal_params(i)),20);
+    b1=bar(xout1,n1,'r');
+    set(b1,'edgecolor','none')
+    [n2,xout2]=hist(fitted_params(mode2,modal_params(i)),20);
+    hold on;b2=bar(xout2,n2,'b');
+    set(b2,'edgecolor','none')
+    title(param_names{modal_params(i)},'interpreter','latex');
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp2a_data_modes']);
+close(f);
+clearvars -except P_HOME true1_parameters parameter_keys xlims param_names;
+
+%profile likelihoods for the slow mode
+
+f=figure();
+set(f, 'Position',[0 0 1000 1000])
+chi1 = chi2inv(0.95,1);
+for i=1:5;
+    for j=1:2;
+        ind =j+(2*(i-1));
+        load([P_HOME '/Results/dcprogs/Exp2ai/parameter_key_' num2str(parameter_keys(ind)) '.mat'])
+        
+        subplot(5,2,ind);
+        plot(profiles(1,:),profile_likelihoods); %x axis in log space
+        hold on;
+        plot(log(true1_parameters(parameter_keys(ind))),min(profile_likelihoods),'rp');        
+        %range for the likelihood based approxomation
+        range = profile_likelihoods < min(profile_likelihoods)+(0.5*chi1);
+        line([min(profiles(1,range)) min(profiles(1,range))],[min(profile_likelihoods) max(profile_likelihoods)],'Color','r');
+        line([max(profiles(1,range)) max(profiles(1,range))],[min(profile_likelihoods) max(profile_likelihoods)],'Color','r');
+        line([min(profiles(1,:)) max(profiles(1,:))],[min(profile_likelihoods)+(0.5*chi1); min(profile_likelihoods)+(0.5*chi1);],'Color','r');
+        hold off;
+        title(param_names{ind},'interpreter','latex');
+    end ;
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp2a_pl_allparams']);
+close(f);
+clearvars -except P_HOME true1_parameters parameter_keys xlims param_names;
+
+%%Now we vary the number of concentrations
+%1,000 likelihood fits 1,000 random low and high conc data sets from Guess
+%2
+
+load([P_HOME '/Results/dcprogs/Exp2i/Exp2i_31102013.mat'])
+f=figure();
+set(f, 'Position',[0 0 3000 400])
+xlims={[0 3e4],[0  2e5],[5000 10000],[0 100],[0 200000],[0 500],[0 6e8],[0 5000],[0 15000],[0 6e8]};
+for i=1:2;
+    for j=1:5;
+        ind =j+(5*(i-1));
+        subplot(2,5,ind);
+        plt_limit=xlims{ind};
+        hist_data = fitted_params((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)),ind);
+        hist(hist_data,40);       
+        hold on;
+        plot(true1_parameters(parameter_keys(ind)),0,'rp');
+        hold off;
+        totals = sum((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)));
+        title(param_names{ind},'interpreter','latex');
+        xlim(xlims{ind})
+    end
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp2i_fixed_start']);
+close(f);
+clearvars -except P_HOME true1_parameters parameter_keys xlims param_names;
+
+%%Now what happens if we vary the starting position?
+load([P_HOME '/Results/dcprogs/Exp2g/Exp2g_31102013.mat'])
+f=figure();
+set(f, 'Position',[0 0 3000 400])
+xlims={[0 3e4],[0  2e5],[5000 10000],[0 100],[0 200000],[0 500],[0 6e8],[0 5000],[0 15000],[0 6e8]};
+for i=1:2;
+    for j=1:5;
+        ind =j+(5*(i-1));
+        subplot(2,5,ind);
+        plt_limit=xlims{ind};
+        hist_data = fitted_params((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)),ind);
+        hist(hist_data,40);       
+        hold on;
+        plot(true1_parameters(parameter_keys(ind)),0,'rp');
+        hold off;
+        totals = sum((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)));
+        title(param_names{ind},'interpreter','latex');
+        xlim(xlims{ind})
+    end
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp2g_random_start']);
+close(f);
+clearvars -except P_HOME true1_parameters parameter_keys xlims param_names;
+
+%%Determine mode and Profile likelihoods 
+load([P_HOME '/Results/dcprogs/Exp2g/Exp2g_31102013.mat'])
+mode1=fitted_params(:,1)<2500;
+mode2=(fitted_params(:,1)>10000 & fitted_params(:,1)<30000);
+%means for the rate parameters of mode 1
+fprintf('%s\n','mode1')
+fprintf('%.16f\n',mean(fitted_params(mode1,:)))
+
+%means for the rate parameters of mode 2
+fprintf('%s\n','mode2')
+fprintf('%.16f\n',mean(fitted_params(mode2,:)))
+
+f=figure();
+modal_params=[1 2 6 7 9];
+for i=1:5;
+    subplot(1,5,i);
+    [n1,xout1]=hist(fitted_params(mode1,modal_params(i)),20);
+    b1=bar(xout1,n1,'r');
+    set(b1,'edgecolor','none')
+    [n2,xout2]=hist(fitted_params(mode2,modal_params(i)),20);
+    hold on;b2=bar(xout2,n2,'b');
+    set(b2,'edgecolor','none')
+    title(param_names{modal_params(i)},'interpreter','latex');
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp2g_data_modes']);
+close(f);
+clearvars -except P_HOME true1_parameters parameter_keys xlims param_names;
+
+%%profile likelihoods for 10 parameters, slow mode
+
+f=figure();
+set(f, 'Position',[0 0 1000 1000])
+chi1 = chi2inv(0.95,1);
+for i=1:5;
+    for j=1:2;
+        ind =j+(2*(i-1));
+        load([P_HOME '/Results/dcprogs/Exp2k/parameter_key_' num2str(parameter_keys(ind)) '.mat'])
+        
+        subplot(5,2,ind);
+        plot(profiles(1,:),profile_likelihoods); %x axis in log space
+        hold on;
+        plot(log(true1_parameters(parameter_keys(ind))),min(profile_likelihoods),'rp');
+        %range for the likelihood based approxomation
+        range = profile_likelihoods < min(profile_likelihoods)+(0.5*chi1);
+        line([min(profiles(1,range)) min(profiles(1,range))],[min(profile_likelihoods) max(profile_likelihoods)],'Color','r');
+        line([max(profiles(1,range)) max(profiles(1,range))],[min(profile_likelihoods) max(profile_likelihoods)],'Color','r');
+        line([min(profiles(1,:)) max(profiles(1,:))],[min(profile_likelihoods)+(0.5*chi1); min(profile_likelihoods)+(0.5*chi1);],'Color','r');
+        hold off;
+        title(param_names{ind},'interpreter','latex');
+    end ;
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp2k_pl_allparams']);
+close(f);
+clearvars -except P_HOME true1_parameters parameter_keys xlims param_names;
+
+%show in comparison to the single concnetration profile likelihoods
+experiments={'30nm','30nm and 10um'};
+colours = {'r','b'};
+leg={'Single','Double'};
+width=5;
+height=2;
+results_dir= strcat( P_HOME, {'/Results/dcprogs/Exp2ai','/Results/dcprogs/Exp2k'});
+fig = plot_profiles(results_dir,colours,leg,param_names,width,height,length(parameter_keys),parameter_keys);
+print(fig,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Adding_conc_10_param_pl']);
+close(fig);
+clearvars -except P_HOME true1_parameters parameter_keys xlims param_names;
+
+%show the difference in profile likelihood condfidence intervals
+f=figure();
+set(f, 'Position',[0 0 1000 1000])
+chi1 = chi2inv(0.95,1);
+
+%plot the single concnetration dataset
+
+results_dir={'Exp2ai','Exp2k'};
+for l=1:2
+    for i=1:5;
+        for j=1:2;
+            ind =j+(2*(i-1));
+            load([P_HOME strcat('/Results/dcprogs/',results_dir{l},'/parameter_key_', num2str(parameter_keys(ind)), '.mat')])      
+            subplot(5,2,ind);
+            hold on;
+            [min_lik,I] = min(profile_likelihoods);
+
+            plot(log(true1_parameters(parameter_keys(ind))),l,'rp');
+            plot(profiles(1,I),l,'gp');
+
+            %range for the likelihood based approxomation
+            range = profile_likelihoods < min(profile_likelihoods)+(0.5*chi1);
+            lower_idx = find(range, 1, 'first');
+            upper_idx = find(range, 1, 'last');
+
+            lower_ci = 1;
+            upper_ci = log(10e10);
+            threshold=min_lik+(chi1/2);
+            if lower_idx > 1  
+                %we can establish a lowed bounded confidence interval
+                lower_ci = calc_root(profiles(1,lower_idx-1),profiles(1,lower_idx),profile_likelihoods(lower_idx-1)-threshold,profile_likelihoods(lower_idx)-threshold);
+
+            end
+
+            if upper_idx < length(profile_likelihoods)
+                %we can establish a upper bounded confidence interval
+                upper_ci = calc_root(profiles(1,upper_idx),profiles(1,upper_idx+1),profile_likelihoods(upper_idx)-threshold,profile_likelihoods(upper_idx+1)-threshold);          
+
+
+            end
+
+            mid = (lower_ci+upper_ci)/2;
+            rectangle('Position',[lower_ci,l-0.25 ,upper_ci-lower_ci, 0.5])
+            %errorbar(l,(lower_ci+upper_ci)/2,mid-lower_ci,upper_ci-mid);
+            xlim([profiles(1,1),profiles(1,end)]);
+            ylim ([0 3])
+
+            hold off;
+            title(param_names{ind},'interpreter','latex');
+            set(gca,'YTick',[1:2])
+            set(gca,'YTickLabel',{'conc 1','conc 2'})
+        end ;
+    end
+end
+
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Expmulticonc_pl_intervals']);
+close(f);
+clearvars -except P_HOME true1_parameters parameter_keys xlims param_names;
+
+%show in comparison to the low concnetrations vs low-high concs profile likelihoods
+experiments={'10nm 30nm and 100nm','30nm and 10um'};
+colours = {'r','b'};
+leg={'Low concs','High concs'};
+width=5;
+height=2;
+results_dir= strcat( P_HOME, {'/Results/dcprogs/Exp2l','/Results/dcprogs/Exp2k'});
+fig = plot_profiles(results_dir,colours,leg,param_names,width,height,length(parameter_keys),parameter_keys);
+print(fig,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Low_verus_high_concs']);
+close(fig);
+
+
+%confidence intervals
+f=figure();
+set(f, 'Position',[0 0 1000 1000])
+chi1 = chi2inv(0.95,1);
+
+results_dir={'Exp2l','Exp2k'};
+for l=1:2
+    for i=1:5;
+        for j=1:2;
+            ind =j+(2*(i-1));
+            load([P_HOME strcat('/Results/dcprogs/',results_dir{l},'/parameter_key_', num2str(parameter_keys(ind)), '.mat')])      
+            subplot(5,2,ind);
+            hold on;
+            [min_lik,I] = min(profile_likelihoods);
+
+            plot(log(true1_parameters(parameter_keys(ind))),l,'rp');
+            plot(profiles(1,I),l,'gp');
+
+            %range for the likelihood based approxomation
+            range = profile_likelihoods < min(profile_likelihoods)+(0.5*chi1);
+            lower_idx = find(range, 1, 'first');
+            upper_idx = find(range, 1, 'last');
+
+            lower_ci = 1;
+            upper_ci = log(10e10);
+            threshold=min_lik+(chi1/2);
+            if lower_idx > 1  
+                %we can establish a lowed bounded confidence interval
+                lower_ci = calc_root(profiles(1,lower_idx-1),profiles(1,lower_idx),profile_likelihoods(lower_idx-1)-threshold,profile_likelihoods(lower_idx)-threshold);
+
+            end
+
+            if upper_idx < length(profile_likelihoods)
+                %we can establish a upper bounded confidence interval
+                upper_ci = calc_root(profiles(1,upper_idx),profiles(1,upper_idx+1),profile_likelihoods(upper_idx)-threshold,profile_likelihoods(upper_idx+1)-threshold);          
+
+
+            end
+
+            mid = (lower_ci+upper_ci)/2;
+            rectangle('Position',[lower_ci,l-0.25 ,upper_ci-lower_ci, 0.5])
+            %errorbar(l,(lower_ci+upper_ci)/2,mid-lower_ci,upper_ci-mid);
+            xlim([profiles(1,1),profiles(1,end)]);
+            ylim ([0 3])
+
+            hold off;
+            title(param_names{ind},'interpreter','latex');
+            set(gca,'YTick',[1:2])
+            set(gca,'YTickLabel',{'low concs','low+high conc'})
+        end ;
+    end
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Low_verus_high_concs_intervals']);
+close(f);
+
+clearvars -except P_HOME true1_parameters;
+
+%% 13 Parameter model - dependent binding sites
+%%ESTIMATING 13 RATES INTRODUCING NON-IDENTIFIABILITY
+parameter_keys=[1,2,3,4,5,6,7,8,9,10,11,13,14];
+load([P_HOME '/Results/dcprogs/Exp4a/Exp4a_24102013.mat'])
+f=figure();
+param_names={'$\alpha_{2}$','$\beta_{2}$','$\alpha_{1a}$','$\beta_{1a}$','$\alpha_{1b}$','$\beta_{1b}$','$k_{-2a}$','$k_{+2a}$','$k_{-2b}$','$k_{+2b}$ ','$k_{-1a}$','$k_{-1b}$','$k_{+1b}$'};
+set(f, 'Position',[0 0 2000 400])
+xlims={[0 3e4],[0  2e5],[5000 10000],[0 100],[0 200000],[0 500],[500 5000],[0 6e8],[500 15000],[0 6e8],[0 5000],[0 30000],[0 1e10]};
+for i=1:3;
+    for j=1:4;
+        ind =j+(4*(i-1));
+        subplot(3,5,ind);
+        plt_limit=xlims{ind};
+        hist_data = fitted_params((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)),ind);
+        hist(hist_data,40);
+        totals = sum((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)));
+        hold on;
+        plot(true1_parameters(parameter_keys(ind)),0,'rp');
+        hold off;
+        title(param_names{ind},'interpreter','latex');
+        xlim(xlims{ind})
+    end
+end
+ind=13;
+subplot(3,5,ind);
+plt_limit=xlims{ind};
+hist_data = fitted_params((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)),ind);
+hist(hist_data,40);
+hold on;
+plot(true1_parameters(parameter_keys(ind)),0,'rp');
+hold off;
+totals = sum((fitted_params(:,ind) > plt_limit(1) & fitted_params(:,ind) < plt_limit(2)));
+title(param_names{ind},'interpreter','latex');
+xlim(xlims{ind})
+
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp4a_data_allparams']);
+
+%we can profile these modes...
+mode1=fitted_params(:,1)<2500;
+mode2=(fitted_params(:,1)>10000 & fitted_params(:,1)<30000);
+%means for the rate parameters of mode 1
+fprintf('%.16f\n',mean(fitted_params(mode1,:)))
+
+%means for the rate parameters of mode 2
+fprintf('%.16f\n',mean(fitted_params(mode2,:)))
+
+modal_params=[1 2 9 10 13];
+for i=1:5;
+    subplot(1,5,i);
+    [n1,xout1]=hist(fitted_params(mode1,modal_params(i)),20);
+    b1=bar(xout1,n1,'r');
+    set(b1,'edgecolor','none')
+    [n2,xout2]=hist(fitted_params(mode2,modal_params(i)),20);
+    hold on;b2=bar(xout2,n2,'b');
+    set(b2,'edgecolor','none')
+    title(param_names{modal_params(i)},'interpreter','latex');
+end
+print(f,'-depsc',[P_HOME '../../../Written/thesis_1/Figures/Exp4a_data_modes']);
+clearvars -except P_HOME true1_parameters;
 
