@@ -469,6 +469,8 @@ classdef DataController
            a=TransitionRate(15, R, S, 'beta2','',1);
            a.hasLimits=true;
            a.limits=[1e-15,1e+7];
+           a.eff = 'c';
+           a.funct=@(rate,effector_value)rate*effector_value;
            
            b=TransitionRate(15000, S, R, 'alpha2','',2);
            b0.hasLimits=true;
@@ -484,15 +486,57 @@ classdef DataController
            constraints=containers.Map('KeyType', 'int32','ValueType','any');
            
            if refactor
-               mechanism=MechanismUpdate(rate_list,cycles,constraints,'FIVE STATE MODEL');
+               mechanism=MechanismUpdate(rate_list,cycles,constraints,'TWO STATE MODEL');
            else
-               mechanism=Mechanism(rate_list,cycles,constraints,'FIVE STATE MODEL');
+               mechanism=Mechanism(rate_list,cycles,constraints,'TWO STATE MODEL');
            end           
-            
-            
         end
         
-
+        function mechanism=read_mechanism_three_state(refactor)
+            S  = State('A', 'AR*', 60e-12,1);
+            AR  = State('B', 'AR', 0.0,2);
+            R  = State('B', 'R', 0.0,3);
+          
+           %conc=100*10^-9; %100nM
+           conc=1; %concentration no longer part of mechanism 
+           %only Q generation
+           %define our ratelist
+            
+           
+           a=TransitionRate(1000, AR, S, 'beta','',1);
+           a.hasLimits=true;
+           a.limits=[1e-15,1e+7];
+           a.funct=@(rate,effector_value)rate*effector_value;
+           
+           b=TransitionRate(1000, S, AR, 'alpha','',2);
+           b.hasLimits=true;
+           b.limits=[1e-15,1e+7];
+           
+           c=TransitionRate(1000, AR, R, 'koff','',3);
+           c.hasLimits=true;
+           c.limits=[1e-15,1e+7];
+           
+           d=TransitionRate(10000000, R, AR, 'kon','',4);
+           d.hasLimits=true;
+           d.limits=[1e-15,1e+7];
+           d.eff = 'c';           
+           
+           rate_list=[a,b,c,d];
+           
+           cycles=struct([]);
+           
+           %constraints belong at the level of the mechanism - Rate has no
+           %real concept of what the other rates are
+           
+           constraints=containers.Map('KeyType', 'int32','ValueType','any');
+           
+           if refactor
+               mechanism=MechanismUpdate(rate_list,cycles,constraints,'THREE STATE MODEL');
+           else
+               mechanism=Mechanism(rate_list,cycles,constraints,'THREE STATE MODEL');
+           end           
+        end
+        
         function write_mec_file(mechanism,outfile)
             %To be implemented
 
@@ -513,7 +557,7 @@ classdef DataController
             
 
             
-            if version==-103
+            if abs(version)==103
                 %specific to this version
 
                 tapeID=fread(scn_handle,24,'char=>char')';
