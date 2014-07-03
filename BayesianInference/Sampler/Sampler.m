@@ -50,7 +50,7 @@ classdef Sampler
                     startParams=propParams;
                 else                        
                     paramSamples(:,sampleNo)=startParams;                       
-                    posteriors(sampleNo,:)=currentInfo.LogPosterior;                     
+                    posteriors(sampleNo)=currentInfo.LogPosterior;                     
                 end
                 
                 %tuning step for sampler
@@ -170,7 +170,7 @@ classdef Sampler
             %return samples. Transpose paramSamples and proposals to male
             %tham easier to read
             sampleTime=toc(t);
-            samples=struct('params',paramSamples','N', samplesToDraw,'acceptances',acceptances','posteriors',posteriors,'proposals',proposals','sampleTime',sampleTime,'scaleFactors',runningSF);
+            samples=struct('params',paramSamples','N', samplesToDraw,'acceptances',acceptances','posteriors',posteriors','proposals',proposals','sampleTime',sampleTime,'scaleFactors',runningSF);
                         
         end
     end
