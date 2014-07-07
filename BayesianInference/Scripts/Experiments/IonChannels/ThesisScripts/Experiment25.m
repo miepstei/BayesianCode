@@ -37,7 +37,7 @@ data.useChs=[1 0];
 
 %% Sampling method
 
-proposalScheme = TruncatedMalaProposal(eye(2,2),1,0.01);
+proposalScheme = TruncatedMalaProposal(eye(model.k,model.k),1,0.01);
 
 %% Set up the sampler
 MCMCsampler = Sampler();
