@@ -84,7 +84,7 @@ classdef RwmhMixtureProposal < Proposal
                        
             propInfo = model.calcGradInformation(propParams,data,RwmhMixtureProposal.RequiredInfo);    
             %proposal distibution is symmetric so cancels in the ratio
-            if isinf(propInfo.LogPosterior)
+            if isinf(propInfo.LogPosterior) || isnan(propInfo.LogPosterior) 
                 alpha=-Inf;
             else
                 alpha = min(0,((propInfo.LogPosterior)-(currInfo.LogPosterior)));

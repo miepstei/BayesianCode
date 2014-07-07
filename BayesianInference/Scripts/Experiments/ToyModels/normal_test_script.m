@@ -58,7 +58,8 @@ function samples=normal_test_script(proposalScheme,samplerScheme,startParams,ste
     figure;hold on;
     
     plot([startParams(1); samples.params(:,1)],[startParams(2); samples.params(:,2)],'b.-');
-    contour(means,vars,posterior',50);
+    maxPosterior = max(max(posterior));
+    contour(means,vars,posterior',linspace(maxPosterior-5,maxPosterior,10));
     xlim(xlimit);
     ylim(ylimit);
     hold off

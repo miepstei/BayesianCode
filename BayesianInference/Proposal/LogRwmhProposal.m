@@ -58,7 +58,7 @@ classdef LogRwmhProposal < Proposal
             %logCurrentParams = log10(currentParams);
             [L, ~] = chol(obj.mass_matrix);
             logPropParams = log(currentParams) + L' * randn(length(currentParams),1);
-            propInformation = model.calcGradInformation(exp(logPropParams,data,RwmhProposal.RequiredInfo));
+            propInformation = model.calcGradInformation(exp(logPropParams),data,RwmhProposal.RequiredInfo);
                 
 
             if isinf(propInformation.LogPosterior)

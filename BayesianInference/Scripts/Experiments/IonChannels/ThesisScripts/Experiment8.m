@@ -22,7 +22,7 @@ model = SevenState_10Param_AT();
 
 %% Starting Parameters
 load(strcat(getenv('P_HOME'),'/BayesianInference/Data/SevenStateGuessesAndParams.mat'))
-startParams=guess2(ten_param_keys);
+startParams=guess2(ten_param_keys)';
 clearvars -except experiment_description SamplerParams model startParams
 
 %% Data

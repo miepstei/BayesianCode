@@ -79,7 +79,7 @@ classdef TruncatedMalaProposal < Proposal
             propParams = propMeans + (L' * randn(length(currentParams),1));
             propInfo = model.calcGradInformation(propParams,data,TruncatedMalaProposal.RequiredInfo);
 
-            if propInfo.LogPosterior ~= -Inf
+            if propInfo.LogPosterior ~= -Inf &&  ~isnan(propInfo.LogPosterior)
                 %accept/reject ratio needs to take account of asymmetry in
                 %proposal distibution
                 
