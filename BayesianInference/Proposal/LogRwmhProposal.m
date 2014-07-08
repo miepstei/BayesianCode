@@ -21,7 +21,7 @@ classdef LogRwmhProposal < Proposal
             
         function obj = set.componentwise(obj,cw) 
             if (cw ~= 0 && cw ~=1 )
-                error('RwmhProposal:componentwise:invalidComponent', 'componentwise parameter must be 0 or 1')
+                error('LogRwmhProposal:componentwise:invalidComponent', 'componentwise parameter must be 0 or 1')
             end
             obj.componentwise = cw;
         end
@@ -32,7 +32,7 @@ classdef LogRwmhProposal < Proposal
             if(p == 0)
                 obj.mass_matrix = mass_matrix;
             else
-                error('RwmhProposal:mass_matrix:notPosDef','covariance matrix must be positive definite')
+                error('LogRwmhProposal:mass_matrix:notPosDef','covariance matrix must be positive definite')
             end    
     
         end
@@ -57,7 +57,8 @@ classdef LogRwmhProposal < Proposal
                         
             %logCurrentParams = log10(currentParams);
             [L, ~] = chol(obj.mass_matrix);
-            logPropParams = log(currentParams) + L' * randn(length(currentParams),1);
+            logCurrParams = log(currentParams);
+            logPropParams = logCurrParams + L' * randn(length(currentParams),1);
             propInformation = model.calcGradInformation(exp(logPropParams),data,RwmhProposal.RequiredInfo);
                 
 
@@ -66,7 +67,7 @@ classdef LogRwmhProposal < Proposal
             else               
                 %need to transform the density in log space to ensure mass
                 %is equivalent in log space
-                alpha = min(0,(propInformation.LogPosterior + log(prod(exp(logPropParams))))-(currInfo.LogPosterior +log(prod(exp(currentParams)))));
+                alpha = min(0,(propInformation.LogPosterior + sum(logPropParams))-(currInfo.LogPosterior +sum(logCurrParams)));
             end
             propParams=exp(logPropParams);    
 
@@ -107,11 +108,16 @@ classdef LogRwmhProposal < Proposal
         
         function obj=adjustScaling(obj,factor)
             %scale diagonal elements of the mass matrix
-            obj.mass_matrix(logical(eye(size(obj.mass_matrix))))=diag(obj.mass_matrix)*factor;
+            obj.mass_matrix=obj.mass_matrix*factor;
         end
         
         function obj=adjustPwScaling(obj,factor,paramNo)
-            obj.mass_matrix(paramNo,paramNo)=obj.mass_matrix(paramNo,paramNo)*factor;
+            l=zeros(size(obj.mass_matrix));
+            l(paramNo,:)=1;
+            l(:,paramNo)=1;
+            l=logical(l);
+            
+            obj.mass_matrix(l)=obj.mass_matrix(l)*factor;
         end
         
     end  

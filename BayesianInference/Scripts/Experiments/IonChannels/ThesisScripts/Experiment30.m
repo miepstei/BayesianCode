@@ -9,8 +9,8 @@ clear all;
 experiment_description='Preconditioned RWMH , Single Chain, 7-state concentration dependent, 2-concentrations, generated as per Colquhoun2003, Standard sampler';
 
 %% sampling parameters
-SamplerParams.Samples=500000;
-SamplerParams.Burnin=250000;
+SamplerParams.Samples=200000;
+SamplerParams.Burnin=100000;
 SamplerParams.AdjustmentLag=50; 
 SamplerParams.NotifyEveryXSamples=1000;
 SamplerParams.ScaleFactor=0.1;

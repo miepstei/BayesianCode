@@ -104,11 +104,16 @@ classdef RwmhProposal < Proposal
         
         function obj=adjustScaling(obj,factor)
             %scale diagonal elements of the mass matrix
-            obj.mass_matrix(logical(eye(size(obj.mass_matrix))))=diag(obj.mass_matrix)*factor;
+            obj.mass_matrix=obj.mass_matrix*factor;
         end
         
         function obj=adjustPwScaling(obj,factor,paramNo)
-            obj.mass_matrix(paramNo,paramNo)=obj.mass_matrix(paramNo,paramNo)*factor;
+            l=zeros(size(obj.mass_matrix));
+            l(paramNo,:)=1;
+            l(:,paramNo)=1;
+            l=logical(l);
+            
+            obj.mass_matrix(l)=obj.mass_matrix(l)*factor;
         end
         
     end  

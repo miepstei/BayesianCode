@@ -9,8 +9,8 @@ clear all;
 experiment_description='MALA, Single Chain, 7-state concentration dependent, 2-concentrations, generated as per Colquhoun2003, MALA sampler';
 
 %% sampling parameters
-SamplerParams.Samples=500000;
-SamplerParams.Burnin=250000;
+SamplerParams.Samples=100000;
+SamplerParams.Burnin=50000;
 SamplerParams.AdjustmentLag=1000; 
 SamplerParams.NotifyEveryXSamples=1000;
 SamplerParams.ScaleFactor=0.1;

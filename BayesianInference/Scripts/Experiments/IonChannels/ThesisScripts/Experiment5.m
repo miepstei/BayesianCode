@@ -9,8 +9,8 @@ clear all;
 experiment_description='Metropolis-Hastings with componentwise adjustment, Single Chain, 7-state concentration dependent, 1-concentrations, generated as per Colquhoun 2003, Standard MH Sampler';
 
 %% sampling parameters
-SamplerParams.Samples=20000;
-SamplerParams.Burnin=10000;
+SamplerParams.Samples=200000;
+SamplerParams.Burnin=100000;
 SamplerParams.AdjustmentLag=50; % scaling
 SamplerParams.NotifyEveryXSamples=1000;
 SamplerParams.ScaleFactor=0.1;
@@ -22,7 +22,7 @@ model = SevenState_9param_AT();
 
 %% Starting Parameters
 load(strcat(getenv('P_HOME'),'/BayesianInference/Data/SevenStateGuessesAndParams.mat'))
-startParams=guess2(nine_param_keys);
+startParams=guess2(nine_param_keys)';
 clearvars -except experiment_description SamplerParams model startParams
 
 %% Data
@@ -45,7 +45,7 @@ MCMCsampler = Sampler();
 %% Sample!
 rng('shuffle')
 t=rng;
-samples=MCMCsampler.blockSample(SamplerParams,model,data,proposalScheme,startParams);
+samples=MCMCsampler.cwSample(SamplerParams,model,data,proposalScheme,startParams);
 
 %% Save the data
 mkdir(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/'))

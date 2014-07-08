@@ -46,7 +46,7 @@ MCMCsampler = Sampler();
 %% Sample!
 rng('shuffle')
 t=rng;
-samples=MCMCsampler.blockSample(SamplerParams,model,data,proposalScheme,startParams);
+samples=MCMCsampler.cwSample(SamplerParams,model,data,proposalScheme,startParams);
 
 %% Save the data
 mkdir(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/'))
