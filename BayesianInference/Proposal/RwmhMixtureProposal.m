@@ -95,7 +95,8 @@ classdef RwmhMixtureProposal < Proposal
         function obj=adjustScaling(obj,factor)
             %scale diagonal elements of the mass matrix
             obj.epsilon=obj.epsilon*factor;
-            obj.mass_matrix(logical(eye(size(obj.mass_matrix))))=diag(obj.mass_matrix)*obj.epsilon;
+            %obj.mass_matrix(logical(eye(size(obj.mass_matrix))))=diag(obj.mass_matrix)*obj.epsilon;
+            obj.mass_matrix=obj.mass_matrix*factor;
         end
         
         

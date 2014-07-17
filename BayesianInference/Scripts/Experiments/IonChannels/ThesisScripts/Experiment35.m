@@ -1,21 +1,21 @@
-%%Experiment 30
-% SAMPLER: Preconditioned RWMH 
+%%Experiment 33
+% SAMPLER: smMala at mode
 % NUMBER OF CHAINS: Single Chain
 % MODEL: Seven State from Colquhoun2003
 % DATASET: 2-concentrations, generated as per Colquhoun2003
 % SAMPLER: Standard
 
 clear all;
-experiment_description='Preconditioned RWMH , Single Chain, 7-state concentration dependent, 2-concentrations, generated as per Colquhoun2003, Standard sampler';
+experiment_description='smMala at mode , Single Chain, 7-state concentration dependent, 2-concentrations, generated as per Colquhoun2003, Standard sampler';
 
 %% sampling parameters
-SamplerParams.Samples=50000;
-SamplerParams.Burnin=10000;
+SamplerParams.Samples=5000;
+SamplerParams.Burnin=2500;
 SamplerParams.AdjustmentLag=50; 
 SamplerParams.NotifyEveryXSamples=1000;
 SamplerParams.ScaleFactor=0.1;
-SamplerParams.LowerAcceptanceLimit=0.1;
-SamplerParams.UpperAcceptanceLimit=0.5;
+SamplerParams.LowerAcceptanceLimit=0.3;
+SamplerParams.UpperAcceptanceLimit=0.7;
 
 %% Model
 model = SevenState_10Param_QET();
@@ -40,11 +40,11 @@ options.MaxIter=100000;
 options.MaxFunEvals=100000;
 [x,fval,exitflag] = fminsearch(@(params)-model.calcLogLikelihood(params,data),startParams,options);
 fprintf('Max likelihood is %.4f, params %.4f %.4f ... \n',fval,x(1),x(2))
-mass_m = (model.calcMetricTensor(x,data))^-1;
+startParams=x;
 
 %% Sampling method - redefine model
 model = SevenState_10Param_AT();
-proposalScheme = RwmhProposal(mass_m,0);
+proposalScheme = SimpMmalaProposal(eye(model.k,model.k),0);
 
 %% Set up the sampler
 MCMCsampler = Sampler();
@@ -59,4 +59,4 @@ savedir = strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/');
 if ~isequal(exist(savedir, 'dir'),7)
     mkdir(savedir)
 end
-save(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/Experiment30_' , num2str(t.Seed) , '.mat'))
+save(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/Experiment35_' , num2str(t.Seed) , '.mat'))
