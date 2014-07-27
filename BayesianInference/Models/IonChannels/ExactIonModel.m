@@ -40,12 +40,17 @@ classdef (Abstract)ExactIonModel < BayesianModel
                 tcrit = data.tcrit(experimentSet);
                 useChs = data.useChs(experimentSet);
                 qmat=obj.generateQ(params,concentration);
-                [likelihood , error] = likelihood_mex(bursts,qmat,tres,tcrit,obj.kA,useChs);
-                if error == 1
+                try
+                    [likelihood , error] = likelihood_mex(bursts,qmat,tres,tcrit,obj.kA,useChs);
+                    if error == 1
+                        logLik=-Inf;
+                        break
+                    else
+                        logLik = logLik+likelihood;
+                    end
+                catch 
                     logLik=-Inf;
-                    break
-                else
-                    logLik = logLik+likelihood;
+                    break                    
                 end
             end
         end
@@ -59,8 +64,13 @@ classdef (Abstract)ExactIonModel < BayesianModel
             %
             % INPUTS 
             %       params - k*1 vector, parameter values
-            %       data - struct, understood by the likelihood function            
-            logPosterior = obj.calcLogLikelihood(params,data) + obj.calcLogPrior(params);
+            %       data - struct, understood by the likelihood function
+            prior = obj.calcLogPrior(params);
+            if prior==-Inf
+                logPosterior=-Inf;
+            else
+                logPosterior = obj.calcLogLikelihood(params,data) + obj.calcLogPrior(params);
+            end
         end
         
         function gradLogLikelihood = calcGradLogLikelihood(obj,params,data)

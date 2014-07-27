@@ -52,10 +52,10 @@ function [ ESS,essvals,essvalsnorm,essvalestime ] = CalculateESS( Samples,Sample
     
     ESS = NumOfSamples./MonoEst;
     essvals = sprintf('%.4f ',ESS);
-    essvalsnorm = sprintf('%.4f ',ESS/NumOfSamples);
-    essvalestime = sprintf('%.4f',ESS/Samples.sampleTime);
+    essvalsnorm = ESS/NumOfSamples;
+    essvalestime = (ESS/Samples.sampleTime)*60;
     
     fprintf('ESS: %s\n', essvals)
-    fprintf('ESS per sample: %s\n', essvalsnorm)
-    fprintf('ESS per sec: %s\n', essvalestime)
+    fprintf('ESS per sample: %s\n', sprintf('%.4f ',ESS/NumOfSamples))
+    fprintf('ESS per min: %s\n', sprintf('%.4f ',(ESS/Samples.sampleTime)*60))
 end

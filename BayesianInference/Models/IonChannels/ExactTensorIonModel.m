@@ -3,7 +3,7 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
     %events likelihood calculation. Uses a more sophisticated finite-difference
     %calculation for first-order and second order derivatives
     
-    properties(Constant)
+    properties
         stepRatio = 2.0000001;
         rombergTerms = 2;
         maxStep=0.5;
@@ -27,15 +27,15 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
             
             gradLogLikelihood = zeros(obj.k,1);
 
-            delta = ExactTensorIonModel.maxStep*ExactTensorIonModel.stepRatio .^(0:-1:-ExactTensorIonModel.deltaTerms)';
+            delta = obj.maxStep*obj.stepRatio .^(0:-1:-obj.deltaTerms)';
             ndeltas = length(delta);     
             
             %first order variables
             fdarule2 = 1;
             nfda2=length(fdarule2);
-            ne2 = ndeltas + 1 - length(fdarule2) - ExactTensorIonModel.rombergTerms;            
+            ne2 = ndeltas + 1 - length(fdarule2) - obj.rombergTerms;            
             fMethodOrder=2;
-            fRombexpon = 2*(1:ExactTensorIonModel.rombergTerms) + fMethodOrder - 2;
+            fRombexpon = 2*(1:obj.rombergTerms) + fMethodOrder - 2;
 
             %minimum step sizes for all parameters
             nominalSteps = max(params , 0.02);
@@ -55,7 +55,7 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
                 der_init_derivs = v2m(f_del_deriv,ne2,nfda2)*fdarule2.';
                 der_init_derivs = der_init_derivs(:)./(nominalSteps(m)*delta(1:ne2));
 
-                [der_romb_deriv,errors] = rxt(ExactTensorIonModel.stepRatio,der_init_derivs,fRombexpon);
+                [der_romb_deriv,errors] = rxt(obj.stepRatio,der_init_derivs,fRombexpon);
 
                 nest = length(der_romb_deriv);
                 trim = [1 2 nest-1 nest];
@@ -129,7 +129,7 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
                     hessianDiagonals=zeros(obj.k,1);
                     order_1_steps= zeros(obj.k,1);
 
-                    delta = ExactTensorIonModel.maxStep*ExactTensorIonModel.stepRatio .^(0:-1:-ExactTensorIonModel.deltaTerms)';
+                    delta = obj.maxStep*obj.stepRatio .^(0:-1:-obj.deltaTerms)';
                     ndeltas = length(delta);           
 
                     %evaluate function at current params
@@ -139,15 +139,15 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
                     hMethodOrder=4;
                     hDerivativeOrder=2;
 
-                    srinv = 1./ExactTensorIonModel.stepRatio;
+                    srinv = 1./obj.stepRatio;
                     nterms=2;
                     [i,j] = ndgrid(1:nterms);
                     c = 1./factorial(2:2:(2*nterms));
                     mat = c(j).*srinv.^((i-1).*(2*j));
                     fdarule = [1 0]/mat;
                     nfda = length(fdarule); 
-                    ne = ndeltas + 1 - nfda - ExactTensorIonModel.rombergTerms;
-                    hRombexpon = 2*(1:ExactTensorIonModel.rombergTerms) + hMethodOrder - 2;
+                    ne = ndeltas + 1 - nfda - obj.rombergTerms;
+                    hRombexpon = 2*(1:obj.rombergTerms) + hMethodOrder - 2;
 
 
                     %first order variables
@@ -155,9 +155,9 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
                     %c = 1./factorial(1:2:(2*nterms));
                     fdarule2 = 1;
                     nfda2=length(fdarule2);
-                    ne2 = ndeltas + 1 - length(fdarule2) - ExactTensorIonModel.rombergTerms;            
+                    ne2 = ndeltas + 1 - length(fdarule2) - obj.rombergTerms;            
                     fMethodOrder=2;
-                    fRombexpon = 2*(1:ExactTensorIonModel.rombergTerms) + fMethodOrder - 2;
+                    fRombexpon = 2*(1:obj.rombergTerms) + fMethodOrder - 2;
 
                     %minimum step sizes for all parameters
                     nominalSteps = max(params , 0.02);
@@ -179,7 +179,7 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
                         der_init_derivs = v2m(f_del_deriv,ne2,nfda2)*fdarule2.';
                         der_init_derivs = der_init_derivs(:)./(nominalSteps(m)*delta(1:ne2));
 
-                        [der_romb_deriv,errors] = rxt(ExactTensorIonModel.stepRatio,der_init_derivs,fRombexpon);
+                        [der_romb_deriv,errors] = rxt(obj.stepRatio,der_init_derivs,fRombexpon);
 
                         nest = length(der_romb_deriv);
                         trim = [1 2 nest-1 nest];
@@ -203,7 +203,7 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
                         % finite difference method.
                         der_init = v2m(f_del,ne,nfda)*fdarule.';
                         der_init = der_init(:)./(nominalSteps(m)*delta(1:ne)).^hDerivativeOrder;
-                        [der_romb,errors] = rxt(ExactTensorIonModel.stepRatio,der_init,hRombexpon);
+                        [der_romb,errors] = rxt(obj.stepRatio,der_init,hRombexpon);
                         nest = length(der_romb);
                         trim = [1 2 nest-1 nest];
                         [der_romb,tags] = sort(der_romb);
@@ -220,7 +220,7 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
                     % Get params.RombergTerms+1 estimates of the upper
                     % triangle of the hessian matrix
                     rbt=3;
-                    dfac = ExactTensorIonModel.stepRatio.^(-(0:rbt)');
+                    dfac = obj.stepRatio.^(-(0:rbt)');
                     for j = 2:obj.k
                         for i = 1:(j-1)
                             dij = zeros(rbt+1,1);
@@ -258,7 +258,7 @@ classdef (Abstract)ExactTensorIonModel < ExactIonModel
                             dij = dij/4/prod(order_1_steps([i,j]));
                             dij = dij./(dfac.^2);    
                             % Romberg extrapolation step
-                            [metricTensor(i,j),~] =  rxt(ExactTensorIonModel.stepRatio,dij,[2 4]);
+                            [metricTensor(i,j),~] =  rxt(obj.stepRatio,dij,[2 4]);
                             metricTensor(j,i) = metricTensor(i,j);    
                         end
                     end
