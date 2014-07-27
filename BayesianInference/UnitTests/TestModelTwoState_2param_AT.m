@@ -73,7 +73,7 @@ classdef TestModelTwoState_2param_AT < matlab.unittest.TestCase
         end
         
         function testCalcMetricTensor(testCase)
-            testCase.verifyEqual(testCase.model.calcMetricTensor([5000 100],testCase.data),[ 0.0002708839019760 -0.0005984293238726; -0.0005984293238726 0.0269308657152578],'AbsTol', 1e-10)
+            testCase.verifyEqual(testCase.model.calcMetricTensor([5000 100],testCase.data),[ 0.000270883901976 -0.000598429323873; -0.000598429323873 0.026930792955682],'AbsTol', 1e-10)
         end
         
         function testCalcDerivMetricTensor(testCase)

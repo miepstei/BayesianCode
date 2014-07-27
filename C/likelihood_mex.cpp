@@ -25,7 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
     DCProgs::t_Bursts dbursts;
     
     int n = mxGetNumberOfElements (prhs[0]);
-
+    double burst_time = 0;
     for (int i = 0; i < n; i++) {
         mxArray* mburst = mxGetCell (prhs[0], i);
         
@@ -42,11 +42,13 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
         DCProgs::t_Burst dburst;       
         for (int j=0; j < ncols; j++){
             dburst.push_back(elements[j]);
+            burst_time+=elements[j];
+            //mexPrintf("burst %.16f\n",elements[j]);
         }
         dbursts.push_back(dburst);
         dburst.clear();
     }
-    
+    //mexPrintf("burst time %.16f\n",burst_time);
     /* second is the Q matrix */
     
     double* qMatrix = mxGetPr(prhs[1]);
@@ -59,12 +61,16 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
 
     DCProgs::t_rmatrix matrix(nrows ,ncols);
     
+    //matlab uses column-major notation so the 1-d array iterates down the column first
+    
     for (int i=0; i<nrows; i++){
         for (int j=0;j<ncols;j++){
-            matrix(i,j) = qMatrix[(i*ncols)+j];
+            matrix(i,j) = qMatrix[(j*nrows)+i];
+            //mexPrintf("im1[%d][%d] =  %0.2f \t", i, j, qMatrix[(j*nrows)+i]);
         }
+        //mexPrintf("\n");
     }
-
+    
     /* third is \tau, the resolution time (in seconds)*/
     double tau = mxGetScalar(prhs[2]);
     
@@ -93,6 +99,7 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
             result = likelihood(matrix);
         }
     }
+    
     catch (std::exception& e) {
         mexPrintf("[WARN]: DCProgs - Error thrown in DCProgs\n");
         mexPrintf(e.what());
