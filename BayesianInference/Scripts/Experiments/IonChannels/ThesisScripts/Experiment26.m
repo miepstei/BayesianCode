@@ -45,9 +45,7 @@ MCMCsampler = Sampler();
 %% Sample!
 rng('shuffle')
 t=rng;
-matlabpool open
 samples=MCMCsampler.blockSample(SamplerParams,model,data,proposalScheme,startParams);
-matlabpool close
 
 %% Save the data
 savedir = strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/');

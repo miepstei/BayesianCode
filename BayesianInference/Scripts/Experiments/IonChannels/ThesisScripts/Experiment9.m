@@ -10,8 +10,8 @@ clear all;
 experiment_description='Metropolis-Hastings with componentwise adjustment, Single Chain, 7-state concentration dependent, 2-concentrations, generated as per Colquhoun 2003, Standard MH Sampler';
 
 %% sampling parameters
-SamplerParams.Samples=20000;
-SamplerParams.Burnin=10000;
+SamplerParams.Samples=100000;
+SamplerParams.Burnin=50000;
 SamplerParams.AdjustmentLag=50; % scaling
 SamplerParams.NotifyEveryXSamples=1000;
 SamplerParams.ScaleFactor=0.1;

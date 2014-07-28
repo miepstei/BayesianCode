@@ -9,8 +9,8 @@ clear all;
 experiment_description='Roberts Adaptive, Single Chain, 2-state concentration dependent, 4-concentrations, generated as per Ball 1989, RosenthalAdaptiveSampler';
 
 %% sampling parameters
-SamplerParams.Samples=50000;
-SamplerParams.Burnin=25000;
+SamplerParams.Samples=200000;
+SamplerParams.Burnin=100000;
 SamplerParams.AdjustmentLag=50; 
 SamplerParams.NotifyEveryXSamples=1000;
 SamplerParams.ScaleFactor=0.1;
