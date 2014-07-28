@@ -1,12 +1,12 @@
 %%Experiment B
-% SAMPLER: multiplicative Metropolis-Hastings with adjustment 
+% SAMPLER: multiplicative Metropolis-Hastings with componentwise adjustment 
 % NUMBER OF CHAINS: Single Chain
 % MODEL: 7-state concentration dependent, 10 params
 % DATASET: 2-concentrations, generated as per Colqhoun 2003, 30nm, 10 um, 20000
 % intervals each
 % SAMPLER: Standard
 clear all;
-experiment_description='multiplicative Metropolis-Hastings with compnentwise adjustment, Single Chain, 7-state concentration dependent, 2-concentrations, generated as per Colquhoun 2003, Standard MH Sampler';
+experiment_description='multiplicative Metropolis-Hastings with componentwise adjustment, Single Chain, 7-state concentration dependent, 2-concentrations, generated as per Colquhoun 2003, Standard MH Sampler';
 
 %% sampling parameters
 SamplerParams.Samples=200000;
@@ -45,7 +45,7 @@ MCMCsampler = Sampler();
 %% Sample!
 rng('shuffle')
 t=rng;
-samples=MCMCsampler.blockSample(SamplerParams,model,data,proposalScheme,startParams);
+samples=MCMCsampler.cwSample(SamplerParams,model,data,proposalScheme,startParams);
 
 %% Save the data
 mkdir(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/'))
