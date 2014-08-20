@@ -9,8 +9,8 @@ clear all;
 experiment_description='multiplicative Metropolis-Hastings with componentwise adjustment, Single Chain, 7-state concentration dependent, 2-concentrations, generated as per Colquhoun 2003, Standard MH Sampler';
 
 %% sampling parameters
-SamplerParams.Samples=200000;
-SamplerParams.Burnin=100000;
+SamplerParams.Samples=50000;
+SamplerParams.Burnin=25000;
 SamplerParams.AdjustmentLag=50; % scaling
 SamplerParams.NotifyEveryXSamples=1000;
 SamplerParams.ScaleFactor=0.1;

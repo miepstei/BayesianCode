@@ -14,8 +14,8 @@ SamplerParams.Burnin=25000;
 SamplerParams.AdjustmentLag=50; 
 SamplerParams.NotifyEveryXSamples=1000;
 SamplerParams.ScaleFactor=0.1;
-SamplerParams.LowerAcceptanceLimit=0.3;
-SamplerParams.UpperAcceptanceLimit=0.7;
+SamplerParams.LowerAcceptanceLimit=0.1;
+SamplerParams.UpperAcceptanceLimit=0.5;
 
 %% Model
 model = SevenState_10Param_QET();

@@ -6,7 +6,7 @@
 % SAMPLER: Standard
 
 clear all;
-experiment_description='Preconditioned Mala, Roberts Adaptive MCMC, Single Chain, Normal Model, 30 observations, generated as per G&C 2011, RosenthalAdaptiveSampler sampler';
+experiment_description='Preconditioned Mala, Standard Sampler, Single Chain, Normal Model, 30 observations, generated as per G&C 2011, RosenthalAdaptiveSampler sampler';
 
 %% sampling parameters
 SamplerParams.Samples=1000;

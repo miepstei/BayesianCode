@@ -10,7 +10,7 @@ experiment_description='Preconditioned RWMH , Single Chain, 7-state concentratio
 
 %% sampling parameters
 SamplerParams.Samples=50000;
-SamplerParams.Burnin=10000;
+SamplerParams.Burnin=25000;
 SamplerParams.AdjustmentLag=50; 
 SamplerParams.NotifyEveryXSamples=1000;
 SamplerParams.ScaleFactor=0.1;
