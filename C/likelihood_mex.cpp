@@ -88,14 +88,21 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
     int error = 0;
     DCProgs::t_real result;
     
+    int nmax = 2;
+    double xtol = 1e-12;
+    double rtol = 1e-12;
+    int itermax = 100;
+    double lower_bound = -1e6;
+    double upper_bound = 0;
+    
     try {
         
         if (! useChs){
-            DCProgs::Log10Likelihood likelihood(dbursts, open_states, tau, -1);
+            DCProgs::Log10Likelihood likelihood(dbursts, open_states, tau, -t_crit,nmax,xtol,rtol,itermax,lower_bound,upper_bound);
             result = likelihood(matrix);
         }
         else {
-            DCProgs::Log10Likelihood likelihood(dbursts, open_states, tau, t_crit);
+            DCProgs::Log10Likelihood likelihood(dbursts, open_states, tau, t_crit,nmax,xtol,rtol,itermax,lower_bound,upper_bound);
             result = likelihood(matrix);
         }
     }

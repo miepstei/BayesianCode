@@ -8,7 +8,7 @@ function [ ESS,essvals,essvalsnorm,essvalestime ] = CalculateESS( Samples,Sample
 
     % Calculate empirical autocovariance
     for i = 1:NumOfParameters
-        ACs(:,i) = autocorr(Samples.params(:,i),MaxLag);
+        ACs(:,i) = autocorr(Samples.params(SamplerParams.Burnin+1:end,i),MaxLag);
     end
 
 

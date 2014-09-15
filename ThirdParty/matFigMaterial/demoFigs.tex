@@ -1,0 +1,51 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{graphicx} %\layout: page width = 397pts = 5.51inches = 14cm
+\usepackage{psfrag} 
+
+\begin{document}
+
+\section*{Version 1: Export using matlab menus}
+\begin{center}
+\includegraphics[width=397pt]{demo1.eps}
+\end{center}
+\pagebreak
+
+\section*{Version 2: Export using print}
+\begin{center}
+\includegraphics[width=397pt]{demo2.eps}
+\end{center}
+\pagebreak
+
+\section*{Version 3: Setting figure page size}
+\begin{center}
+\includegraphics[width=397pt]{demo3.eps}
+\end{center}
+\pagebreak
+
+\section*{Version 4: Setting axis sizes}
+\begin{center}
+\includegraphics[width=397pt]{demo4.eps}
+\end{center}
+\pagebreak
+
+\section*{Version 5: Setting line and font style}
+\begin{center}
+\includegraphics[width=397pt]{demo5.eps}
+\end{center}
+\pagebreak
+
+\section*{Version 6: Using PSfrag on right xlabel}
+\begin{center}
+\psfrag{omega = 2 pi c/lambda}[l][c]{$\omega = \frac{2 \pi c}{\lambda}$}
+\includegraphics[width=397pt]{demo6.eps}
+\end{center}
+\pagebreak
+
+\section*{Version 7: My code and PSfrag on all labels}
+\begin{center}
+\psfrag{omega = 2 pi c/lambda}[l][c]{$\omega = \frac{2 \pi c}{\lambda}$}
+\psfrag{y}[l][c]{$y$}
+\includegraphics[width=397pt]{demo7.eps}
+\end{center}
+
+\end{document}

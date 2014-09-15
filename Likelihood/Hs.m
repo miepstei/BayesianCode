@@ -27,7 +27,7 @@ I=eye(ky);
 %expMat=lik.mat_exponentiation(-eig_vals,spec,tres);
 
 %mex function for calculating the exponential of a matrix
-expMat=mat_exp(-(s*I-Qyy)*tres);
+expMat=expm(-(s*I-Qyy)*tres);
 %[V,D] = eig(s*I-Qyy);
 %expMat=(V*exp(tres*-D)*V^-1);
 %expMat=expm(tres*(s*I-Qyy));

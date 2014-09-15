@@ -38,6 +38,7 @@ data.useChs=[1 0];
 options = optimset('fminsearch');
 options.MaxIter=100000;
 options.MaxFunEvals=100000;
+options.Display='iter';
 [x,fval,exitflag] = fminsearch(@(params)-model.calcLogLikelihood(params,data),startParams,options);
 fprintf('Max likelihood is %.4f, params %.4f %.4f ... \n',fval,x(1),x(2))
 startParams=x;
