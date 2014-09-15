@@ -102,7 +102,7 @@ for i=1:kx
    %want a kx by kx matrix constituting the left and right eigenvectors 
    nom=right(:,i)*left(i,:);
    dW=dW_ds(roots(i),tres,Qxy,Qyy,Qyx,kx,ky); 
-   denom=right(:,i)'*dW*left(i,:)';
+   denom=left(i,:)*dW*right(:,i);
    R(:,:,i)=nom/denom;
 end
 
