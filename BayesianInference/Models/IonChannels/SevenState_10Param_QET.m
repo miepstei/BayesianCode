@@ -4,10 +4,20 @@ classdef SevenState_10Param_QET < ExactTensorIonModel
           
     methods(Access=public,Static)
         
-        function obj = SevenState_10Param_QET()
+        function obj = SevenState_10Param_QET(dcp_options)
             obj.kA=3; % 3 open states
             obj.h=0.01;
             obj.k = 10; %9 params - 1 fixed, 3 constrained, 1 mr
+            if nargin == 1
+                obj.options = dcp_options;
+            else
+                obj.options{1}=2;
+                obj.options{2}=1e-12;
+                obj.options{3}=1e-12;
+                obj.options{4}=100;
+                obj.options{5}=-1e6;
+                obj.options{6}=0;
+            end            
         end
                
         function Q = generateQ(params,conc)
@@ -93,12 +103,15 @@ classdef SevenState_10Param_QET < ExactTensorIonModel
         end
         
         function sample = samplePrior()
-            %in this model we have two uniform priors
-            sample = unifrnd(1e-2,1e10,[10 1]);         
+            sample = [unifrnd(1e-2,1e6,[6 1]); unifrnd(1e-2,1e10,[1 1]); unifrnd(1e-2,1e6,[2 1]);unifrnd(1e-2,1e10,[1 1])];         
         end
         
         function logPrior = calcLogPrior(params)
-            logPrior = sum(log(unifpdf(params,1e-2,1e10)));   
+            if size(params,1) < size(params,2)
+                params=params';
+            end
+            pdf = [unifpdf(params(1:6),1e-2,1e6); unifpdf(params(7),1e-2,1e10); unifpdf(params(8:9),1e-2,1e6); unifpdf(params(10),1e-2,1e10)];
+            logPrior = sum(log(pdf));   
         end
         
         function derivLogPrior = calcDerivLogPrior(params)

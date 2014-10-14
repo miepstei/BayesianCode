@@ -8,10 +8,20 @@ classdef SevenState_9param_AT < ExactIonModel
        
     methods(Access=public,Static)
         
-        function obj = SevenState_9param_AT()
+        function obj = SevenState_9param_AT(dcp_options)
             obj.kA=3; % 3 open states
             obj.h=0.01;
             obj.k = 9; %9 params - 1 fixed, 3 constrained, 1 mr
+            if nargin == 1
+                obj.options = dcp_options;
+            else
+                obj.options{1}=2;
+                obj.options{2}=1e-12;
+                obj.options{3}=1e-12;
+                obj.options{4}=100;
+                obj.options{5}=-1e6;
+                obj.options{6}=0;
+            end
         end
                
         function Q = generateQ(params,conc)
@@ -96,12 +106,15 @@ classdef SevenState_9param_AT < ExactIonModel
         end
         
         function sample = samplePrior()
-            %in this model we have two uniform priors
-            sample = unifrnd(1e-2,1e10,[9 1]);         
+            sample = [unifrnd(1e-2,1e6,[8 1]); unifrnd(1e-2,1e10,[1 1])];         
         end
         
         function logPrior = calcLogPrior(params)
-            logPrior = sum(log(unifpdf(params,1e-2,1e10)));   
+            if size(params,1) < size(params,2)
+                params=params';
+            end
+            pdf = [unifpdf(params(1:8),1e-2,1e6); unifpdf(params(9),1e-2,1e10)];
+            logPrior = sum(log(pdf));   
         end
         
         function derivLogPrior = calcDerivLogPrior(params)

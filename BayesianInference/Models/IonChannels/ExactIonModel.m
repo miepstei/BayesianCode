@@ -6,6 +6,7 @@ classdef (Abstract)ExactIonModel < BayesianModel
     
     properties(GetAccess = 'public', SetAccess = 'public')
         h  %finite difference stepsize
+        options
     end
     
     properties(GetAccess = 'public', SetAccess = 'protected')
@@ -41,7 +42,7 @@ classdef (Abstract)ExactIonModel < BayesianModel
                 useChs = data.useChs(experimentSet);
                 qmat=obj.generateQ(params,concentration);
                 try
-                    [likelihood , error] = likelihood_mex(bursts,qmat,tres,tcrit,obj.kA,useChs);
+                    [likelihood , error] = dcpLikelihood(bursts,qmat,tres,tcrit,obj.kA,useChs,obj.options);
                     if error == 1
                         logLik=-Inf;
                         break
