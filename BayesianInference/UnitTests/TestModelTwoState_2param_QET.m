@@ -61,19 +61,19 @@ classdef TestModelTwoState_2param_QET < matlab.unittest.TestCase
         end
         
         function testCalcLogPosterior(testCase)
-            testCase.verifyEqual(testCase.model.calcLogPosterior(testCase.params,testCase.data),5.4674232192860974e+04,'AbsTol', 1e-6)
+            testCase.verifyEqual(testCase.model.calcLogPosterior(testCase.params,testCase.data),5.468344253324289e+04,'AbsTol', 1e-6)
         end
         
         function testCalcGradLogLikelihood(testCase)
-            testCase.verifyEqual(testCase.model.calcGradLogLikelihood(testCase.params,testCase.data),[0.964801072592262;-20.900339769618874],'AbsTol', 1e-10)
+            testCase.verifyEqual(testCase.model.calcGradLogLikelihood(testCase.params,testCase.data),[0.964801072737184;-20.900339769615332],'AbsTol', 1e-10)
         end
         
         function testCalcGradLogPosterior(testCase)
-            testCase.verifyEqual(testCase.model.calcGradLogPosterior(testCase.params,testCase.data),[0.9648010844102828;-20.900339769618874],'AbsTol', 1e-6)
+            testCase.verifyEqual(testCase.model.calcGradLogPosterior(testCase.params,testCase.data),[0.964801072737184;-20.900339769615332],'AbsTol', 1e-6)
         end
         
         function testCalcMetricTensor(testCase)
-            testCase.verifyEqual(testCase.model.calcMetricTensor([5000; 100],testCase.data),[ 0.000274487752615 -0.000598745407134; -0.000598745407134 0.026933810358126],'AbsTol', 1e-10)
+            testCase.verifyEqual(testCase.model.calcMetricTensor([5000; 100],testCase.data),[ 0.000274487752615 -0.000598744975131; -0.000598744975131 0.026933810623103],'AbsTol', 1e-10)
         end
         
         function testCalcDerivMetricTensor(testCase)
@@ -86,13 +86,13 @@ classdef TestModelTwoState_2param_QET < matlab.unittest.TestCase
         end
         
         function testCalcLogPrior(testCase)
-            testCase.verifyEqual(testCase.model.calcLogPrior([5000; 100]),-4.6051701859878911e+01,'AbsTol', 1e-6)
+            testCase.verifyEqual(testCase.model.calcLogPrior([5000; 100]),-36.841361477903732,'AbsTol', 1e-6)
             testCase.verifyEqual(testCase.model.calcLogPrior([-1; -1]),-Inf)
         end
         
         function testSamplePrior(testCase)
             rng(1)
-            testCase.verifyEqual(testCase.model.samplePrior,[4.1702200470315700e+09;7.2032449344243774e+09],'AbsTol', 1e-6)
+            testCase.verifyEqual(testCase.model.samplePrior,[4.1702200470315700e+09;0.000720324496239e+09],'AbsTol', 1e-6)
             rng('shuffle', 'twister')
         end        
     end
