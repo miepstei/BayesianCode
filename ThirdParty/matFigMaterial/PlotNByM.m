@@ -1,4 +1,4 @@
-function PlotNByM(fig,N,M,varargin)
+function PlotNByM(fig,N,M,hastitle,varargin)
 
 % function PlotNByM(varargin)
 %
@@ -17,7 +17,7 @@ function PlotNByM(fig,N,M,varargin)
 % Fonts
 FontName = 'TimesNewRoman';
 FSsm = 7; % small font size
-FSmed = 20; % medium font size
+FSmed = 9; % medium font size
 FSlg = 11; % large font size
 
 % Line widths
@@ -42,9 +42,9 @@ figure1 = fig;
 
 PP = [0,0,14,10]; % *** paper position in centimeters
 PS = PP(end-1:end); % paper size in centimeters
-
+set(figure1, 'paperunits','centimeters')
 set(figure1,'paperpositionmode','manual','paperposition', ...
-        PP,'papersize',PS, 'paperunits','centimeters');
+        PP,'papersize',PS);
 
 if length(varargin)>0
   % So the figure is the same size on the screen as when it is printed:
@@ -59,10 +59,15 @@ end
 
 left = 0.1; % space on LHS of figure
 right = 0.02; % space on RHS of figure
-top = 0.02; % space above figure
+top = 0.0; % space above figure
 bottom = 0.1;% space below figure
-hspace = 0.1/min(M,N);
-vspace = 0.1/min(N,M);
+hspace = 0.15/min(M,N);
+
+if hastitle
+    vspace = 0.25/min(N,M);
+else
+    vspace = 0.15/min(N,M);
+end
 
 height = ((1-top-bottom)/N)-vspace; % height of axis
 width = ((1-left-right)/M)-hspace; % width of axis
@@ -84,18 +89,23 @@ end
 % First axis
 %ax1 = axes('position',pos1); % produce axis
 AX=get(figure1,'children');
+
+if length(AX) < N*M
+    %pad out axis vector to keep shape
+    AX(length(AX)+1:N*M) = NaN;
+end
 AX=reshape(sort(AX,'ascend'),N,M);
+
 for i=1:N
     for j=1:M
-        
-        set(AX(i,j),'position',reshape(pos(i,j,:),1,4));
-        set(get(AX(i,j),'xlabel'),'FontSize',FSmed)
-        set(get(AX(i,j),'ylabel'),'FontSize',FSmed)
-        set(AX(i,j),'TickDir','out'); % alter the direction of the tick marks
-        set(AX(i,j),'FontName',FontName,'FontSize',FSsm) % set the font name and size
-        set(AX(i,j),'box','off') % turns the figure bounding box off
-        set(AX(i,j),'layer','top') % stops problems with lines being plotted on
-                       % top of the axis lines
+        if ~isnan(AX(i,j))  %ignore "dummy" axes
+            set(AX(i,j),'position',reshape(pos(i,j,:),1,4));
+            set(AX(i,j),'TickDir','out'); % alter the direction of the tick marks
+            set(AX(i,j),'FontName',FontName,'FontSize',FSsm) % set the font name and size
+            set(AX(i,j),'box','off') % turns the figure bounding box off
+            set(AX(i,j),'layer','top') % stops problems with lines being plotted on
+                           % top of the axis lines
+        end
     end
 end
     

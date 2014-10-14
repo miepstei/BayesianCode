@@ -11,7 +11,7 @@ classdef RecordingManipulator
     
     methods(Static = true)
         
-        function [open shut] = getPeriods(res_ts)
+        function [open, shut] = getPeriods(res_ts)
             % seperate the open-shut intervals into separate timeseries
             % this function may differ from the one in
             % dc-pyps. Basically in dc-pyps the code loops over the
@@ -26,6 +26,49 @@ classdef RecordingManipulator
             open = res_ts.getIntervals(RecordingManipulator.OPEN_AMP);
             shut = res_ts.getIntervals(RecordingManipulator.CLOSED_AMP);
 
+        end
+        
+        function periods = getSuceedingPeriodsWithRange(res_ts,isopen,range)
+            %gets a set of open intervals after shut intervals (isopen=1) or
+            %shut intervals after open intervals (isopen=0) within the
+            %range 
+            
+            if isopen
+                %get shut intervals that match the range
+                shut_periods = intersect(find(res_ts.intervals>=range(1) & res_ts.intervals<range(2)),find(res_ts.amplitudes==RecordingManipulator.CLOSED_AMP));
+
+                %if the last index is going to be greater than the length of the
+                %recording then drop it
+                
+                if shut_periods(end) == res_ts.points
+                    periods = res_ts.getIntervalAt(shut_periods(1:end-1)+1);
+                else
+                    periods = res_ts.getIntervalAt(shut_periods+1);
+                end
+                
+            else
+                open_periods = intersect(find(res_ts.intervals>=range(1) & res_ts.intervals<range(2)),find(res_ts.amplitudes==RecordingManipulator.OPEN_AMP));
+                if open_periods(end) == res_ts.points
+                    periods = res_ts.getIntervalAt(open_periods(1:end-1)+1);
+                else
+                    periods = res_ts.getIntervalAt(open_periods+1);
+                end
+            end
+            
+            
+        end
+        
+        function periods = getPeriodsWithRange(res_ts,isopen,range)
+                
+             %find open or closed intervals between a specified range
+            
+             if isopen
+                 idx = intersect(find(res_ts.intervals>=range(1) & res_ts.intervals<range(2)),find(res_ts.amplitudes==RecordingManipulator.OPEN_AMP));
+             else
+                 idx = intersect(find(res_ts.intervals>=range(1) & res_ts.intervals<range(2)),find(res_ts.amplitudes==RecordingManipulator.CLOSED_AMP));
+             end
+             periods = res_ts.getIntervalAt(idx);
+            
         end
         
         function burst_array = getBursts(res_ts,t_crit)
