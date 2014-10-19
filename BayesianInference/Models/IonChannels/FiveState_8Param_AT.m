@@ -4,7 +4,7 @@ classdef FiveState_8Param_AT < ExactIonModel
        
     methods(Access=public,Static)
         
-        function obj = FiveState_8Param_QET(dcp_options)
+        function obj = FiveState_8Param_AT(dcp_options)
             obj.kA=2; % 2 open states
             obj.h=0.01;
             obj.k = 8; %8 params
