@@ -1,4 +1,4 @@
-classdef TestModelSevenState_13param_QET < matlab.unittest.TestCase
+classdef TestModelSevenState_13Param_QET < matlab.unittest.TestCase
     properties
         model
         params
@@ -8,7 +8,7 @@ classdef TestModelSevenState_13param_QET < matlab.unittest.TestCase
     methods (TestClassSetup)
         function createExperiment(testCase)
             
-            testCase.model = SevenState_13param_QET();
+            testCase.model = SevenState_13Param_QET();
             testCase.params=[1500,50000,13000,50,15000,10,6000,100000000,5000,100000000,6000,5000,100000000]';
             testCase.data.tres = 0.000025;
             testCase.data.concs = 1;

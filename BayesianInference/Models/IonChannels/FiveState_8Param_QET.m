@@ -70,7 +70,7 @@ classdef FiveState_8Param_QET < ExactTensorIonModel
         end
         
         function derivLogPrior = calcDerivLogPrior(params)
-            if isinf(FiveState_9param_QET.calcLogPrior(params))
+            if isinf(FiveState_8Param_QET.calcLogPrior(params))
                 derivLogPrior = -Inf;
             else
                 derivLogPrior = 0;

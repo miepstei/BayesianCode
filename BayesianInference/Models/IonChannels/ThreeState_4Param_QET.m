@@ -1,10 +1,10 @@
-classdef ThreeState_4param_AT < ExactIonModel
-    %ThreeStateExactIonModel with uniform priors and 
+classdef ThreeState_4Param_QET < ExactTensorIonModel
+    %TwoStateExactIonModel with uniform priors and 
     %overridden metric tensor. %del-Castillo K
        
     methods(Access=public,Static)
         
-        function obj = ThreeState_4param_AT(dcp_options)
+        function obj = ThreeState_4Param_QET(dcp_options)
             obj.kA=1; % 1 open state
             obj.h=0.01;
             obj.k = 4; %4 params
@@ -51,7 +51,7 @@ classdef ThreeState_4param_AT < ExactIonModel
         end
         
         function derivLogPrior = calcDerivLogPrior(params)
-            if isinf(ThreeState_4param_AT.calcLogPrior(params))
+            if isinf(ThreeState_4Param_QET.calcLogPrior(params))
                 derivLogPrior = -Inf;
             else
                 derivLogPrior = 0;

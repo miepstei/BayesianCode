@@ -1,25 +1,25 @@
-classdef TestModelTwoState_2param_ET < matlab.unittest.TestCase 
+classdef TestModelTwoState_2Param_AT < matlab.unittest.TestCase
     properties
         model
         params
         data
-    end    
+    end
     
     methods (TestClassSetup)
         function createExperiment(testCase)
-            testCase.model = TwoState_2param_ET();
-            testCase.params=[5000 100]';
+            testCase.model = TwoState_2Param_AT();
+            testCase.params=[5000; 100];
             testCase.data.tres = 0.000025;
             testCase.data.concs = 1;
             testCase.data.tcrit = 0.004;
             [testCase.data.bursts,~] = load_data(strcat(getenv('P_HOME'), {'/Samples/Simulations/two_state_20000.scn'}),testCase.data.tres,testCase.data.tcrit);
             testCase.data.useChs=1;
         end
-    end    
-
-
+    end
+    
     methods(Test)
         function testProperties(testCase)
+            
             %check defaults
             testCase.verifyEqual(testCase.model.kA,1);
             testCase.verifyEqual(testCase.model.h,0.01);
@@ -40,7 +40,7 @@ classdef TestModelTwoState_2param_ET < matlab.unittest.TestCase
             
             %check accessibilty
             testCase.model.h=0.1;
-            testCase.verifyEqual(testCase.model.h,0.1);              
+            testCase.verifyEqual(testCase.model.h,0.1);
         end
         
         %test Q generation
@@ -51,7 +51,7 @@ classdef TestModelTwoState_2param_ET < matlab.unittest.TestCase
             testCase.verifyEqual(Q(1,2),5000);
             testCase.verifyEqual(Q(2,1),100);
             testCase.verifyEqual(Q(2,2),-100);            
-        end    
+        end
         
         function testLikelihood(testCase)
             testCase.verifyEqual(testCase.model.calcLogLikelihood([5000 100],testCase.data),5.472028389472085e+04,'AbsTol', 1e-6);
@@ -73,7 +73,7 @@ classdef TestModelTwoState_2param_ET < matlab.unittest.TestCase
         end
         
         function testCalcMetricTensor(testCase)
-            testCase.verifyEqual(testCase.model.calcMetricTensor([5000 100],testCase.data),[ 0.000274487752615 -0.000598745407134; -0.000598745407134  0.026933810358126],'AbsTol', 1e-6)
+            testCase.verifyEqual(testCase.model.calcMetricTensor([5000 100],testCase.data),[ 0.000270447344519 -0.000598392944084; -0.000598392944084 0.026930356398225],'AbsTol', 1e-10)
         end
         
         function testCalcDerivMetricTensor(testCase)
@@ -94,7 +94,13 @@ classdef TestModelTwoState_2param_ET < matlab.unittest.TestCase
             rng(1)
             testCase.verifyEqual(testCase.model.samplePrior,[4.170220047031570e+09;0.000720324496239e+09],'AbsTol', 1e-6)
             rng('shuffle', 'twister')
-        end        
+        end
     end
+    
+    methods (TestMethodTeardown)
+        function destroyExperiment(testCase)
+            clear testCase.experiment
+        end
+    end    
+    
 end
-       

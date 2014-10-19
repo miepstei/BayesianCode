@@ -132,7 +132,7 @@ classdef EightState_15Param_AT < ExactIonModel
         end
         
         function derivLogPrior = calcDerivLogPrior(params)
-            if isinf(SevenState_10Param_AT.calcLogPrior(params))
+            if isinf(SevenState_15Param_AT.calcLogPrior(params))
                 derivLogPrior = -Inf;
             else
                 derivLogPrior = 0;

@@ -1,4 +1,4 @@
-classdef TwoState_2param_ET < TwoState_2param_AT
+classdef TwoState_2Param_ET < TwoState_2Param_AT
     %TwoStateExactIonModel with uniform priors and 
     %overridden metric tensor
     
@@ -8,7 +8,7 @@ classdef TwoState_2param_ET < TwoState_2param_AT
     
     methods(Access=public)
         
-        function obj = TwoState_2param_ET()
+        function obj = TwoState_2Param_ET()
             obj.kA=1;
             obj.h=0.01;
             obj.k = 2;

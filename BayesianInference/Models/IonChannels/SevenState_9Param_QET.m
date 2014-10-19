@@ -1,4 +1,4 @@
-classdef SevenState_9param_AT < ExactIonModel
+classdef SevenState_9Param_QET < ExactTensorIonModel
     %TwoStateExactIonModel with uniform priors and 
     %overridden metric tensor
     
@@ -8,7 +8,7 @@ classdef SevenState_9param_AT < ExactIonModel
        
     methods(Access=public,Static)
         
-        function obj = SevenState_9param_AT(dcp_options)
+        function obj = SevenState_9Param_QET(dcp_options)
             obj.kA=3; % 3 open states
             obj.h=0.01;
             obj.k = 9; %9 params - 1 fixed, 3 constrained, 1 mr
@@ -21,11 +21,11 @@ classdef SevenState_9param_AT < ExactIonModel
                 obj.options{4}=100;
                 obj.options{5}=-1e6;
                 obj.options{6}=0;
-            end
+            end            
         end
                
         function Q = generateQ(params,conc)
-            Q=zeros(7,7);
+            Q=zeros(5,5);
             
             %param array defined as follows
             
@@ -89,7 +89,7 @@ classdef SevenState_9param_AT < ExactIonModel
             Q(6,1) = 0;
             Q(6,2) = 0;
             Q(6,3) = params(6);
-            Q(6,4) = SevenState_9param_AT.FixedParam * conc;
+            Q(6,4) = SevenState_9Param_QET.FixedParam * conc;
             Q(6,5) = 0;
             Q(6,7) = params(8);
             Q(6,6) = -sum(Q(6,:));
@@ -98,7 +98,7 @@ classdef SevenState_9param_AT < ExactIonModel
             Q(7,2) = 0;
             Q(7,3) = 0;
             Q(7,4) = 0;
-            Q(7,5) = conc*((SevenState_9param_AT.FixedParam)*params(8)*(params(7))*(params(9)))/(params(8)*(params(9))*params(7)); %mr
+            Q(7,5) = conc*((SevenState_9Param_QET.FixedParam)*params(8)*(params(7))*(params(9)))/(params(8)*(params(9))*params(7)); %mr
             Q(7,6) = params(9) * conc;
             Q(7,7) = -sum(Q(7,:));
             
@@ -118,7 +118,7 @@ classdef SevenState_9param_AT < ExactIonModel
         end
         
         function derivLogPrior = calcDerivLogPrior(params)
-            if isinf(SevenState_9param_AT.calcLogPrior(params))
+            if isinf(SevenState_9Param_QET.calcLogPrior(params))
                 derivLogPrior = -Inf;
             else
                 derivLogPrior = 0;
@@ -126,3 +126,4 @@ classdef SevenState_9param_AT < ExactIonModel
         end        
     end
 end
+

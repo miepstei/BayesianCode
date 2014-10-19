@@ -1,13 +1,17 @@
-classdef SevenState_13param_QET < ExactTensorIonModel
+classdef SevenState_9Param_AT < ExactIonModel
     %TwoStateExactIonModel with uniform priors and 
     %overridden metric tensor
+    
+    properties(Constant)
+        FixedParam=100000000;
+    end
        
     methods(Access=public,Static)
         
-        function obj = SevenState_13param_QET(dcp_options)
+        function obj = SevenState_9Param_AT(dcp_options)
             obj.kA=3; % 3 open states
             obj.h=0.01;
-            obj.k = 13; %13 params
+            obj.k = 9; %9 params - 1 fixed, 3 constrained, 1 mr
             if nargin == 1
                 obj.options = dcp_options;
             else
@@ -17,11 +21,11 @@ classdef SevenState_13param_QET < ExactTensorIonModel
                 obj.options{4}=100;
                 obj.options{5}=-1e6;
                 obj.options{6}=0;
-            end            
+            end
         end
                
         function Q = generateQ(params,conc)
-            Q=zeros(5,5);
+            Q=zeros(7,7);
             
             %param array defined as follows
             
@@ -32,12 +36,13 @@ classdef SevenState_13param_QET < ExactTensorIonModel
             %5  alpha1b
             %6  beta1b
             %7  k_{-2}a
-            %8  k_{+2}a
-            %9  k_{-2}b
-            %10 k_{+2}b
-            %11 k_{-1}a
-            %12 k_{-1}b
-            %13 k_{+1}b
+            %8  k_{-2}b
+            %9 k_{+2}b
+            
+            %  k_{+2}a = 100,000,000
+            % k_{-1}a = k_{-2}a (7)
+            % k_{-1}b = k_{-2}b (9)
+            % k_{+1}b = k_{+2}b (10)
             
             % k_{+1}a is set by mr (8*9*11*13)/(12*9*7)
             
@@ -68,7 +73,7 @@ classdef SevenState_13param_QET < ExactTensorIonModel
             Q(4,1) = params(2);
             Q(4,2) = 0;
             Q(4,3) = 0;
-            Q(4,5) = params(9);
+            Q(4,5) = params(8);
             Q(4,6) = params(7);
             Q(4,7) = 0;
             Q(4,4) = -sum(Q(4,:));
@@ -76,44 +81,44 @@ classdef SevenState_13param_QET < ExactTensorIonModel
             Q(5,1) = 0;
             Q(5,2) = params(4); 
             Q(5,3) = 0;
-            Q(5,4) = params(10) * conc;
+            Q(5,4) = params(9) * conc;
             Q(5,6) = 0;
-            Q(5,7) = params(11);
+            Q(5,7) = params(7);
             Q(5,5) = -sum(Q(5,:));
             
             Q(6,1) = 0;
             Q(6,2) = 0;
             Q(6,3) = params(6);
-            Q(6,4) = params(8) * conc;
+            Q(6,4) = SevenState_9Param_AT.FixedParam * conc;
             Q(6,5) = 0;
-            Q(6,7) = params(12);
+            Q(6,7) = params(8);
             Q(6,6) = -sum(Q(6,:));
             
             Q(7,1) = 0;
             Q(7,2) = 0;
             Q(7,3) = 0;
             Q(7,4) = 0;
-            Q(7,5) = conc*((params(8))*params(9)*(params(11))*(params(13)))/(params(12)*(params(10))*params(7)); %mr
-            Q(7,6) = params(13) * conc;
+            Q(7,5) = conc*((SevenState_9Param_AT.FixedParam)*params(8)*(params(7))*(params(9)))/(params(8)*(params(9))*params(7)); %mr
+            Q(7,6) = params(9) * conc;
             Q(7,7) = -sum(Q(7,:));
             
             
         end
         
         function sample = samplePrior()
-            sample = [unifrnd(1e-2,1e6,[7 1]); unifrnd(1e-2,1e10);unifrnd(1e-2,1e6);unifrnd(1e-2,1e10);unifrnd(1e-2,1e6,[2 1]);unifrnd(1e-2,1e10)];         
+            sample = [unifrnd(1e-2,1e6,[8 1]); unifrnd(1e-2,1e10,[1 1])];         
         end
         
         function logPrior = calcLogPrior(params)
             if size(params,1) < size(params,2)
                 params=params';
             end
-            pdf = [unifpdf(params(1:7),1e-2,1e6); unifpdf(params(8),1e-2,1e10);unifpdf(params(9),1e-2,1e6) ;unifpdf(params(10),1e-2,1e10) ;unifpdf(params(11:12),1e-2,1e6);unifpdf(params(13),1e-2,1e10);];
+            pdf = [unifpdf(params(1:8),1e-2,1e6); unifpdf(params(9),1e-2,1e10)];
             logPrior = sum(log(pdf));   
         end
         
         function derivLogPrior = calcDerivLogPrior(params)
-            if isinf(SevenState_13param_AT.calcLogPrior(params))
+            if isinf(SevenState_9Param_AT.calcLogPrior(params))
                 derivLogPrior = -Inf;
             else
                 derivLogPrior = 0;

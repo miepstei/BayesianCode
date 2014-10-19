@@ -1,10 +1,13 @@
-classdef TwoState_2param_QET < ExactTensorIonModel
-    %TwoStateExactIonModel with uniform priors and 
-    %overridden metric tensor
-       
+classdef TwoState_2Param_AT < ExactIonModel
+    %TwoStateExactIonModel with uniform priors
+    
+    properties
+
+    end
+    
     methods(Access=public,Static)
         
-        function obj = TwoState_2param_QET(dcp_options)
+        function obj = TwoState_2Param_AT(dcp_options)
             obj.kA=1;
             obj.h=0.01;
             obj.k = 2;
@@ -19,7 +22,7 @@ classdef TwoState_2param_QET < ExactTensorIonModel
                 obj.options{6}=0;
             end            
         end
-               
+        
         function Q = generateQ(params,conc)
             Q=zeros(2,2);
             
@@ -44,11 +47,12 @@ classdef TwoState_2param_QET < ExactTensorIonModel
         end
         
         function derivLogPrior = calcDerivLogPrior(params)
-            if isinf(TwoState_2param_QET.calcLogPrior(params))
+            if isinf(TwoState_2Param_AT.calcLogPrior(params))
                 derivLogPrior = -Inf;
             else
                 derivLogPrior = 0;
             end   
-        end        
+        end
     end
 end
+

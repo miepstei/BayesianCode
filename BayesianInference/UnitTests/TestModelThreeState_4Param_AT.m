@@ -7,7 +7,7 @@ classdef TestModelThreeState_4Param_AT < matlab.unittest.TestCase
     
     methods (TestClassSetup)
         function createExperiment(testCase)
-            testCase.model = ThreeState_4param_AT();
+            testCase.model = ThreeState_4Param_AT();
             testCase.params=[1000; 1000;100;100];
             testCase.data.tres = 0.000025;
             testCase.data.concs = 1;
@@ -79,7 +79,7 @@ classdef TestModelThreeState_4Param_AT < matlab.unittest.TestCase
         
         function testCalcMetricTensor(testCase)
             mt = testCase.model.calcMetricTensor(testCase.params,testCase.data);
-            testCase.verifyEqual(mt(:),[ 0.0068257941165939,0.0000305590219796,0.0009330415196018,-0.0003104469215032,0.0000305590219796,-0.0110822657006793,-0.0367871598427882,0.0122528854262782,0.0009330415196018,-0.0367871598427882,0.4039012128487229,0.0159748924488667,-0.0003104469215032,0.0122528854262782,0.0159748924488667,-0.0090737012214959]','AbsTol', 1e-10)
+            testCase.verifyEqual(mt(:),[ 0.0068257941165939,0.0000305590219796,0.0009330415196018,-0.0003104469215032,0.0000305590219796,-0.0110822657006793,-0.0367871598427882,0.0122528854262782,0.0009330415196018,-0.0367871598427882,0.4039012128487229,0.0159748924488667,-0.0003104469215032,0.0122528854262782,0.0159748924488667,-0.0090737012214959]','AbsTol', 1e-6)
         end
         
         function testCalcDerivMetricTensor(testCase)

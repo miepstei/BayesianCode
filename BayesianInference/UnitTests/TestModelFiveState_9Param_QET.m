@@ -1,4 +1,4 @@
-classdef TestModelFiveState_9param_QET < matlab.unittest.TestCase
+classdef TestModelFiveState_9Param_QET < matlab.unittest.TestCase
     properties
         model
         params

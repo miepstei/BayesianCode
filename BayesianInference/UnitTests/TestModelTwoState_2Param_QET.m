@@ -1,4 +1,4 @@
-classdef TestModelTwoState_2param_QET < matlab.unittest.TestCase 
+classdef TestModelTwoState_2Param_QET < matlab.unittest.TestCase 
     properties
         model
         params
@@ -7,7 +7,7 @@ classdef TestModelTwoState_2param_QET < matlab.unittest.TestCase
     
     methods (TestClassSetup)
         function createExperiment(testCase)
-            testCase.model = TwoState_2param_QET();
+            testCase.model = TwoState_2Param_QET();
             testCase.params=[5000; 100];
             testCase.data.tres = 0.000025;
             testCase.data.concs = 1;

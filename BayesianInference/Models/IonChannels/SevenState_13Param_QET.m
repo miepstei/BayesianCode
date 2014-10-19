@@ -1,10 +1,10 @@
-classdef SevenState_13param_AT < ExactIonModel
+classdef SevenState_13Param_QET < ExactTensorIonModel
     %TwoStateExactIonModel with uniform priors and 
     %overridden metric tensor
        
     methods(Access=public,Static)
         
-        function obj = SevenState_13param_AT(dcp_options)
+        function obj = SevenState_13Param_QET(dcp_options)
             obj.kA=3; % 3 open states
             obj.h=0.01;
             obj.k = 13; %13 params
@@ -113,7 +113,7 @@ classdef SevenState_13param_AT < ExactIonModel
         end
         
         function derivLogPrior = calcDerivLogPrior(params)
-            if isinf(SevenState_13param_AT.calcLogPrior(params))
+            if isinf(SevenState_13Param_QET.calcLogPrior(params))
                 derivLogPrior = -Inf;
             else
                 derivLogPrior = 0;
