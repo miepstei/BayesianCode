@@ -37,10 +37,10 @@ void mexFunction( int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[] ) {
         // Create survivor object A_S
         DCProgs::LaplaceSurvivor survivor(qmatrix);
         if (isAF){
-            PSurvive = survivor.af(s);
+            PSurvive = survivor.H(s,tres);
         }
         else
-            PSurvive = survivor.fa(s);
+            PSurvive = survivor.H(s,tres);
         
     } catch (std::exception& e) {
         mexPrintf("[WARN]: Error thrown in DCProgs::LaplaceSurvivor\n");
