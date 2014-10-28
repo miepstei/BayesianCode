@@ -24,37 +24,52 @@ classdef FiveState_8Param_QET < ExactTensorIonModel
             Q=zeros(5,5);
             
             %param array defined as follows
-            %in 1985 model, params(1) = params(7);params(5)=params(8)
+            
+            %params(1) = alpha1
+            %params(2) = alpha2
+            %params(3) = beta2
+            %params(4) = km_2
+            %params(5) = kp_2
+            %params(6) = beta1
+            %params(7) = km_1
+            %params(8) = kp_1
+            
+            %States numbered in this mechanism:
+
+            %      1   2
+            %      |   |
+            %  5 - 4 - 3
+            
             
             Q(1,1) = -(params(1)); 
-            Q(1,2) = 0; %kp2* 
-            Q(1,3) = params(1);
-            Q(1,4) = 0; %alpha1
+            Q(1,2) = 0; 
+            Q(1,3) = 0;
+            Q(1,4) = params(1); 
             Q(1,5) = 0;
             
-            Q(2,1) = 0; %km2* set by mr 
+            Q(2,1) = 0;  
             Q(2,2) = -(params(2)); 
-            Q(2,3) = 0; %alpha2 
-            Q(2,4) = params(2);
+            Q(2,3) = params(2);  
+            Q(2,4) = 0;
             Q(2,5) = 0;
             
-            Q(3,1) = params(3);
-            Q(3,2) = 0; %beta2 
-            Q(3,3) = -(params(3) + params(4));
-            Q(3,4) = params(4); %km2
+            Q(3,1) = 0;
+            Q(3,2) = params(3);  
+            Q(3,3) = -(params(3) + (2 * params(4)));
+            Q(3,4) = (2 * params(4)); 
             Q(3,5) = 0;
 
-            Q(4,1) = 0; %beta1
-            Q(4,2) = params(6); 
-            Q(4,3) = params(5)*conc; %kp2
+            Q(4,1) = params(6); 
+            Q(4,2) = 0; 
+            Q(4,3) = params(5)*conc; 
             Q(4,4) = -((params(5)*conc) + params(6)+params(7));
-            Q(4,5) = params(7); %km1
+            Q(4,5) = params(7); 
 
             Q(5,1) = 0;
             Q(5,2) = 0; 
             Q(5,3) = 0;
-            Q(5,4) = params(8)*conc; %kp1
-            Q(5,5) = -params(8)*conc;            
+            Q(5,4) = params(8)*conc; 
+            Q(5,5) = -params(8)*conc;               
         end
         
         function sample = samplePrior()
