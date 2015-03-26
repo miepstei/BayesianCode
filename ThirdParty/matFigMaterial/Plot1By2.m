@@ -16,7 +16,7 @@ function Plot1By2(fig,varargin)
 
 % Fonts
 FontName = 'TimesNewRoman';
-FSsm = 7; % small font size
+FSsm = 20; % small font size for axes labels
 FSmed = 20; % medium font size
 FSlg = 11; % large font size
 
@@ -64,7 +64,7 @@ bottom = 0.1;% space below figure
 hspace = 0.07;
 
 height = (1-top-bottom); % height of axis
-width = (1-left-right-hspace); % width of axis
+width = ((1-left-right)/2)-hspace; % width of axis
 
 across = [hspace+width,0,0,0];
 

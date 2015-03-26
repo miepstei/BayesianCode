@@ -9,18 +9,22 @@ echo
 mkdir -p mex
 rm mex/*
 
-DCPROGS_DIR=/usr/local/include/dcprogs
-EIGEN_INCLUDE_DIR=/usr/local/Cellar/Eigen/3.2.1/include/eigen3
-MATLAB_DIR=/Applications/MATLAB_R2014a.app
 
 OS=$( uname )
 
 if [ $OS == "Darwin" ]
 then
+    DCPROGS_DIR=/usr/local/include/dcprogs
+    EIGEN_INCLUDE_DIR=/usr/local/include/eigen3
+    MATLAB_DIR=/Applications/MATLAB_R2014b.app
+
     echo "Compiling dcpUtils object file - MAC"
     c++ -std=c++11 -stdlib=libc++ -c  -I${DCPROGS_DIR}/likelihood -I${DCPROGS_DIR} -I${EIGEN_INCLUDE_DIR} -I${MATLAB_DIR}/extern/include -I${MATLAB_DIR}/simulink/include -DMATLAB_MEX_FILE -fno-common -no-cpp-precomp -fexceptions -arch x86_64 -isysroot / -mmacosx-version-min=10.9  -DMX_COMPAT_32 -O2 -DNDEBUG  src/dcpUtils.cpp -o mex/dcpUtils.o
 elif [ $OS == "Linux"  ]
 then
+    DCPROGS_DIR=/usr/local/include/dcprogs
+    EIGEN_INCLUDE_DIR=/usr/local/include/eigen3
+    MATLAB_DIR=/usr/local/MATLAB/R2014b/
     echo "Compiling dcpUtils object file - LINUX"
     c++ -std=c++11 -c  -I${DCPROGS_DIR}/likelihood -I${DCPROGS_DIR} -I${EIGEN_INCLUDE_DIR} -I${MATLAB_DIR}/extern/include -I${MATLAB_DIR}/simulink/include -DMATLAB_MEX_FILE -D_GNU_SOURCE -fPIC -fno-omit-frame-pointer -pthread  -DMX_COMPAT_32 -O -DNDEBUG src/dcpUtils.cpp -o mex/dcpUtils.o
 fi

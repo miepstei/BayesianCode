@@ -1,6 +1,6 @@
 function fig = generate_bivariate_plot(experiment,data,datatype,rows,cols)
     MSEC=1000;
-    fig=figure;
+    fig=figure('Visible','off');
     
     for conc_no=1:length(experiment.data.concs)
         tres=experiment.data.tres(conc_no);

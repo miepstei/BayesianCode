@@ -3,7 +3,14 @@
 
 clear all
 
-model = TwoState_2param_AT();
+options{1}=3;
+options{2}=1e-6;
+options{3}=1e-6;
+options{4}=100;
+options{5}=-1e6;
+options{6}=0;
+
+model = TwoState_2param_AT(options);
 surface=zeros(100,100);
 
 %True params used to generate this dataset
@@ -27,7 +34,11 @@ param_2 = linspace(-12,12,100); %mu_c - beta
 
 for row=1:100
     for col=1:100
-        surface(row,col) = model.calcLogLikelihood([exp(param_1(col))*TRUE_PARAM_1 exp(param_2(row))*TRUE_PARAM_2],data);
+        try
+            surface(row,col) = model.calcLogLikelihood([exp(param_1(col))*TRUE_PARAM_1 exp(param_2(row))*TRUE_PARAM_2],data);
+        catch
+            
+        end
     end
 end
 
@@ -42,7 +53,7 @@ ylabel('$\mathrm{log}(\hat{\mu_{c}}/\mu_{c})$','Interpreter','LaTex','FontSize',
 xlabel('$\mathrm{log}(\hat{\mu_{o}}/\mu_{o})$','Interpreter','LaTex','FontSize',15);
 set(gca,'YDir','Reverse')
 set(gca,'XDir','Reverse')
-Plot1By1(f,[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/multiple_concs_exact_missed_events'])
+%Plot1By1(f,1,[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/multiple_concs_exact_missed_events'])
 %print(f,'-depsc',[getenv('P_HOME') '../../../Written/Thesis/Figures/Chapter4/multiple_concs_exact_missed_events']);
 close(f)
 
@@ -72,7 +83,7 @@ ylabel('log$(\hat{\mu_{c}}$/$\mu_{c})$','Interpreter','LaTex','FontSize',10);
 xlabel('log$(\hat{\mu_{o}}$/$\mu_{o})$','Interpreter','LaTex','FontSize',15);
 set(gca,'YDir','Reverse')
 set(gca,'XDir','Reverse')
-Plot1By1(f,[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/single_conc_10_5_exact_missed_events'])
+%Plot1By1(f,1,[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/single_conc_10_5_exact_missed_events'])
 %print(f,'-depsc',[getenv('P_HOME') '../../../Written/Thesis/Figures/Chapter4/single_conc_10_5_exact_missed_events']);
 close(f)
 save(strcat(getenv('P_HOME'),'/BayesianInference/Results/ExactLikelihood/TwoStateExactMissedEvents.mat'),'surface','param_1','param_2','surface_single')
@@ -99,4 +110,4 @@ for row=1:100
 end
 
 surface_zoom(isinf(surface_zoom))=NaN;
-save(strcat(getenv('P_HOME'),'/BayesianInference/Results/ExactLikelihood/TwoStateExactMissedEventsZoom.mat'),'surface','param_1','param_2','surface_zoom')
+%save(strcat(getenv('P_HOME'),'/BayesianInference/Results/ExactLikelihood/TwoStateExactMissedEventsZoom.mat'),'surface','param_1','param_2','surface_zoom')

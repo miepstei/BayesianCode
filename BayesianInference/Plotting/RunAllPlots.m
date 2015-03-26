@@ -1,0 +1,14 @@
+%Creates all plots from Chapter 4 onwards
+
+BallTwoStateApproxLikSurfacePlots
+ExactMissedEventsPlots
+TwoStateSamplingFigures
+SevenStatePlots
+
+%Chapter5
+Chapter5
+Chapter5SevenState
+PosDefMatrices
+SyntheticParameterisation
+RealDataParameterisationThreeState
+RealDataParameterisationFiveState

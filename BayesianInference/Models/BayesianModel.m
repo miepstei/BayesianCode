@@ -38,19 +38,19 @@ classdef BayesianModel
                 information.LogPosterior=NaN;
             end
             
-            if requiredInfo(BayesianModel.GradLogPost) == 1
+            if requiredInfo(BayesianModel.GradLogPost) == 1 && information.LogPosterior ~= -Inf
                 information.GradLogPosterior=obj.calcGradLogPosterior(params,data);
             else
                 information.GradLogPosterior=NaN(obj.k,1);
             end
             
-            if requiredInfo(BayesianModel.MetricTensor) == 1
+            if requiredInfo(BayesianModel.MetricTensor) == 1 && information.LogPosterior ~= -Inf
                 information.MetricTensor=obj.calcMetricTensor(params,data);
             else
                 information.MetricTensor=NaN(obj.k,obj.k);
             end
             
-            if requiredInfo(BayesianModel.DerivMetTensor) == 1
+            if requiredInfo(BayesianModel.DerivMetTensor) == 1 && information.LogPosterior ~= -Inf
                 information.DerivMetricTensor=obj.calcDerivMetricTensor(params,data);
             else
                 information.DerivMetricTensor=NaN(obj.k,obj.k,obj.k);

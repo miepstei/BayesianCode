@@ -1,6 +1,6 @@
 function fig = generate_conditional_plot(experiment,data,datatype,posterior_samples,isopen,rows,cols,kA,kF,conditional_range,dcpoptions)
     MSEC=1000; %scale factor for seconds -> milliseconds
-    fig=figure('Visible','off');
+    fig=figure('Visible','on');
 
     %determine a consistent scale length for all the plots
     Q=experiment.model.generateQ(experiment.startParams,experiment.data.concs(1));
@@ -27,7 +27,7 @@ function fig = generate_conditional_plot(experiment,data,datatype,posterior_samp
         conditional_open = RecordingManipulator.getSuceedingPeriodsWithRange(resolvedData,1,conditional_range);
         [buckets,frequency,dx] =  Histogram(conditional_open,tres);
         semilogx(buckets*MSEC,frequency./(length(conditional_open)*log10(dx)*2.30259),'LineWidth',2);
-        title(strcat(num2str(conc),' M'))
+        title(strcat('Concentration = ', num2str(conc),' M'),'FontSize',16)
         hold on;  
         
         for i=1:size(posterior_samples,1)
@@ -37,6 +37,12 @@ function fig = generate_conditional_plot(experiment,data,datatype,posterior_samp
             hold on; 
             semilogx(t*MSEC,UnconditionalExactPDF(Q,kA,kF,tres,t,isopen,dcpoptions),'r'); 
         end        
+        
+        if conc_no == conc_number
+            xlabel('log10(msec)')
+            ylabel('density')
+        end
+        
         hold off
     end
 end

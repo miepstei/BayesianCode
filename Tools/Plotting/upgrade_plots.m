@@ -89,12 +89,17 @@ hist(fitted_params(:,1),400);
 title('Distribution of $\alpha_2$','interpreter','latex');
 xlabel('$\alpha_2$','interpreter','latex');
 xlim([0 3e4])
+l=ylim;
+line([true1_parameters(1),true1_parameters(1)],ylim,'LineStyle','--','Color','r')
+text(2300,l(2)-200,['true \alpha_2 = ' num2str(true1_parameters(1))])
 ylabel('Count'); 
 
 subplot(2,2,2);
-scatter(log(fitted_params(:,1)),-fitted_likelihoods);
+scatter(log(fitted_params(:,2)),-fitted_likelihoods);
 title('Scatter of log($\beta_2$) versus Likelihood','interpreter','latex');
 xlabel('$\beta_2$','interpreter','latex');
+l=ylim;
+line([log(true1_parameters(2)),log(true1_parameters(2))],ylim,'LineStyle','--','Color','r')
 ylabel('-Max Likelihood'); 
 
 
@@ -102,12 +107,16 @@ subplot(2,2,3);
 hist(fitted_params(:,2),400);
 title('Distribution of $\beta_2$','interpreter','latex');
 xlabel('$\beta_2$','interpreter','latex');
+line([true1_parameters(2),true1_parameters(2)],ylim,'LineStyle','--','Color','r')
+text(100000,20,['true \beta_2 = ' num2str(true1_parameters(2))])
 ylabel('Count'); 
 
 subplot(2,2,4);
 scatter(fitted_params(:,1),fitted_params(:,2));
 title('Scatter of $\beta_2$ versus $\alpha_2$','interpreter','latex');
 xlabel('$\alpha_2$','interpreter','latex');
+line([true1_parameters(1),true1_parameters(1)],ylim,'LineStyle','--','Color','r')
+line(xlim,[true1_parameters(2),true1_parameters(2)],'LineStyle','--','Color','r')
 ylabel('$\beta_2$','interpreter','latex'); 
 
 
@@ -147,12 +156,17 @@ subplot(2,2,1);
 hist(fitted_params(:,1),400);
 title('Distribution of $\alpha_2$','interpreter','latex');
 xlabel('$\alpha_2$','interpreter','latex');
+l=ylim;
+line([true1_parameters(1),true1_parameters(1)],ylim,'LineStyle','--','Color','r')
+text(2050,l(2)-5,['true \alpha_2 = ' num2str(true1_parameters(1))])
 ylabel('Count'); 
 
 subplot(2,2,2);
-scatter(log(fitted_params(:,1)),-fitted_likelihoods);
+scatter(log(fitted_params(:,2)),-fitted_likelihoods);
 title('Scatter of log($\beta_2$) versus Likelihood','interpreter','latex');
 xlabel('$\beta_2$','interpreter','latex');
+l=ylim;
+line([log(true1_parameters(2)),log(true1_parameters(2))],ylim,'LineStyle','--','Color','r')
 ylabel('-Max Likelihood'); 
 
 
@@ -160,12 +174,16 @@ subplot(2,2,3);
 hist(fitted_params(:,2),400);
 title('Distribution of $\beta_2$','interpreter','latex');
 xlabel('$\beta_2$','interpreter','latex');
+line([true1_parameters(2),true1_parameters(2)],ylim,'LineStyle','--','Color','r')
+text(100000,20,['true \beta_2 = ' num2str(true1_parameters(2))])
 ylabel('Count'); 
 
 subplot(2,2,4);
 scatter(fitted_params(:,1),fitted_params(:,2));
 title('Scatter of $\beta_2$ versus $\alpha_2$','interpreter','latex');
 xlabel('$\alpha_2$','interpreter','latex');
+line([true1_parameters(1),true1_parameters(1)],ylim,'LineStyle','--','Color','r')
+line(xlim,[true1_parameters(2),true1_parameters(2)],'LineStyle','--','Color','r')
 ylabel('$\beta_2$','interpreter','latex'); 
 
 

@@ -1,4 +1,4 @@
-function PlotNByM(fig,N,M,hastitle,varargin)
+function PlotNByM(fig,N,M,hastitle,axisFontSize,varargin)
 
 % function PlotNByM(varargin)
 %
@@ -16,9 +16,9 @@ function PlotNByM(fig,N,M,hastitle,varargin)
 
 % Fonts
 FontName = 'TimesNewRoman';
-FSsm = 7; % small font size
-FSmed = 9; % medium font size
-FSlg = 11; % large font size
+FSsm = axisFontSize; % small font size for axis labels
+%FSmed = 9; % medium font size
+%FSlg = 11; % large font size
 
 % Line widths
 LWthick = 2; % thick lines
@@ -40,7 +40,14 @@ col9 = [1,0,3/4];
 % set figure size
 figure1 = fig;
 
-PP = [0,0,14,10]; % *** paper position in centimeters
+if length(varargin)>1
+  % desperate times - set the paper size to change matlabs shoddy exponential scaling:
+    PP = [0,0,varargin{2},varargin{3}];   
+else
+    PP = [0,0,14,10]; % *** paper position in centimeters
+      
+end
+
 PS = PP(end-1:end); % paper size in centimeters
 set(figure1, 'paperunits','centimeters')
 set(figure1,'paperpositionmode','manual','paperposition', ...
@@ -94,11 +101,13 @@ if length(AX) < N*M
     %pad out axis vector to keep shape
     AX(length(AX)+1:N*M) = NaN;
 end
-AX=reshape(sort(AX,'ascend'),N,M);
+
+%may need to look at this commentout
+AX=reshape(flip(AX),N,M);
 
 for i=1:N
     for j=1:M
-        if ~isnan(AX(i,j))  %ignore "dummy" axes
+        if isa(fig.Children(1),'matlab.graphics.axis.Axes')  %ignore "dummy" axes
             set(AX(i,j),'position',reshape(pos(i,j,:),1,4));
             set(AX(i,j),'TickDir','out'); % alter the direction of the tick marks
             set(AX(i,j),'FontName',FontName,'FontSize',FSsm) % set the font name and size

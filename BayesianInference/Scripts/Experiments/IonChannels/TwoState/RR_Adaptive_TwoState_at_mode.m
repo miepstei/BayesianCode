@@ -9,7 +9,7 @@ SamplerParams.UpperAcceptanceLimit=0.5;
 SamplerParams.ScaleFactor=0.1;
 
 %% Model
-model = TwoStateExactIonModel();
+model = TwoState_2param_AT();
 startParams=[100;547394.9172720];
 
 %% Data

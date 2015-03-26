@@ -16,8 +16,8 @@ function Plot1By1(fig,standardise,varargin)
 
 % Fonts
 FontName = 'TimesNewRoman';
-FSsm = 7;
-FSmed = 20;
+FSsm = 12; %axis label font size
+FSmed = 12;
 FSlg = 14;
 
 % Line widths
@@ -48,19 +48,25 @@ set(figure1,'paperpositionmode','manual','paperposition', ...
 
 if length(varargin)>0
   % So the figure is the same size on the screen as when it is printed:
-  pu = get(gcf,'PaperUnits');
-  pp = get(gcf,'PaperPosition');
-  set(gcf,'Units',pu,'Position',pp)
+  pu = get(figure1,'PaperUnits');
+  pp = get(figure1,'PaperPosition');
+  set(figure1,'Units',pu,'Position',pp)
+end
+
+if length(varargin)>1
+  % So the figure is the same size on the screen as when it is printed:
+    FSsm = varargin{2}; %axis label font size
+    FSmed = varargin{2};
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Axis position
 
-left = 0.1; % space on LHS of figure
-right = 0.02; % space on RHS of figure
-top = 0.05; % space above figure
-bottom = 0.1;% space below figure
+left = 0.15; % space on LHS of figure
+right = 0.1; % space on RHS of figure
+top = 0.1; % space above figure
+bottom = 0.13;% space below figure
 
 height = (1-top-bottom); % height of axis
 width = 1-left-right; % width of axis
@@ -71,7 +77,7 @@ pos1 = [left,1-top-height,width,height]; % position of axis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Plotting
 
-AX=get(gcf,'children');
+AX=get(figure1,'children');
 if standardise
     for i=1:length(AX) %plotyy
     
@@ -86,19 +92,19 @@ if standardise
     end
 else
     %keep the inset as is
-    set(AX(2),'position',pos1);
+    set(AX(1),'position',pos1);
     hold on
-    set(AX(2),'TickDir','out'); % alter the direction of the tick marks
-    set(AX(2),'FontName',FontName,'FontSize',FSsm) % set the font name
+    set(AX(1),'TickDir','out'); % alter the direction of the tick marks
+    set(AX(1),'FontName',FontName,'FontSize',FSsm) % set the font name
                                                  % and size
 
-    set(get(AX(2),'xlabel'),'FontSize',FSmed)
-    set(get(AX(2),'ylabel'),'FontSize',FSmed)    
+    set(get(AX(1),'xlabel'),'FontSize',FSmed)
+    set(get(AX(1),'ylabel'),'FontSize',FSmed)    
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-box off % turns the figure bounding box off
-set(gca,'layer','top') % tops problems with lines being plotted on
+set(AX,'box','off') % turns the figure bounding box off
+set(AX,'layer','top') % tops problems with lines being plotted on
                        % top of the axis lines
 		       
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		       

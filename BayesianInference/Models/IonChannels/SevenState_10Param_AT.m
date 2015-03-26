@@ -33,8 +33,8 @@ classdef SevenState_10Param_AT < ExactIonModel
             %6  beta1b
             %7  k_{-2}a
             %8  k_{-1}b
-            %8  k_{-2}b
-            %9 k_{+2}b
+            %9  k_{-2}b
+            %10 k_{+2}b
             
             %  k_{+2}a = 100,000,000
             % k_{-1}a = k_{-2}a (7)

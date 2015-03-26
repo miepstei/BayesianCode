@@ -37,7 +37,7 @@ f=figure('Visible','off');
 contour(param_1,param_2,surface,linspace(max(max(surface))-10,max(max(surface)),10))
 ylabel('$\log(\hat{\mu_{c}}/\mu_{c})$','Interpreter','LaTex','FontSize',15);
 xlabel('$\log(\hat{\mu_{o}}/\mu_{o})$','Interpreter','LaTex','FontSize',15);
-Plot1By1(f,[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/multiple_concs'])
+Plot1By1(f,1,[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/multiple_concs'])
 %print(f,'-depsc',[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/multiple_concs']);
 close(f)
 
@@ -57,7 +57,7 @@ f=figure('Visible','off');
 contour(param_1,param_2,surface_single,linspace(max(max(surface_single))-10,max(max(surface_single)),10))
 ylabel('$\log(\hat{\mu_{c}}/\mu_{c})$','Interpreter','LaTex','FontSize',15);
 xlabel('$\log(\hat{\mu_{o}}/\mu_{o})$','Interpreter','LaTex','FontSize',15);
-Plot1By1(f,[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/single_conc_10_5'])
+Plot1By1(f,1,[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/single_conc_10_5'])
 %print(f,'-depsc',[getenv('P_HOME') '/../../Written/Thesis/Figures/Chapter4/single_conc_10_5']);
 close(f)
 save(strcat(getenv('P_HOME'),'/BayesianInference/Results/Ball/TwoStateApproxMissedEvents.mat'),'surface','param_1','param_2','surface_single')

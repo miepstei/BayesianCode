@@ -1,5 +1,5 @@
 function fig = generate_conditional_mean_plot(experiment,data,datatype,posterior_samples,isopen,rows,cols,kA,kF,conditional_ranges,dcpoptions)
-    fig=figure('Visible','off');
+    fig=figure('Visible','on');
     
     conc_number = length(experiment.data.concs);
     no_of_samples = size(posterior_samples,1);
@@ -51,6 +51,13 @@ function fig = generate_conditional_mean_plot(experiment,data,datatype,posterior
         for j=1:size(posterior_samples,1)
             scatter(conditional_mean_close(:,j),conditional_mean_open(:,j),[],c)
         end
+        title(strcat('concentration = ', num2str(conc),' M'),'FontSize',16)
+        
+        if conc_no == conc_number
+            xlabel('log10(msec)')
+            ylabel('msec')
+        end        
+        
         hold off
         set(gca,'XScale','log');
 

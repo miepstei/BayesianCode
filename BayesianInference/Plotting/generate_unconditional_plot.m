@@ -1,6 +1,6 @@
 function fig = generate_unconditional_plot(experiment,data,datatype,posterior_samples,isopen,rows,cols,kA,kF,dcpoptions)
     MSEC=1000;
-    fig=figure('Visible','off');
+    fig=figure('Visible','on');
     
     
     %determine a consistent scale length for all the plots
@@ -33,12 +33,12 @@ function fig = generate_unconditional_plot(experiment,data,datatype,posterior_sa
             [~, intervals] = RecordingManipulator.getPeriods(resolvedData);
         end
         
-        subplot(rows,cols,conc_no)
+        subplot(rows,cols,conc_no)        
         [buckets,frequency,dx] =  Histogram(intervals.intervals,tres);
         semilogx(buckets*MSEC,frequency./(length(intervals.intervals)*log10(dx)*2.30259),'LineWidth',2);
-        title(strcat(num2str(conc),' M'))
         hold on;  
-        
+        title(strcat('Concentration = ', num2str(conc),' M'),'FontSize',16)
+
         for i=1:size(posterior_samples,1)
             params = posterior_samples(i,:);
             Q=experiment.model.generateQ(params',conc);
@@ -47,6 +47,12 @@ function fig = generate_unconditional_plot(experiment,data,datatype,posterior_sa
             pdf_i = UnconditionalIdealPDF(Q,kA,kF,tres,t,isopen,dcpoptions);
             semilogx(t*MSEC,pdf_i,'g','LineWidth',1);
         end        
+        
+        if conc_no == conc_number
+            xlabel('log10(msec)')
+            ylabel('density')
+        end
+        
         hold off
     end
 end

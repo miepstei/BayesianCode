@@ -1,15 +1,15 @@
-%%Experiment 53
+%%Experiment 54
 % SAMPLER:  Log RWMH -> Adaptive MCMC at mode -> MALA
 % NUMBER OF CHAINS: Single Chain
-% MODEL: Seven State 10 params from Colquhoun2003
-% DATASET: 3-concentrations, experimental data from Hatton 2003 Figure 11
+% MODEL: Three State 4-params from Colquhoun2003
+% DATASET: 3-concentrations, synthetic data from Experiment 44
 % one channel
-% SAMPLER: Standard -> Adaptive -> MALA
+% SAMPLER: Standard -> Adaptive -> Standard
 
 fprintf('\n**** SAMPLING STARTING ****\n');
 
 clear all;
-experiment_description='Log RWMH -> Adaptive MCMC at mode -> MALA , Single Chain, 3-state 4-params concentration dependent, 3-concentrations, experimental data from Hatton 2003 Figure 11';
+experiment_description='Log RWMH -> Adaptive MCMC at mode -> MALA , Single Chain, 3-state 4-params concentration dependent, 3-concentrations, synthetic data from Experiment 44';
 
 %% sampling parameters
 SamplerParams.Samples=50000;
@@ -21,15 +21,14 @@ SamplerParams.LowerAcceptanceLimit=0.1;
 SamplerParams.UpperAcceptanceLimit=0.5;
 
 %% RWMH Starting Parameters
-load(strcat(getenv('P_HOME'),'/BayesianInference/Data/SevenStateGuessesAndParams.mat'))
-startParams = guess2(ten_param_keys); 
+startParams = [1000,1000,100,100]'; 
 clearvars -except experiment_description SamplerParams model startParams SamplerParams
 
 %% Data
-data=load(strcat(getenv('P_HOME'),'/BayesianInference/Data/Hatton2003/Figure11/AchRealData.mat'));
+load(strcat(getenv('P_HOME'),'/BayesianInference/Results/Thesis/Experiment44_1206427105.mat'),'data');
 
 %% Sampling method - redefine model
-model = SevenState_10Param_AT();
+model = ThreeState_4Param_AT();
 proposalScheme = LogRwmhProposal(eye(model.k,model.k),1);
 
 %% Set up the sampler
@@ -42,11 +41,11 @@ fprintf('\n**** MAP ESTIMATION STARTING ****\n');
 samples=MCMCsampler.cwSample(SamplerParams,model,data,proposalScheme,startParams);
 
 %% Save the data
-savedir = strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/RealData');
+savedir = strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/Synthetic');
 if ~isequal(exist(savedir, 'dir'),7)
     mkdir(savedir)
 end
-save(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/RealData/Experiment53_',class(proposalScheme), '_' , num2str(t.Seed) , '.mat'))
+save(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/Synthetic/Experiment54_',class(proposalScheme), '_' , num2str(t.Seed) , '.mat'))
 
 %find the maximum from the previous sampling
 [MAP,idx] = max(samples.posteriors(:));
@@ -75,7 +74,7 @@ t=rng;
 samples=MCMCsampler.blockSample(SamplerParams,model,data,proposalScheme,mapStartParams);
 
 %% Save the data
-save(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/RealData/Experiment53_',class(proposalScheme), '_' , num2str(t.Seed) , '.mat'))
+save(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/Synthetic/Experiment54_',class(proposalScheme), '_' , num2str(t.Seed) , '.mat'))
 
 covarianceEstimate = samples.covariance(:,:,end);
 fprintf('\n**** COVARIANCE ESTIMATION COMPLETED ****\n')
@@ -99,7 +98,7 @@ t=rng;
 samples=MCMCsampler.blockSample(SamplerParams,model,data,proposalScheme,mapStartParams);
 
 %% Save the data
-save(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/RealData/Experiment53_',class(proposalScheme), '_' , num2str(t.Seed) , '.mat'))
+save(strcat(getenv('P_HOME'), '/BayesianInference/Results/Thesis/Synthetic/Experiment54_',class(proposalScheme), '_' , num2str(t.Seed) , '.mat'))
 fprintf('\n**** MALA SAMPLES COMPLETED ****\n')
 fprintf('\n**** SAMPLING COMPLETED ****\n')
 

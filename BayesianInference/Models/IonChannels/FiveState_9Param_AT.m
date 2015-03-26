@@ -22,9 +22,24 @@ classdef FiveState_9Param_AT < ExactIonModel
                
         function Q = generateQ(params,conc)
             Q=zeros(5,5);
+ 
+            %States numbered regularly in this mechanism:
+
+            %      1 - 2
+            %      |   |
+            %  5 - 4 - 3
+            
             
             %param array defined as follows
-            %in 1985 model, params(1) = params(7);params(5)=params(8)
+            %params(1) = kp_2*
+            %params(2) = alpha_1
+            %params(3) = alpha_2
+            %params(4) = Beta_2
+            %params(5) = km_2
+            %params(6) = Beta_1
+            %params(7) = kp_2
+            %params(8) = km_1
+            %params(9) = kp_1
             
             Q(1,1) = -(params(1)*conc + params(2)); 
             Q(1,2) = params(1)*conc; %kp2* 
